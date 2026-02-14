@@ -50,19 +50,29 @@ Amazon Textract, Amazon Comprehend, AWS Lambda, Amazon S3, Amazon DynamoDB, AWS 
 
 **Amazon Cognito**: In banking, you cannot have open access. Cognito manages user sign-up and sign-in, ensuring that only authorized loan officers can view sensitive financial documents.
 
-3. Ingestion & Storage Layer
-Amazon S3 (The Landing Zone): Think of this as the "Digital Inbox." When a file is uploaded, it is stored in an encrypted S3 bucket.
-Event Trigger: S3 is configured with "Event Notifications". The moment a PDF lands in the bucket, it sends a signal to start the audit process immediately, ensuring zero idle time.
-4. The Orchestration Layer
+**2. Ingestion & Storage Layer**
+
+**Amazon S3 (The Landing Zone)**: Think of this as the "Digital Inbox." When a file is uploaded, it is stored in an encrypted S3 bucket.
+
+**Event Trigger**: S3 is configured with "Event Notifications". The moment a PDF lands in the bucket, it sends a signal to start the audit process immediately, ensuring zero idle time.
+
+**3. The Orchestration Layer**
 AWS Lambda (The Orchestrator): This is the "Traffic Controller". It doesn't do the heavy lifting itself; instead, it triggers other services in the correct order. For example, it tells Textract to start reading, waits for the result, and then passes that text to Bedrock for analysis.
-AWS Step Functions (Advanced): For a professional competition entry, you should use Step Functions to manage the workflow. It handles "retries" if a service is busy and ensures that if the PII detection fails, the document is blocked from moving forward.
-5. The AI Analysis Layer (The Specialized Tools)
-Amazon Textract: Unlike standard OCR, Textract understands "forms" and "tables". It can identify that a specific number on a page is "Gross Monthly Income" and extract it into a digital format that the AI can understand.
-Amazon Bedrock (The Auditor): This uses Large Language Models (LLMs) like Claude or Llama to perform "Reasoning". You give it a prompt: "Compare the income on this W2 with the deposits in this bank statement. Are there any discrepancies?"
-Amazon Comprehend: This is your "Compliance Officer". It scans the text to find PII like Social Security Numbers or personal phone numbers and can automatically redact them so the final report is safe to share.
-6. Storage & Monitoring Layer
-Amazon DynamoDB: This is your "Audit Results Database". It stores the final outcome: a JSON object containing the Loan ID, the Risk Score (0-100), and a list of identified red flags. It is optimized for high-speed retrieval by the dashboard.
-AWS KMS & CloudWatch: KMS manages the encryption keys for your documents, while CloudWatch records every action for a perfect audit trail, which is a key requirement for banking workplace efficiency.
+
+**AWS Step Functions (Advanced)**(_Optional)_**: For a professional competition entry, you should use Step Functions to manage the workflow. It handles "retries" if a service is busy and ensures that if the PII detection fails, the document is blocked from moving forward.
+
+**4. The AI Analysis Layer (The Specialized Tools)**
+
+**Amazon Textract**: Unlike standard OCR, Textract understands "forms" and "tables". It can identify that a specific number on a page is "Gross Monthly Income" and extract it into a digital format that the AI can understand.
+
+**Amazon Bedrock (The Auditor)**: This uses Large Language Models (LLMs) like Claude or Llama to perform "Reasoning". You give it a prompt: "Compare the income on this W2 with the deposits in this bank statement. Are there any discrepancies?"
+
+**Amazon Comprehend**: This is your "Compliance Officer". It scans the text to find PII like Social Security Numbers or personal phone numbers and can automatically redact them so the final report is safe to share.
+
+**5. Storage & Monitoring Layer**
+**Amazon DynamoDB**: This is your "Audit Results Database". It stores the final outcome: a JSON object containing the Loan ID, the Risk Score (0-100), and a list of identified red flags. It is optimized for high-speed retrieval by the dashboard.
+
+**AWS KMS & CloudWatch**_(Optional)_: KMS manages the encryption keys for your documents, while CloudWatch records every action for a perfect audit trail, which is a key requirement for banking workplace efficiency.
 
 
 
