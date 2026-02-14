@@ -78,5 +78,45 @@ Amazon Textract, Amazon Comprehend, AWS Lambda, Amazon S3, Amazon DynamoDB, AWS 
 
 
 
+**_Here is the detailed technical breakdown of how we will create the application components:_**
+
+
+**1. Presentation & Identity Layer (The Interface)**
+   
+**React Dashboard:** This is the primary portal for the Loan Officer. It is built using React.js to handle asynchronous state management, which is necessary when waiting for AI analysis results.
+
+**AWS Amplify:** You will use Amplify to host the frontend. It provides the "Amplify Auth" library to connect directly to Amazon Cognito, ensuring that only authorized banking personnel can access sensitive financial data.
+
+**Amazon Cognito:** This service manages User Pools and Identity Pools. It issues JSON Web Tokens (JWT) that the frontend must send to the backend to prove the user's identity before any document is processed.
+
+**2. Ingestion & Storage Layer (The Landing Zone)**
+
+**Amazon S3:** You will create an S3 bucket configured for "Private" access. When a file is uploaded via the React dashboard, it is stored in the Raw Zone.
+
+**S3 Event Notifications:** We will configure the bucket to send a notification to AWS Lambda the instant a .pdf or .jpg file is successfully uploaded.
+
+**3. The Orchestration Layer (The Logic Controller)**
+
+**AWS Lambda (The Orchestrator):** This function acts as the "Traffic Controller." It does not perform the audit itself but coordinates the API calls to Textract and Bedrock in the correct sequence.
+
+**AWS Step Functions:** For a professional entry, we will use Step Functions to create a "State Machine." This allows the application to handle errors (like a blurry photo) and retries automatically without crashing.
+
+**4. AI Analysis Layer (The Intelligence)**
+
+**Amazon Textract:** The Orchestrator sends the S3 object to Textract's AnalyzeDocument API. Textract extracts Key-Value pairs (e.g., "Salary: $5000") and Tables (e.g., monthly bank transactions).
+
+**Amazon Bedrock:** We will feed the extracted text from Textract into an LLM (like Claude) on Bedrock. Using Prompt Engineering, we will ask the model to "Reason" through the data to find mismatches between documents.
+
+**Amazon Comprehend:** This service runs as a parallel step to detect PII (Personally Identifiable Information). It identifies sensitive numbers like Social Security IDs and can redact them before the report is saved.
+
+**5. Storage & Monitoring Layer (The Output)**
+
+**Amazon DynamoDB:** Once the audit is complete, the results—including a Risk Score, a list of Flagged Inconsistencies, and metadata—are saved in a DynamoDB table.
+
+**AWS KMS:** All documents in S3 and all data in DynamoDB are encrypted using keys managed by the Key Management Service, meeting banking-grade security standards.
+
+**Amazon CloudWatch:** Every action taken by the AI is logged here. This creates a "Paper Trail," which is essential for workplace efficiency and regulatory audits in banking.
+
+
 
 
