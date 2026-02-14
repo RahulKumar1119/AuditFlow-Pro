@@ -57,9 +57,10 @@ Amazon Textract, Amazon Comprehend, AWS Lambda, Amazon S3, Amazon DynamoDB, AWS 
 **Event Trigger**: S3 is configured with "Event Notifications". The moment a PDF lands in the bucket, it sends a signal to start the audit process immediately, ensuring zero idle time.
 
 **3. The Orchestration Layer**
-AWS Lambda (The Orchestrator): This is the "Traffic Controller". It doesn't do the heavy lifting itself; instead, it triggers other services in the correct order. For example, it tells Textract to start reading, waits for the result, and then passes that text to Bedrock for analysis.
 
-**AWS Step Functions (Advanced)**(_Optional)_**: For a professional competition entry, you should use Step Functions to manage the workflow. It handles "retries" if a service is busy and ensures that if the PII detection fails, the document is blocked from moving forward.
+**AWS Lambda (The Orchestrator):** This is the "Traffic Controller". It doesn't do the heavy lifting itself; instead, it triggers other services in the correct order. For example, it tells Textract to start reading, waits for the result, and then passes that text to Bedrock for analysis.
+
+**AWS Step Functions (Advanced)**(_Optional)_: For a professional competition entry, you should use Step Functions to manage the workflow. It handles "retries" if a service is busy and ensures that if the PII detection fails, the document is blocked from moving forward.
 
 **4. The AI Analysis Layer (The Specialized Tools)**
 
