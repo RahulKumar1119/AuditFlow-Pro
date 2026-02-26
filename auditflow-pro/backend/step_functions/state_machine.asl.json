@@ -1,0 +1,215 @@
+{
+  "Comment": "AuditFlow-Pro Document Processing and Risk Scoring Pipeline",
+  "StartAt": "ProcessAllDocuments",
+  "States": {
+    "ProcessAllDocuments": {
+      "Type": "Map",
+      "Comment": "Parallel processing of all documents in the application.",
+      "ItemsPath": "$.documents",
+      "ResultPath": "$.processed_documents",
+      "MaxConcurrency": 10,
+      "Iterator": {
+        "StartAt": "ClassifyDocument",
+        "States": {
+          "ClassifyDocument": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "${ClassifierFunctionArn}",
+              "Payload": {
+                "document_id.$": "$.document_id",
+                "s3_bucket.$": "$.s3_bucket",
+                "s3_key.$": "$.s3_key",
+                "loan_application_id.$": "$$.Execution.Input.loan_application_id"
+              }
+            },
+            "Retry": [
+              {
+                "ErrorEquals": ["States.TaskFailed", "States.Timeout", "Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException"],
+                "IntervalSeconds": 5,
+                "MaxAttempts": 3,
+                "BackoffRate": 3.0
+              }
+            ],
+            "Catch": [
+              {
+                "ErrorEquals": ["States.ALL"],
+                "Next": "HandleDocumentError"
+              }
+            ],
+            "ResultSelector": {
+              "document_id.$": "$.Payload.document_id",
+              "document_type.$": "$.Payload.document_type",
+              "confidence.$": "$.Payload.confidence",
+              "requires_manual_review.$": "$.Payload.requires_manual_review",
+              "metadata.$": "$.Payload.metadata"
+            },
+            "Next": "CheckClassificationConfidence"
+          },
+          "CheckClassificationConfidence": {
+            "Type": "Choice",
+            "Choices": [
+              {
+                "Variable": "$.requires_manual_review",
+                "BooleanEquals": true,
+                "Next": "FlagForManualReview"
+              }
+            ],
+            "Default": "ExtractData"
+          },
+          "FlagForManualReview": {
+            "Type": "Pass",
+            "Result": {
+              "extraction_status": "SKIPPED_NEEDS_REVIEW"
+            },
+            "ResultPath": "$.extraction_result",
+            "End": true
+          },
+          "ExtractData": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "${ExtractorFunctionArn}",
+              "Payload.$": "$"
+            },
+            "Retry": [
+              {
+                "ErrorEquals": ["States.TaskFailed", "States.Timeout", "Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException"],
+                "IntervalSeconds": 5,
+                "MaxAttempts": 3,
+                "BackoffRate": 3.0
+              }
+            ],
+            "Catch": [
+              {
+                "ErrorEquals": ["States.ALL"],
+                "Next": "HandleDocumentError"
+              }
+            ],
+            "ResultSelector": {
+              "document_id.$": "$.Payload.document_id",
+              "document_type.$": "$.Payload.document_type",
+              "extraction_status.$": "$.Payload.extraction_status",
+              "metadata.$": "$.Payload.metadata"
+            },
+            "End": true
+          },
+          "HandleDocumentError": {
+            "Type": "Pass",
+            "Comment": "Catches individual document failures so the rest of the Map state can continue.",
+            "Result": {
+              "extraction_status": "FAILED"
+            },
+            "ResultPath": "$.extraction_status",
+            "End": true
+          }
+        }
+      },
+      "Next": "CheckAllDocumentsProcessed"
+    },
+    "CheckAllDocumentsProcessed": {
+      "Type": "Pass",
+      "Comment": "Aggregation point waiting for all parallel documents to finish.",
+      "Next": "ValidateDocuments"
+    },
+    "ValidateDocuments": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${ValidatorFunctionArn}",
+        "Payload": {
+          "loan_application_id.$": "$.loan_application_id",
+          "documents.$": "$.processed_documents"
+        }
+      },
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed", "States.Timeout"],
+          "IntervalSeconds": 5,
+          "MaxAttempts": 3,
+          "BackoffRate": 3.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "HandleWorkflowError"
+        }
+      ],
+      "ResultPath": "$.validation_results",
+      "ResultSelector": {
+        "inconsistencies.$": "$.Payload.inconsistencies",
+        "golden_record.$": "$.Payload.golden_record",
+        "documents.$": "$.Payload.documents"
+      },
+      "Next": "CalculateRiskScore"
+    },
+    "CalculateRiskScore": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${RiskScorerFunctionArn}",
+        "Payload": {
+          "loan_application_id.$": "$.loan_application_id",
+          "inconsistencies.$": "$.validation_results.inconsistencies",
+          "golden_record.$": "$.validation_results.golden_record",
+          "documents.$": "$.validation_results.documents"
+        }
+      },
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed", "States.Timeout"],
+          "IntervalSeconds": 5,
+          "MaxAttempts": 3,
+          "BackoffRate": 3.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "HandleWorkflowError"
+        }
+      ],
+      "ResultPath": "$.risk_results",
+      "ResultSelector": {
+        "risk_assessment.$": "$.Payload.risk_assessment"
+      },
+      "Next": "GenerateReport"
+    },
+    "GenerateReport": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${ReporterFunctionArn}",
+        "Payload": {
+          "loan_application_id.$": "$.loan_application_id",
+          "documents.$": "$.validation_results.documents",
+          "inconsistencies.$": "$.validation_results.inconsistencies",
+          "golden_record.$": "$.validation_results.golden_record",
+          "risk_assessment.$": "$.risk_results.risk_assessment"
+        }
+      },
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed", "States.Timeout"],
+          "IntervalSeconds": 5,
+          "MaxAttempts": 3,
+          "BackoffRate": 3.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "HandleWorkflowError"
+        }
+      ],
+      "End": true
+    },
+    "HandleWorkflowError": {
+      "Type": "Fail",
+      "Comment": "Global error handling state if any of the main pipeline Lambdas fail after 3 retries.",
+      "Error": "WorkflowFailed",
+      "Cause": "A critical step in the document processing pipeline failed."
+    }
+  }
+}
