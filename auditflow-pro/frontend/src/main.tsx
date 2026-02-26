@@ -1,10 +1,22 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+// src/main.tsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Amplify } from 'aws-amplify';
+import App from './App';
+import './index.css'; // Make sure you have Tailwind/CSS imported here
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+// Configure Amplify (Replace with your actual Cognito details later)
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userPoolId: 'us-east-1_xxxxxxxxx',
+      userPoolClientId: 'xxxxxxxxxxxxxxxxx',
+    }
+  }
+});
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
-)
+  </React.StrictMode>
+);
