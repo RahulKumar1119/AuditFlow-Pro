@@ -36,6 +36,39 @@ export const fetchAudits = async (limit = 20, nextToken = null) => {
 
 // Add this export to frontend/src/services/api.js
 
+// Fetch the full audit record for Task 20.1
+export const fetchAuditById = async (id: string) => {
+  const token = await getAuthToken();
+  const url = `${import.meta.env.VITE_API_URL || ''}/audits/${id}`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': token,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) throw new Error('Failed to fetch audit details');
+  return response.json();
+};
+
+// Log PII access events for Task 20.3
+export const logPiiAccess = async (auditId: string, fieldName: string) => {
+  const token = await getAuthToken();
+  const url = `${import.meta.env.VITE_API_URL || ''}/audits/${auditId}/log-access`;
+
+  // Fire and forget logging endpoint
+  await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ field: fieldName, timestamp: new Date().toISOString() })
+  }).catch(console.error);
+};
+
 export const requestUploadUrl = async (fileName, contentType, loanApplicationId, checksum) => {
   const token = await getAuthToken();
   const url = `${API_URL}/documents`;
