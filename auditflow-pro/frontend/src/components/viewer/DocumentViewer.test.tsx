@@ -37,7 +37,7 @@ describe('DocumentViewer & Comparison Components', () => {
     </QueryClientProvider>
   );
 
-  it('Task 21.1 & 21.4: Fetches URL and renders PDF viewer', async () => {
+  it('Fetches URL and renders PDF viewer (Tasks 21.1 & 21.4)', async () => {
     renderViewer({ documentId: 'doc-123', loanApplicationId: 'loan-1', fileType: 'application/pdf' });
     
     // Check loading state
@@ -50,15 +50,13 @@ describe('DocumentViewer & Comparison Components', () => {
     expect(api.fetchDocumentViewUrl).toHaveBeenCalledWith('doc-123', 'loan-1');
   });
 
-  it('Task 21.1: Handles pagination correctly', async () => {
+  it('Handles pagination correctly (Task 21.1)', async () => {
     renderViewer({ documentId: 'doc-123', loanApplicationId: 'loan-1', fileType: 'application/pdf', initialPage: 1 });
     
     await waitFor(() => {
       expect(screen.getByText('Page 1 of 5')).toBeDefined();
     });
 
-    const nextBtn = screen.getByRole('button', { name: '' }); // The ChevronRight button
-    
     // We target the explicit jump buttons based on their Title attributes
     const jumpBottomBtn = screen.getByTitle('Jump to Bottom');
     fireEvent.click(jumpBottomBtn);
@@ -68,7 +66,7 @@ describe('DocumentViewer & Comparison Components', () => {
     });
   });
 
-  it('Task 21.2: Renders bounding box highlights with tooltips', async () => {
+  it('Renders bounding box highlights with tooltips (Task 21.2)', async () => {
     const highlights = [{
       id: 'hl-1', page: 1, value: '$50,000', isFocused: true,
       box: { Width: 0.1, Height: 0.05, Left: 0.5, Top: 0.5 }
@@ -87,7 +85,7 @@ describe('DocumentViewer & Comparison Components', () => {
     expect(highlightBox.className).toContain('border-red-500');
   });
 
-  it('Task 21.3: Renders side-by-side comparison view', async () => {
+  it('Renders side-by-side comparison view with toggle button (Task 21.3)', async () => {
     render(
       <QueryClientProvider client={queryClient}>
         <DocumentComparisonView 
@@ -105,5 +103,8 @@ describe('DocumentViewer & Comparison Components', () => {
     
     // API should be called twice (once for each viewer)
     expect(api.fetchDocumentViewUrl).toHaveBeenCalledTimes(2);
+
+    // Verify the sync toggle exists
+    expect(screen.getByText('Scroll Synced')).toBeDefined();
   });
 });

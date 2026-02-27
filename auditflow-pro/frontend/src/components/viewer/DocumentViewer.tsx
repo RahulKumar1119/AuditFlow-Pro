@@ -1,9 +1,9 @@
 // frontend/src/components/viewer/DocumentViewer.tsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { fetchDocumentViewUrl } from '../../services/api';
 import { ZoomIn, ZoomOut, Maximize, ChevronLeft, ChevronRight, ArrowUpToLine, ArrowDownToLine } from 'lucide-react';
 
@@ -28,13 +28,29 @@ interface Props {
   fileType: string; // e.g., 'application/pdf', 'image/jpeg'
   highlights?: Highlight[];
   initialPage?: number;
+  // Callbacks and refs for synchronized scrolling in side-by-side mode
+  onZoomPan?: (state: { scale: number; positionX: number; positionY: number }) => void;
+  syncRef?: React.RefObject<ReactZoomPanPinchRef>;
 }
 
-const DocumentViewer: React.FC<Props> = ({ documentId, loanApplicationId, fileType, highlights = [], initialPage = 1 }) => {
+const DocumentViewer: React.FC<Props> = ({ 
+  documentId, 
+  loanApplicationId, 
+  fileType, 
+  highlights = [], 
+  initialPage = 1, 
+  onZoomPan, 
+  syncRef 
+}) => {
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(initialPage);
 
-  // Task 21.4: Fetch and cache the pre-signed URL via React Query
+  // Listen for initialPage changes from clicks in the InconsistencyPanel
+  useEffect(() => {
+    setPageNumber(initialPage);
+  }, [initialPage]);
+
+  // Fetch and cache the pre-signed URL via React Query
   const { data, isLoading, isError } = useQuery({
     queryKey: ['documentUrl', documentId],
     queryFn: () => fetchDocumentViewUrl(documentId, loanApplicationId),
@@ -53,20 +69,21 @@ const DocumentViewer: React.FC<Props> = ({ documentId, loanApplicationId, fileTy
 
   return (
     <div className="flex flex-col h-full bg-gray-100 border border-gray-300 rounded-lg overflow-hidden">
-      {/* Task 21.1: Toolbar with Zoom, Pan, and explicit Navigation controls */}
+      {/* Toolbar with Zoom, Pan, and explicit Navigation controls */}
       <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-300 shadow-sm">
         <div className="flex items-center space-x-2">
           <button 
             disabled={pageNumber <= 1} 
             onClick={() => setPageNumber(1)} 
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50" title="Jump to Top"
+            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors" 
+            title="Jump to Top"
           >
             <ArrowUpToLine size={18} />
           </button>
           <button 
             disabled={pageNumber <= 1} 
             onClick={() => setPageNumber(p => p - 1)} 
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50"
+            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors"
           >
             <ChevronLeft size={18} />
           </button>
@@ -74,29 +91,37 @@ const DocumentViewer: React.FC<Props> = ({ documentId, loanApplicationId, fileTy
           <button 
             disabled={pageNumber >= numPages} 
             onClick={() => setPageNumber(p => p + 1)} 
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50"
+            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors"
           >
             <ChevronRight size={18} />
           </button>
           <button 
             disabled={pageNumber >= numPages} 
             onClick={() => setPageNumber(numPages)} 
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50" title="Jump to Bottom"
+            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors" 
+            title="Jump to Bottom"
           >
             <ArrowDownToLine size={18} />
           </button>
         </div>
       </div>
 
-      {/* Task 21.1: Embedded viewer with zoom and pan controls */}
+      {/* Embedded viewer with zoom and pan controls */}
       <div className="flex-1 overflow-hidden relative cursor-grab active:cursor-grabbing bg-gray-200">
-        <TransformWrapper initialScale={1} minScale={0.5} maxScale={4} centerOnInit>
+        <TransformWrapper 
+          ref={syncRef}
+          initialScale={1} 
+          minScale={0.5} 
+          maxScale={4} 
+          centerOnInit
+          onTransformed={(ref) => onZoomPan && onZoomPan(ref.state)} // Pass pan/zoom state up for syncing
+        >
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
               <div className="absolute top-4 right-4 z-10 flex flex-col space-y-2 bg-white rounded shadow-md p-1">
-                <button onClick={() => zoomIn()} className="p-1.5 hover:bg-gray-100 rounded" title="Zoom In"><ZoomIn size={18} /></button>
-                <button onClick={() => zoomOut()} className="p-1.5 hover:bg-gray-100 rounded" title="Zoom Out"><ZoomOut size={18} /></button>
-                <button onClick={() => resetTransform()} className="p-1.5 hover:bg-gray-100 rounded" title="Reset Zoom"><Maximize size={18} /></button>
+                <button onClick={() => zoomIn()} className="p-1.5 hover:bg-gray-100 rounded transition-colors" title="Zoom In"><ZoomIn size={18} /></button>
+                <button onClick={() => zoomOut()} className="p-1.5 hover:bg-gray-100 rounded transition-colors" title="Zoom Out"><ZoomOut size={18} /></button>
+                <button onClick={() => resetTransform()} className="p-1.5 hover:bg-gray-100 rounded transition-colors" title="Reset Zoom"><Maximize size={18} /></button>
               </div>
 
               <TransformComponent wrapperClass="w-full h-full flex items-center justify-center">
@@ -110,7 +135,7 @@ const DocumentViewer: React.FC<Props> = ({ documentId, loanApplicationId, fileTy
                     <img src={data.view_url} alt="Document" className="max-w-[800px] h-auto pointer-events-none" />
                   )}
 
-                  {/* Task 21.2: Highlight Bounding Boxes Overlay */}
+                  {/* Highlight Bounding Boxes Overlay */}
                   {currentPageHighlights.map((hl) => (
                     <div
                       key={hl.id}
