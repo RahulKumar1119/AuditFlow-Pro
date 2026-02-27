@@ -95,3 +95,20 @@ export const requestUploadUrl = async (fileName, contentType, loanApplicationId,
 
   return response.json();
 };
+// Add to frontend/src/services/api.ts
+
+export const fetchDocumentViewUrl = async (documentId: string, loanApplicationId: string) => {
+  const token = await getAuthToken();
+  const url = `${import.meta.env.VITE_API_URL || ''}/documents/${documentId}/view?loan_application_id=${loanApplicationId}`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Authorization': token,
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) throw new Error('Failed to get document view URL');
+  return response.json();
+};
