@@ -81,13 +81,13 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - _Requirements: 20.1_
 
 - [ ] 5. Implement Document Classifier Lambda function
-  - [~] 5.1 Create Lambda handler and Textract integration
+  - [x] 5.1 Create Lambda handler and Textract integration
     - Implement Lambda handler function with input/output schema
     - Integrate AWS Textract AnalyzeDocument API
     - Extract text and form structures from documents
     - _Requirements: 3.1, 10.3_
 
-  - [~] 5.2 Implement document type classification logic
+  - [x] 5.2 Implement document type classification logic
     - Create classification rules for W2 forms (IRS structure, EIN detection)
     - Create classification rules for Bank Statements (institution headers, transaction tables)
     - Create classification rules for Tax Forms (IRS form numbers, tax year)
@@ -96,7 +96,7 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Calculate confidence scores for each classification
     - _Requirements: 3.2, 3.3, 3.4, 3.5, 3.6, 3.7_
 
-  - [~] 5.3 Add error handling and logging
+  - [x] 5.3 Add error handling and logging
     - Implement retry logic for Textract API calls with exponential backoff
     - Handle illegible documents gracefully
     - Add CloudWatch logging for classification results
@@ -110,20 +110,20 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - _Requirements: 20.1, 20.8_
 
 - [ ] 6. Implement Data Extractor Lambda function
-  - [~] 6.1 Create Lambda handler with document type routing
+  - [x] 6.1 Create Lambda handler with document type routing
     - Implement Lambda handler with input validation
     - Route to appropriate extractor based on document type
     - Handle multi-page PDF processing
     - _Requirements: 4.1, 5.1, 5.2_
 
-  - [~] 6.2 Implement W2 form data extraction
+  - [x] 6.2 Implement W2 form data extraction
     - Extract employer name, EIN, employee name, SSN
     - Extract wages, federal tax withheld, state tax withheld, tax year
     - Parse key-value pairs from Textract response
     - Calculate confidence scores for each field
     - _Requirements: 4.3, 4.9_
 
-  - [~] 6.3 Implement Bank Statement data extraction
+  - [x] 6.3 Implement Bank Statement data extraction
     - Extract account holder name, account number, bank name
     - Extract statement period, beginning/ending balance
     - Parse transaction tables from Textract response
