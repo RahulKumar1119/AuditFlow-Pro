@@ -1,7 +1,7 @@
 #!/bin/bash
 # infrastructure/deploy.sh
 
-REGION="us-east-1"
+REGION="ap-south-1"
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 BUCKET_NAME="auditflow-documents-prod-${ACCOUNT_ID}"
 
