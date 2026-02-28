@@ -42,9 +42,13 @@ aws dynamodb create-table \
         AttributeName=audit_record_id,AttributeType=S \
         AttributeName=loan_application_id,AttributeType=S \
         AttributeName=audit_timestamp,AttributeType=S \
+        AttributeName=risk_score,AttributeType=N \
+        AttributeName=status,AttributeType=S \
     --key-schema AttributeName=audit_record_id,KeyType=HASH \
     --global-secondary-indexes \
-        "[{\"IndexName\": \"loan_application_id-audit_timestamp-index\",\"KeySchema\":[{\"AttributeName\":\"loan_application_id\",\"KeyType\":\"HASH\"},{\"AttributeName\":\"audit_timestamp\",\"KeyType\":\"RANGE\"}],\"Projection\":{\"ProjectionType\":\"ALL\"}}]" \
+        "[{\"IndexName\": \"loan_application_id-audit_timestamp-index\",\"KeySchema\":[{\"AttributeName\":\"loan_application_id\",\"KeyType\":\"HASH\"},{\"AttributeName\":\"audit_timestamp\",\"KeyType\":\"RANGE\"}],\"Projection\":{\"ProjectionType\":\"ALL\"}}, \
+          {\"IndexName\": \"risk_score-audit_timestamp-index\",\"KeySchema\":[{\"AttributeName\":\"status\",\"KeyType\":\"HASH\"},{\"AttributeName\":\"risk_score\",\"KeyType\":\"RANGE\"}],\"Projection\":{\"ProjectionType\":\"ALL\"}}, \
+          {\"IndexName\": \"status-audit_timestamp-index\",\"KeySchema\":[{\"AttributeName\":\"status\",\"KeyType\":\"HASH\"},{\"AttributeName\":\"audit_timestamp\",\"KeyType\":\"RANGE\"}],\"Projection\":{\"ProjectionType\":\"ALL\"}}]" \
     --billing-mode PAY_PER_REQUEST
 
 # 4. Create Base IAM Execution Role for Lambda
