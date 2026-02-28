@@ -129,7 +129,7 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Parse transaction tables from Textract response
     - _Requirements: 4.4, 4.7, 4.9_
 
-  - [~] 6.4 Implement Tax Form data extraction
+  - [-] 6.4 Implement Tax Form data extraction
     - Extract taxpayer name, SSN, filing status
     - Extract adjusted gross income, total tax, tax year
     - Parse IRS form fields from Textract response

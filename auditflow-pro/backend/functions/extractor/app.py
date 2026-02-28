@@ -600,7 +600,10 @@ def extract_bank_statement_data(kvs: Dict, blocks: List[Dict], document_id: str)
 
 def extract_tax_form_data(kvs: Dict, blocks: List[Dict], document_id: str) -> TaxFormData:
     """
-    Extract Tax Form data (placeholder for Task 6.4).
+    Extract Tax Form data (1040 and similar IRS forms).
+    
+    Implements Requirement 4.5: Extract taxpayer name, filing status, adjusted gross income, and tax year.
+    Implements Requirement 4.9: Store extracted data with confidence scores.
     
     Args:
         kvs: Key-value pairs from Textract
@@ -608,11 +611,170 @@ def extract_tax_form_data(kvs: Dict, blocks: List[Dict], document_id: str) -> Ta
         document_id: Document identifier
     
     Returns:
-        TaxFormData object
+        TaxFormData object with extracted fields
     """
     logger.info(f"Extracting Tax Form data for document {document_id}")
-    # Placeholder - will be implemented in Task 6.4
-    return TaxFormData()
+    
+    tax_form_data = TaxFormData()
+    
+    # Helper function to find field by key patterns
+    def find_field(patterns: List[str], kvs: Dict, exclude_patterns: List[str] = None) -> Optional[Dict]:
+        """Find a field by matching key patterns (case-insensitive), optionally excluding certain patterns."""
+        exclude_patterns = exclude_patterns or []
+        for key, value_data in kvs.items():
+            key_lower = key.lower()
+            # Check if key should be excluded
+            if any(excl.lower() in key_lower for excl in exclude_patterns):
+                continue
+            # Check if key matches any pattern
+            for pattern in patterns:
+                if pattern.lower() in key_lower:
+                    return value_data
+        return None
+    
+    # Helper function to extract numeric value
+    def extract_numeric(text: str) -> Optional[float]:
+        """Extract numeric value from text, handling currency formatting."""
+        if not text:
+            return None
+        # Remove common currency symbols and commas
+        cleaned = text.replace('$', '').replace(',', '').strip()
+        try:
+            return float(cleaned)
+        except ValueError:
+            return None
+    
+    # Helper function to create ExtractedField
+    def create_field(value: Any, confidence: float) -> ExtractedField:
+        """Create ExtractedField with manual review flag if confidence is low."""
+        requires_review = confidence < CONFIDENCE_THRESHOLD
+        return ExtractedField(value=value, confidence=confidence, requires_manual_review=requires_review)
+    
+    # Extract form type (1040, 1040-SR, etc.)
+    form_type_patterns = ['form', 'form type', '1040', 'form 1040']
+    form_type_data = find_field(form_type_patterns, kvs)
+    if form_type_data:
+        # Extract just the form number if present
+        form_value = form_type_data['value']
+        if '1040' in form_value:
+            form_value = '1040'
+        tax_form_data.form_type = create_field(form_value, form_type_data['confidence'])
+        logger.debug(f"Extracted form_type: {form_value} (confidence: {form_type_data['confidence']:.2f})")
+    
+    # Extract tax year
+    tax_year_patterns = ['tax year', 'year', 'for the year', 'calendar year']
+    tax_year_data = find_field(tax_year_patterns, kvs)
+    if tax_year_data:
+        tax_form_data.tax_year = create_field(tax_year_data['value'], tax_year_data['confidence'])
+        logger.debug(f"Extracted tax_year: {tax_year_data['value']} (confidence: {tax_year_data['confidence']:.2f})")
+    
+    # Extract taxpayer name
+    taxpayer_name_patterns = ['your name', 'taxpayer name', 'first name and initial', 'name']
+    taxpayer_name_data = find_field(taxpayer_name_patterns, kvs, exclude_patterns=['spouse'])
+    if taxpayer_name_data:
+        tax_form_data.taxpayer_name = create_field(taxpayer_name_data['value'], taxpayer_name_data['confidence'])
+        logger.debug(f"Extracted taxpayer_name: {taxpayer_name_data['value']} (confidence: {taxpayer_name_data['confidence']:.2f})")
+    
+    # Extract taxpayer SSN
+    ssn_patterns = ['social security number', 'ssn', 'your social security number']
+    ssn_data = find_field(ssn_patterns, kvs, exclude_patterns=['spouse'])
+    if ssn_data:
+        # Mask SSN for security (show only last 4 digits)
+        ssn_value = ssn_data['value']
+        if ssn_value and len(ssn_value) >= 4:
+            masked_ssn = '***-**-' + ssn_value[-4:]
+        else:
+            masked_ssn = ssn_value
+        tax_form_data.taxpayer_ssn = create_field(masked_ssn, ssn_data['confidence'])
+        logger.debug(f"Extracted taxpayer_ssn: {masked_ssn} (confidence: {ssn_data['confidence']:.2f})")
+    
+    # Extract spouse name
+    spouse_name_patterns = ['spouse name', 'spouse\'s name', 'spouse first name']
+    spouse_name_data = find_field(spouse_name_patterns, kvs)
+    if spouse_name_data:
+        tax_form_data.spouse_name = create_field(spouse_name_data['value'], spouse_name_data['confidence'])
+        logger.debug(f"Extracted spouse_name: {spouse_name_data['value']} (confidence: {spouse_name_data['confidence']:.2f})")
+    
+    # Extract filing status
+    filing_status_patterns = ['filing status', 'status', 'single', 'married filing jointly', 'married filing separately', 'head of household']
+    filing_status_data = find_field(filing_status_patterns, kvs)
+    if filing_status_data:
+        tax_form_data.filing_status = create_field(filing_status_data['value'], filing_status_data['confidence'])
+        logger.debug(f"Extracted filing_status: {filing_status_data['value']} (confidence: {filing_status_data['confidence']:.2f})")
+    
+    # Extract address
+    address_patterns = ['home address', 'address', 'street address', 'city state zip']
+    address_data = find_field(address_patterns, kvs)
+    if address_data:
+        tax_form_data.address = create_field(address_data['value'], address_data['confidence'])
+        logger.debug(f"Extracted address: {address_data['value']} (confidence: {address_data['confidence']:.2f})")
+    
+    # Extract wages and salaries (Line 1)
+    wages_patterns = ['wages', 'salaries', 'tips', 'line 1', 'wages salaries tips']
+    wages_data = find_field(wages_patterns, kvs)
+    if wages_data:
+        wages_value = extract_numeric(wages_data['value'])
+        if wages_value is not None:
+            tax_form_data.wages_salaries = create_field(wages_value, wages_data['confidence'])
+            logger.debug(f"Extracted wages_salaries: {wages_value} (confidence: {wages_data['confidence']:.2f})")
+    
+    # Extract adjusted gross income (Line 11 on 1040)
+    agi_patterns = ['adjusted gross income', 'agi', 'line 11', 'total income']
+    agi_data = find_field(agi_patterns, kvs)
+    if agi_data:
+        agi_value = extract_numeric(agi_data['value'])
+        if agi_value is not None:
+            tax_form_data.adjusted_gross_income = create_field(agi_value, agi_data['confidence'])
+            logger.debug(f"Extracted adjusted_gross_income: {agi_value} (confidence: {agi_data['confidence']:.2f})")
+    
+    # Extract taxable income (Line 15 on 1040)
+    taxable_income_patterns = ['taxable income', 'line 15', 'income after deductions']
+    taxable_income_data = find_field(taxable_income_patterns, kvs)
+    if taxable_income_data:
+        taxable_income_value = extract_numeric(taxable_income_data['value'])
+        if taxable_income_value is not None:
+            tax_form_data.taxable_income = create_field(taxable_income_value, taxable_income_data['confidence'])
+            logger.debug(f"Extracted taxable_income: {taxable_income_value} (confidence: {taxable_income_data['confidence']:.2f})")
+    
+    # Extract total tax (Line 24 on 1040)
+    total_tax_patterns = ['total tax', 'line 24', 'tax']
+    total_tax_data = find_field(total_tax_patterns, kvs, exclude_patterns=['withheld', 'refund'])
+    if total_tax_data:
+        total_tax_value = extract_numeric(total_tax_data['value'])
+        if total_tax_value is not None:
+            tax_form_data.total_tax = create_field(total_tax_value, total_tax_data['confidence'])
+            logger.debug(f"Extracted total_tax: {total_tax_value} (confidence: {total_tax_data['confidence']:.2f})")
+    
+    # Extract federal tax withheld (Line 25 on 1040)
+    federal_tax_patterns = ['federal income tax withheld', 'federal tax withheld', 'line 25', 'withholding']
+    federal_tax_data = find_field(federal_tax_patterns, kvs)
+    if federal_tax_data:
+        federal_tax_value = extract_numeric(federal_tax_data['value'])
+        if federal_tax_value is not None:
+            tax_form_data.federal_tax_withheld = create_field(federal_tax_value, federal_tax_data['confidence'])
+            logger.debug(f"Extracted federal_tax_withheld: {federal_tax_value} (confidence: {federal_tax_data['confidence']:.2f})")
+    
+    # Extract refund amount (Line 35 on 1040)
+    refund_patterns = ['refund', 'amount you overpaid', 'line 35', 'overpayment']
+    refund_data = find_field(refund_patterns, kvs)
+    if refund_data:
+        refund_value = extract_numeric(refund_data['value'])
+        if refund_value is not None:
+            tax_form_data.refund_amount = create_field(refund_value, refund_data['confidence'])
+            logger.debug(f"Extracted refund_amount: {refund_value} (confidence: {refund_data['confidence']:.2f})")
+    
+    # Count extracted fields
+    extracted_count = sum(1 for field in [
+        tax_form_data.form_type, tax_form_data.tax_year, tax_form_data.taxpayer_name,
+        tax_form_data.taxpayer_ssn, tax_form_data.spouse_name, tax_form_data.filing_status,
+        tax_form_data.address, tax_form_data.wages_salaries, tax_form_data.adjusted_gross_income,
+        tax_form_data.taxable_income, tax_form_data.total_tax, tax_form_data.federal_tax_withheld,
+        tax_form_data.refund_amount
+    ] if field is not None)
+    
+    logger.info(f"Tax Form extraction complete for document {document_id}: {extracted_count} fields extracted")
+    
+    return tax_form_data
 
 
 def extract_drivers_license_data(kvs: Dict, blocks: List[Dict], document_id: str) -> DriversLicenseData:
