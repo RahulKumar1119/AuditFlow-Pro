@@ -5,7 +5,7 @@ from botocore.exceptions import ClientError
 from typing import List, Optional, Dict, Any
 from decimal import Decimal
 import time
-from .models import DocumentMetadata, AuditRecord
+import models
 
 # Configure logging for audit trails and errors
 logger = logging.getLogger(__name__)
@@ -40,7 +40,7 @@ class DocumentRepository:
                         continue
                 raise
 
-    def save_document(self, document: DocumentMetadata) -> bool:
+    def save_document(self, document: models.DocumentMetadata) -> bool:
         """Saves a new document record or overwrites an existing one."""
         try:
             self._retry_with_backoff(self.table.put_item, Item=document.to_dict())
@@ -50,13 +50,13 @@ class DocumentRepository:
             logger.error(f"Failed to save document {document.document_id}: {e.response['Error']['Message']}")
             raise
 
-    def get_document(self, document_id: str) -> Optional[DocumentMetadata]:
+    def get_document(self, document_id: str) -> Optional[models.DocumentMetadata]:
         """Retrieves a document by its ID."""
         try:
             response = self._retry_with_backoff(self.table.get_item, Key={'document_id': document_id})
             item = response.get('Item')
             if item:
-                return DocumentMetadata.from_dict(item)
+                return models.DocumentMetadata.from_dict(item)
             return None
         except ClientError as e:
             logger.error(f"Error retrieving document {document_id}: {e.response['Error']['Message']}")
@@ -129,7 +129,7 @@ class DocumentRepository:
             logger.error(f"Failed to update classification for {document_id}: {e.response['Error']['Message']}")
             raise
 
-    def get_documents_by_loan(self, loan_application_id: str) -> List[DocumentMetadata]:
+    def get_documents_by_loan(self, loan_application_id: str) -> List[models.DocumentMetadata]:
         """Queries all documents belonging to a specific loan application."""
         try:
             response = self._retry_with_backoff(
@@ -137,12 +137,12 @@ class DocumentRepository:
                 IndexName='loan_application_id-upload_timestamp-index',
                 KeyConditionExpression=boto3.dynamodb.conditions.Key('loan_application_id').eq(loan_application_id)
             )
-            return [DocumentMetadata.from_dict(item) for item in response.get('Items', [])]
+            return [models.DocumentMetadata.from_dict(item) for item in response.get('Items', [])]
         except ClientError as e:
             logger.error(f"Error querying documents for loan {loan_application_id}: {e.response['Error']['Message']}")
             raise
 
-    def get_documents_by_status(self, status: str, limit: Optional[int] = None) -> List[DocumentMetadata]:
+    def get_documents_by_status(self, status: str, limit: Optional[int] = None) -> List[models.DocumentMetadata]:
         """Queries documents by processing status."""
         try:
             query_params = {
@@ -153,7 +153,7 @@ class DocumentRepository:
                 query_params['Limit'] = limit
             
             response = self._retry_with_backoff(self.table.query, **query_params)
-            return [DocumentMetadata.from_dict(item) for item in response.get('Items', [])]
+            return [models.DocumentMetadata.from_dict(item) for item in response.get('Items', [])]
         except ClientError as e:
             logger.error(f"Error querying documents by status {status}: {e.response['Error']['Message']}")
             raise
@@ -199,7 +199,7 @@ class AuditRecordRepository:
                         continue
                 raise
 
-    def save_audit_record(self, record: AuditRecord) -> bool:
+    def save_audit_record(self, record: models.AuditRecord) -> bool:
         """Saves the completed audit record."""
         try:
             self._retry_with_backoff(self.table.put_item, Item=record.to_dict())
@@ -209,13 +209,13 @@ class AuditRecordRepository:
             logger.error(f"Failed to save audit record {record.audit_record_id}: {e.response['Error']['Message']}")
             raise
 
-    def get_audit_record(self, audit_record_id: str) -> Optional[AuditRecord]:
+    def get_audit_record(self, audit_record_id: str) -> Optional[models.AuditRecord]:
         """Retrieves a specific audit record."""
         try:
             response = self._retry_with_backoff(self.table.get_item, Key={'audit_record_id': audit_record_id})
             item = response.get('Item')
             if item:
-                return AuditRecord.from_dict(item)
+                return models.AuditRecord.from_dict(item)
             return None
         except ClientError as e:
             logger.error(f"Error retrieving audit record {audit_record_id}: {e.response['Error']['Message']}")
@@ -291,7 +291,7 @@ class AuditRecordRepository:
             logger.error(f"Failed to mark audit record {audit_record_id} as archived: {e.response['Error']['Message']}")
             raise
 
-    def get_audits_by_loan(self, loan_application_id: str) -> List[AuditRecord]:
+    def get_audits_by_loan(self, loan_application_id: str) -> List[models.AuditRecord]:
         """Queries all audit records for a specific loan application."""
         try:
             response = self._retry_with_backoff(
@@ -300,12 +300,12 @@ class AuditRecordRepository:
                 KeyConditionExpression=boto3.dynamodb.conditions.Key('loan_application_id').eq(loan_application_id),
                 ScanIndexForward=False  # Most recent first
             )
-            return [AuditRecord.from_dict(item) for item in response.get('Items', [])]
+            return [models.AuditRecord.from_dict(item) for item in response.get('Items', [])]
         except ClientError as e:
             logger.error(f"Error querying audits for loan {loan_application_id}: {e.response['Error']['Message']}")
             raise
 
-    def get_audits_by_status(self, status: str, limit: Optional[int] = None) -> List[AuditRecord]:
+    def get_audits_by_status(self, status: str, limit: Optional[int] = None) -> List[models.AuditRecord]:
         """Queries audit records by status."""
         try:
             query_params = {
@@ -317,12 +317,12 @@ class AuditRecordRepository:
                 query_params['Limit'] = limit
             
             response = self._retry_with_backoff(self.table.query, **query_params)
-            return [AuditRecord.from_dict(item) for item in response.get('Items', [])]
+            return [models.AuditRecord.from_dict(item) for item in response.get('Items', [])]
         except ClientError as e:
             logger.error(f"Error querying audits by status {status}: {e.response['Error']['Message']}")
             raise
 
-    def get_high_risk_audits(self, min_risk_score: int = 50, limit: Optional[int] = None) -> List[AuditRecord]:
+    def get_high_risk_audits(self, min_risk_score: int = 50, limit: Optional[int] = None) -> List[models.AuditRecord]:
         """Queries completed audit records with risk score above threshold."""
         try:
             query_params = {
@@ -335,13 +335,13 @@ class AuditRecordRepository:
                 query_params['Limit'] = limit
             
             response = self._retry_with_backoff(self.table.query, **query_params)
-            return [AuditRecord.from_dict(item) for item in response.get('Items', [])]
+            return [models.AuditRecord.from_dict(item) for item in response.get('Items', [])]
         except ClientError as e:
             logger.error(f"Error querying high-risk audits: {e.response['Error']['Message']}")
             raise
 
     def query_audits_by_date_range(self, status: str, start_date: str, end_date: str, 
-                                   limit: Optional[int] = None) -> List[AuditRecord]:
+                                   limit: Optional[int] = None) -> List[models.AuditRecord]:
         """Queries audit records by status within a date range."""
         try:
             query_params = {
@@ -354,7 +354,7 @@ class AuditRecordRepository:
                 query_params['Limit'] = limit
             
             response = self._retry_with_backoff(self.table.query, **query_params)
-            return [AuditRecord.from_dict(item) for item in response.get('Items', [])]
+            return [models.AuditRecord.from_dict(item) for item in response.get('Items', [])]
         except ClientError as e:
             logger.error(f"Error querying audits by date range: {e.response['Error']['Message']}")
             raise
@@ -376,7 +376,7 @@ class AuditRecordRepository:
             logger.error(f"Failed to delete audit record {audit_record_id}: {e.response['Error']['Message']}")
             raise
 
-    def batch_get_audits(self, audit_record_ids: List[str]) -> List[AuditRecord]:
+    def batch_get_audits(self, audit_record_ids: List[str]) -> List[models.AuditRecord]:
         """Retrieves multiple audit records in a single batch operation."""
         if not audit_record_ids:
             return []
@@ -400,7 +400,7 @@ class AuditRecordRepository:
                 )
                 
                 items = response.get('Responses', {}).get(self.table_name, [])
-                all_records.extend([AuditRecord.from_dict(item) for item in items])
+                all_records.extend([models.AuditRecord.from_dict(item) for item in items])
                 
                 # Handle unprocessed keys
                 unprocessed = response.get('UnprocessedKeys', {})
@@ -412,7 +412,7 @@ class AuditRecordRepository:
                         RequestItems=unprocessed
                     )
                     items = response.get('Responses', {}).get(self.table_name, [])
-                    all_records.extend([AuditRecord.from_dict(item) for item in items])
+                    all_records.extend([models.AuditRecord.from_dict(item) for item in items])
                     unprocessed = response.get('UnprocessedKeys', {})
             
             return all_records

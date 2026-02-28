@@ -6,8 +6,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Initialize Bedrock client for AI-powered semantic reasoning
-bedrock = boto3.client('bedrock-runtime', region_name='us-east-1')
+# Lazy initialization of Bedrock client for AI-powered semantic reasoning
+_bedrock_client = None
+
+def get_bedrock_client():
+    """Get or create Bedrock client (lazy initialization)."""
+    global _bedrock_client
+    if _bedrock_client is None:
+        _bedrock_client = boto3.client('bedrock-runtime', region_name='us-east-1')
+    return _bedrock_client
 
 def levenshtein_distance(s1: str, s2: str) -> int:
     """Calculates the minimum number of single-character edits between two strings."""
@@ -30,7 +37,10 @@ def validate_names(names: list) -> list:
     inconsistencies = []
     for i in range(len(names)):
         for j in range(i + 1, len(names)):
-            dist = levenshtein_distance(names[i]['value'].lower(), names[j]['value'].lower())
+            # Normalize names: lowercase and strip whitespace
+            name1 = names[i]['value'].lower().strip()
+            name2 = names[j]['value'].lower().strip()
+            dist = levenshtein_distance(name1, name2)
             if dist > 2:
                 inconsistencies.append({
                     "field": "name",
@@ -100,6 +110,7 @@ def semantic_address_check(address1: str, address2: str) -> bool:
     """
     
     try:
+        bedrock = get_bedrock_client()
         response = bedrock.invoke_model(
             modelId='anthropic.claude-3-haiku-20240307-v1:0', # Using Haiku for fast, cheap text reasoning
             contentType='application/json',

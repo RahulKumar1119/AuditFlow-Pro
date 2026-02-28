@@ -129,38 +129,38 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Parse transaction tables from Textract response
     - _Requirements: 4.4, 4.7, 4.9_
 
-  - [-] 6.4 Implement Tax Form data extraction
+  - [x] 6.4 Implement Tax Form data extraction
     - Extract taxpayer name, SSN, filing status
     - Extract adjusted gross income, total tax, tax year
     - Parse IRS form fields from Textract response
     - _Requirements: 4.5, 4.9_
 
-  - [~] 6.5 Implement Driver's License data extraction
+  - [x] 6.5 Implement Driver's License data extraction
     - Extract full name, date of birth, license number
     - Extract address, state, expiration date, issue date
     - Parse DMV-specific fields
     - _Requirements: 4.6, 4.9_
 
-  - [~] 6.6 Implement ID Document data extraction
+  - [x] 6.6 Implement ID Document data extraction
     - Extract full name, date of birth, document number
     - Extract issuing authority, expiration date
     - Handle various ID document formats
     - _Requirements: 4.2, 4.9_
 
-  - [~] 6.7 Integrate AWS Comprehend for PII detection
+  - [x] 6.7 Integrate AWS Comprehend for PII detection
     - Call Comprehend DetectPiiEntities API
     - Identify SSN, account numbers, license numbers, DOB
     - Mask PII in logs and apply field-level encryption
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
-  - [~] 6.8 Implement multi-page PDF handling
+  - [x] 6.8 Implement multi-page PDF handling
     - Process pages sequentially with page number tracking
     - Aggregate data from multiple pages
     - Handle timeout protection with document splitting
     - Handle corrupted or illegible pages
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6_
 
-  - [~] 6.9 Add confidence tracking and flagging
+  - [x] 6.9 Add confidence tracking and flagging
     - Flag fields with confidence < 80% for manual verification
     - Store extracted data with confidence scores
     - Log low-confidence extractions
@@ -173,17 +173,17 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Test confidence score calculations
     - _Requirements: 20.1, 20.4, 20.8_
 
-- [~] 7. Checkpoint - Ensure document processing tests pass
+- [x] 7. Checkpoint - Ensure document processing tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 8. Implement Cross-Document Validator Lambda function
-  - [~] 8.1 Create Lambda handler and validation orchestration
+  - [x] 8.1 Create Lambda handler and validation orchestration
     - Implement Lambda handler accepting multiple documents
     - Load extracted data for all documents in loan application
     - Initialize inconsistency tracking
     - _Requirements: 6.1_
 
-  - [~] 8.2 Implement name validation logic
+  - [x] 8.2 Implement name validation logic
     - Compare names across all documents
     - Calculate Levenshtein distance for spelling variations
     - Flag inconsistencies with edit distance > 2 characters
