@@ -30,15 +30,37 @@ This will execute all deployment scripts in the correct order.
 ## Individual Scripts
 
 ### 1. deploy.sh
-Creates base infrastructure:
-- S3 bucket for document storage with encryption
-- DynamoDB tables (AuditFlow-Documents, AuditFlow-AuditRecords)
-- Base IAM execution role for Lambda
+Main deployment script that orchestrates all infrastructure setup:
+- Creates KMS encryption keys for S3 and DynamoDB
+- Creates S3 bucket for document storage with KMS encryption
+- Applies S3 bucket policies for security
+- Configures S3 CORS and lifecycle policies
+- Creates DynamoDB tables (AuditFlow-Documents, AuditFlow-AuditRecords)
+- Creates base IAM execution role for Lambda
 
-### 2. s3_config.sh
-Configures S3 bucket:
+### 2. kms_setup.sh
+Creates and configures KMS encryption keys:
+- Creates KMS key for S3 encryption with automatic rotation
+- Creates KMS key for DynamoDB encryption
+- Sets up key policies for service access (S3, Lambda, CloudWatch)
+- Creates key aliases (alias/auditflow-s3-encryption, alias/auditflow-dynamodb-encryption)
+- Enables annual automatic key rotation
+
+### 3. s3_bucket_policy.sh
+Configures S3 bucket security policies:
+- Enforces KMS encryption for all uploads
+- Denies insecure transport (requires HTTPS)
+- Grants Lambda execution role access
+- Enables S3 versioning
+- Blocks all public access
+
+### 4. s3_config.sh
+Configures S3 bucket CORS and lifecycle policies:
 - CORS configuration for frontend access
-- Lifecycle policy (Glacier after 90 days, delete after 7 years)
+- Lifecycle policy: Archive to Glacier after 90 days
+- Lifecycle policy: Delete after 7 years (2555 days)
+- Server access logging configuration
+- Cleanup of old object versions
 
 ### 3. dynamodb_config.sh
 Configures DynamoDB tables:
@@ -157,6 +179,9 @@ Ensure your AWS credentials have sufficient permissions for all operations.
 Verify AWS_REGION environment variable matches your desired region.
 
 ## Support
+
+For detailed S3 configuration information, see:
+- **S3_CONFIGURATION.md**: Comprehensive guide to S3 bucket setup, security, encryption, lifecycle policies, and troubleshooting
 
 For issues or questions, refer to:
 - AWS CLI documentation: https://docs.aws.amazon.com/cli/

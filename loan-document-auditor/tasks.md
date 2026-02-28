@@ -47,7 +47,7 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Implement table creation scripts with encryption configuration
     - _Requirements: 12.1, 12.3, 12.4, 12.6, 16.4_
 
-  - [~] 3.2 Implement DynamoDB repository classes
+  - [x] 3.2 Implement DynamoDB repository classes
     - Create DocumentRepository with CRUD operations
     - Create AuditRecordRepository with query methods
     - Implement atomic updates and conditional writes
@@ -61,7 +61,7 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - _Requirements: 20.1_
 
 - [ ] 4. Implement S3 document storage layer
-  - [~] 4.1 Create S3 bucket configuration and encryption setup
+  - [x] 4.1 Create S3 bucket configuration and encryption setup
     - Configure S3 bucket with server-side encryption
     - Set up bucket policies and CORS configuration
     - Implement lifecycle policies for archival to Glacier
