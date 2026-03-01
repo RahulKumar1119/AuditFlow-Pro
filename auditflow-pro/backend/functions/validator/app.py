@@ -137,9 +137,271 @@ def lambda_handler(event, context):
         else:
             logger.info(f"Insufficient names for validation (found {len(name_fields)})")
         
-        # Convert inconsistencies to Inconsistency objects
+        # Task 8.3: Perform address validation across all documents
+        logger.info("Starting address validation across documents")
+        
+        # Extract address fields from all documents
+        address_fields = []
+        for doc in loaded_documents:
+            extracted_data = doc.extracted_data
+            doc_id = doc.document_id
+            
+            # Check for various address field types based on document type
+            address_value = None
+            if doc.document_type == 'W2' and 'employee_address' in extracted_data:
+                address_value = extracted_data['employee_address']
+            elif doc.document_type == 'BANK_STATEMENT' and 'account_holder_address' in extracted_data:
+                address_value = extracted_data['account_holder_address']
+            elif doc.document_type == 'TAX_FORM' and 'address' in extracted_data:
+                address_value = extracted_data['address']
+            elif doc.document_type == 'DRIVERS_LICENSE' and 'address' in extracted_data:
+                address_value = extracted_data['address']
+            
+            # Add to address_fields list if found
+            if address_value:
+                # Handle both dict and ExtractedField formats
+                if isinstance(address_value, dict):
+                    value = address_value.get('value')
+                elif hasattr(address_value, 'value'):
+                    value = address_value.value
+                else:
+                    value = str(address_value)
+                
+                if value:
+                    address_fields.append({
+                        'value': value,
+                        'source': doc_id
+                    })
+                    logger.info(f"Extracted address '{value}' from document {doc_id}")
+        
+        # Validate addresses using component parsing and semantic matching
+        address_inconsistencies = []
+        if len(address_fields) >= 2:
+            logger.info(f"Validating {len(address_fields)} addresses for inconsistencies")
+            address_inconsistencies = rules.validate_addresses(address_fields)
+            logger.info(f"Found {len(address_inconsistencies)} address inconsistencies")
+        else:
+            logger.info(f"Insufficient addresses for validation (found {len(address_fields)})")
+        
+        # Convert all inconsistencies to Inconsistency objects
         inconsistencies: List[models.Inconsistency] = []
+        
+        # Add name inconsistencies
         for inc in name_inconsistencies:
+            inconsistency = models.Inconsistency(
+                inconsistency_id=str(uuid.uuid4()),
+                field=inc['field'],
+                severity=inc['severity'],
+                expected_value=inc['expected_value'],
+                actual_value=inc['actual_value'],
+                source_documents=inc['source_documents'],
+                description=inc['description'],
+                detected_by='cross_document_validator'
+            )
+            inconsistencies.append(inconsistency)
+        
+        # Add address inconsistencies
+        for inc in address_inconsistencies:
+            inconsistency = models.Inconsistency(
+                inconsistency_id=str(uuid.uuid4()),
+                field=inc['field'],
+                severity=inc['severity'],
+                expected_value=inc['expected_value'],
+                actual_value=inc['actual_value'],
+                source_documents=inc['source_documents'],
+                description=inc['description'],
+                detected_by='cross_document_validator'
+            )
+            inconsistencies.append(inconsistency)
+        
+        # Task 8.4: Perform income validation across documents
+        logger.info("Starting income validation across documents")
+        
+        # Extract W2 wage fields from all W2 documents
+        w2_wages = []
+        for doc in loaded_documents:
+            if doc.document_type == 'W2':
+                extracted_data = doc.extracted_data
+                doc_id = doc.document_id
+                
+                # Look for wages field in W2
+                wage_value = None
+                if 'wages' in extracted_data:
+                    wage_value = extracted_data['wages']
+                
+                # Add to w2_wages list if found
+                if wage_value:
+                    # Handle both dict and ExtractedField formats
+                    if isinstance(wage_value, dict):
+                        value = wage_value.get('value')
+                    elif hasattr(wage_value, 'value'):
+                        value = wage_value.value
+                    else:
+                        value = str(wage_value)
+                    
+                    if value:
+                        w2_wages.append({
+                            'value': value,
+                            'source': doc_id
+                        })
+                        logger.info(f"Extracted wages '{value}' from W2 document {doc_id}")
+        
+        # Extract adjusted gross income from tax form documents
+        tax_agi = None
+        for doc in loaded_documents:
+            if doc.document_type == 'TAX_FORM':
+                extracted_data = doc.extracted_data
+                doc_id = doc.document_id
+                
+                # Look for adjusted_gross_income field in tax form
+                agi_value = None
+                if 'adjusted_gross_income' in extracted_data:
+                    agi_value = extracted_data['adjusted_gross_income']
+                
+                # Use the first tax form AGI found
+                if agi_value:
+                    # Handle both dict and ExtractedField formats
+                    if isinstance(agi_value, dict):
+                        value = agi_value.get('value')
+                    elif hasattr(agi_value, 'value'):
+                        value = agi_value.value
+                    else:
+                        value = str(agi_value)
+                    
+                    if value:
+                        tax_agi = {
+                            'value': value,
+                            'source': doc_id
+                        }
+                        logger.info(f"Extracted AGI '{value}' from tax form document {doc_id}")
+                        break  # Use first tax form found
+        
+        # Validate income using the validate_income function from rules.py
+        income_inconsistencies = []
+        if w2_wages and tax_agi:
+            logger.info(f"Validating income: {len(w2_wages)} W2(s) against tax form AGI")
+            income_inconsistencies = rules.validate_income(w2_wages, tax_agi)
+            logger.info(f"Found {len(income_inconsistencies)} income inconsistencies")
+        else:
+            if not w2_wages:
+                logger.info("No W2 wages found for income validation")
+            if not tax_agi:
+                logger.info("No tax form AGI found for income validation")
+        
+        # Add income inconsistencies
+        for inc in income_inconsistencies:
+            inconsistency = models.Inconsistency(
+                inconsistency_id=str(uuid.uuid4()),
+                field=inc['field'],
+                severity=inc['severity'],
+                expected_value=inc['expected_value'],
+                actual_value=inc['actual_value'],
+                source_documents=inc['source_documents'],
+                description=inc['description'],
+                detected_by='cross_document_validator'
+            )
+            inconsistencies.append(inconsistency)
+        
+        # Task 8.5: Perform date of birth validation across identification documents
+        logger.info("Starting date of birth validation across identification documents")
+        
+        # Extract DOB fields from all identification documents
+        dob_fields = []
+        for doc in loaded_documents:
+            # DOB is found in identification documents: DRIVERS_LICENSE, ID_DOCUMENT, TAX_FORM
+            if doc.document_type in ['DRIVERS_LICENSE', 'ID_DOCUMENT', 'TAX_FORM']:
+                extracted_data = doc.extracted_data
+                doc_id = doc.document_id
+                
+                # Look for date_of_birth field
+                dob_value = None
+                if 'date_of_birth' in extracted_data:
+                    dob_value = extracted_data['date_of_birth']
+                
+                # Add to dob_fields list if found
+                if dob_value:
+                    # Handle both dict and ExtractedField formats
+                    if isinstance(dob_value, dict):
+                        value = dob_value.get('value')
+                    elif hasattr(dob_value, 'value'):
+                        value = dob_value.value
+                    else:
+                        value = str(dob_value)
+                    
+                    if value:
+                        dob_fields.append({
+                            'value': value,
+                            'source': doc_id
+                        })
+                        logger.info(f"Extracted DOB '{value}' from document {doc_id}")
+        
+        # Validate DOB using zero-tolerance comparison
+        dob_inconsistencies = []
+        if len(dob_fields) >= 2:
+            logger.info(f"Validating {len(dob_fields)} DOB values for inconsistencies")
+            dob_inconsistencies = rules.validate_ssn_dob(dob_fields, 'date_of_birth')
+            logger.info(f"Found {len(dob_inconsistencies)} DOB inconsistencies")
+        else:
+            logger.info(f"Insufficient DOB values for validation (found {len(dob_fields)})")
+        
+        # Add DOB inconsistencies
+        for inc in dob_inconsistencies:
+            inconsistency = models.Inconsistency(
+                inconsistency_id=str(uuid.uuid4()),
+                field=inc['field'],
+                severity=inc['severity'],
+                expected_value=inc['expected_value'],
+                actual_value=inc['actual_value'],
+                source_documents=inc['source_documents'],
+                description=inc['description'],
+                detected_by='cross_document_validator'
+            )
+            inconsistencies.append(inconsistency)
+        
+        # Task 8.5: Perform SSN validation across all documents
+        logger.info("Starting SSN validation across documents")
+        
+        # Extract SSN fields from all documents that contain SSN
+        ssn_fields = []
+        for doc in loaded_documents:
+            extracted_data = doc.extracted_data
+            doc_id = doc.document_id
+            
+            # Check for various SSN field types based on document type
+            ssn_value = None
+            if doc.document_type == 'W2' and 'employee_ssn' in extracted_data:
+                ssn_value = extracted_data['employee_ssn']
+            elif doc.document_type == 'TAX_FORM' and 'taxpayer_ssn' in extracted_data:
+                ssn_value = extracted_data['taxpayer_ssn']
+            
+            # Add to ssn_fields list if found
+            if ssn_value:
+                # Handle both dict and ExtractedField formats
+                if isinstance(ssn_value, dict):
+                    value = ssn_value.get('value')
+                elif hasattr(ssn_value, 'value'):
+                    value = ssn_value.value
+                else:
+                    value = str(ssn_value)
+                
+                if value:
+                    ssn_fields.append({
+                        'value': value,
+                        'source': doc_id
+                    })
+                    logger.info(f"Extracted SSN from document {doc_id}")
+        
+        # Validate SSN using zero-tolerance comparison
+        ssn_inconsistencies = []
+        if len(ssn_fields) >= 2:
+            logger.info(f"Validating {len(ssn_fields)} SSN values for inconsistencies")
+            ssn_inconsistencies = rules.validate_ssn_dob(ssn_fields, 'ssn')
+            logger.info(f"Found {len(ssn_inconsistencies)} SSN inconsistencies")
+        else:
+            logger.info(f"Insufficient SSN values for validation (found {len(ssn_fields)})")
+        
+        # Add SSN inconsistencies
+        for inc in ssn_inconsistencies:
             inconsistency = models.Inconsistency(
                 inconsistency_id=str(uuid.uuid4()),
                 field=inc['field'],
@@ -173,10 +435,10 @@ def lambda_handler(event, context):
             "loan_application_id": loan_application_id,
             "documents": document_summary,
             "inconsistencies": inconsistencies_dict,
-            "validation_status": "NAME_VALIDATION_COMPLETE",
+            "validation_status": "NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE",
             "documents_loaded": len(loaded_documents),
             "inconsistencies_found": len(inconsistencies),
-            "message": f"Name validation complete: {len(inconsistencies)} inconsistencies found"
+            "message": f"Name, address, income, DOB, and SSN validation complete: {len(inconsistencies)} inconsistencies found"
         }
         
         logger.info(f"Validation initialization complete for loan application {loan_application_id}")

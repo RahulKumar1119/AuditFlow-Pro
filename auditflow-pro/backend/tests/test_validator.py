@@ -84,7 +84,7 @@ class TestValidatorLambdaHandler:
             assert response['loan_application_id'] == 'loan-123'
             assert len(response['documents']) == 2
             assert response['inconsistencies'] == []
-            assert response['validation_status'] == 'NAME_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
             assert response['documents_loaded'] == 2
             assert response['inconsistencies_found'] == 0
             
@@ -421,7 +421,7 @@ class TestValidatorLambdaHandler:
             
             # Verify response includes new fields
             assert 'inconsistencies_found' in response
-            assert response['validation_status'] == 'NAME_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
 
 
 if __name__ == '__main__':
@@ -593,7 +593,7 @@ class TestNameValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
             assert len(response['inconsistencies']) == 1
             assert response['inconsistencies_found'] == 1
             
@@ -663,7 +663,7 @@ class TestNameValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
             assert len(response['inconsistencies']) == 0
             assert response['inconsistencies_found'] == 0
     
