@@ -1,11 +1,12 @@
-// auditflow-pro/frontend/src/components/dashboard/Dashboard.jsx
-import React, { useState, useEffect } from 'react';
+// auditflow-pro/frontend/src/components/dashboard/Dashboard.tsx
+import { useState, useEffect } from 'react';
 import { fetchAudits } from '../../services/api';
+import type { AuditRecord } from '../../services/api';
 import { AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-  const [audits, setAudits] = useState([]);
+  const [audits, setAudits] = useState<AuditRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -19,22 +20,24 @@ const Dashboard = () => {
       const data = await fetchAudits(50); // Fetch top 50 recent records
       setAudits(data.items || []);
     } catch (err) {
-      setError(err.message || 'Failed to load dashboard data');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load dashboard data';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   // Helper for risk badge styling
-  const getRiskBadge = (level) => {
-    const styles = {
+  const getRiskBadge = (level: string) => {
+    const styles: Record<string, string> = {
       CRITICAL: 'bg-red-100 text-red-800 border-red-200',
       HIGH: 'bg-orange-100 text-orange-800 border-orange-200',
       MEDIUM: 'bg-yellow-100 text-yellow-800 border-yellow-200',
       LOW: 'bg-green-100 text-green-800 border-green-200',
       UNKNOWN: 'bg-gray-100 text-gray-800 border-gray-200'
     };
-    return `px-2 py-1 text-xs font-semibold rounded-full border ${styles[level] || styles.UNKNOWN}`;
+    const style = styles[level];
+    return `px-2 py-1 text-xs font-semibold rounded-full border ${style !== undefined ? style : styles.UNKNOWN}`;
   };
 
   if (loading) return <div className="flex h-64 items-center justify-center">Loading dashboard...</div>;
@@ -98,7 +101,7 @@ const Dashboard = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {audits.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="px-6 py-4 text-center text-sm text-gray-500">No audit records found.</td>
+                  <td colSpan={7} className="px-6 py-4 text-center text-sm text-gray-500">No audit records found.</td>
                 </tr>
               ) : (
                 audits.map((audit) => (
@@ -108,7 +111,7 @@ const Dashboard = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{audit.applicant_name || 'Unknown'}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(audit.audit_timestamp).toLocaleDateString()}
+                      {new Date(audit.audit_timestamp || '').toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <span className="inline-flex items-center space-x-1">

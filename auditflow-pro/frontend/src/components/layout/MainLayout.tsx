@@ -10,6 +10,12 @@ const MainLayout: React.FC = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
   // Protect the layout - redirect to login if not authenticated
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -21,11 +27,6 @@ const MainLayout: React.FC = () => {
   // Get user groups from token (for role-based access)
   // Note: In AWS Amplify v6, groups might be in different location
   const groups: string[] = [];
-  
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
 
   const handleLogout = async (): Promise<void> => {
     try {

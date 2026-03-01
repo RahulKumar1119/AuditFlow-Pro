@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
@@ -12,13 +12,7 @@ export default defineConfig({
   build: {
     // Production optimizations
     target: 'es2015',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true, // Remove console.log in production
-        drop_debugger: true,
-      },
-    },
+    minify: 'esbuild', // Use esbuild instead of terser (faster and built-in)
     rollupOptions: {
       output: {
         // Manual chunk splitting for better caching

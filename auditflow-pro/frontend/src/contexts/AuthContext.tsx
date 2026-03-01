@@ -1,12 +1,13 @@
 // frontend/src/contexts/AuthContext.tsx
 
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
+import type { ReactNode } from 'react';
 // V6 Import Syntax
 import { signIn, signOut, getCurrentUser } from 'aws-amplify/auth';
 import type { AuthUser } from 'aws-amplify/auth';
 
 // Define types for authentication context
-interface AuthContextType {
+export interface AuthContextType {
   user: AuthUser | null;
   login: (email: string, password: string) => Promise<LoginResult>;
   logout: () => Promise<void>;
@@ -37,7 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const currentUser = await getCurrentUser();
       setUser(currentUser);
-    } catch (error) {
+    } catch {
       setUser(null);
     } finally {
       setLoading(false);
@@ -46,15 +47,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string): Promise<LoginResult> => {
     try {
-      const response = await signIn({ username: email, password });
+      await signIn({ username: email, password });
       // After successful sign in, get the current user
       const currentUser = await getCurrentUser();
       setUser(currentUser);
       return { success: true };
-    } catch (error: any) {
+    } catch (error) {
       // Handle account lockout and authentication errors
-      const errorMessage = error.message || 'Authentication failed';
-      const errorCode = error.name || 'UnknownError';
+      const errorMessage = error instanceof Error ? error.message : 'Authentication failed';
+      const errorCode = error instanceof Error && 'name' in error ? (error as { name: string }).name : 'UnknownError';
       
       return { 
         success: false, 
@@ -88,6 +89,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

@@ -14,13 +14,13 @@ vi.mock('../../services/api', () => ({
 
 // Mock react-pdf to prevent canvas rendering errors in the JSDOM test environment
 vi.mock('react-pdf', () => ({
-  pdfjs: { GlobalWorkerOptions: { workerSrc: '' } },
-  Document: ({ children, onLoadSuccess }: any) => {
+  pdfjs: { GlobalWorkerOptions: { workerSrc: '', version: '3.0.0' } },
+  Document: ({ children, onLoadSuccess }: { children: React.ReactNode; onLoadSuccess: (data: { numPages: number }) => void }) => {
     // Simulate immediate successful load of a 5-page PDF
     setTimeout(() => onLoadSuccess({ numPages: 5 }), 0);
     return <div data-testid="mock-pdf-document">{children}</div>;
   },
-  Page: ({ pageNumber }: any) => <div data-testid={`mock-pdf-page-${pageNumber}`}>Page {pageNumber}</div>
+  Page: ({ pageNumber }: { pageNumber: number }) => <div data-testid={`mock-pdf-page-${pageNumber}`}>Page {pageNumber}</div>
 }));
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
@@ -31,7 +31,19 @@ describe('DocumentViewer & Comparison Components', () => {
     vi.spyOn(api, 'fetchDocumentViewUrl').mockResolvedValue({ view_url: 'http://mock-s3.com/doc.pdf' });
   });
 
-  const renderViewer = (props: any) => render(
+  const renderViewer = (props: {
+    documentId: string;
+    loanApplicationId: string;
+    fileType: string;
+    initialPage?: number;
+    highlights?: Array<{
+      id: string;
+      page: number;
+      value: string;
+      isFocused?: boolean;
+      box: { Width: number; Height: number; Left: number; Top: number };
+    }>;
+  }) => render(
     <QueryClientProvider client={queryClient}>
       <DocumentViewer {...props} />
     </QueryClientProvider>

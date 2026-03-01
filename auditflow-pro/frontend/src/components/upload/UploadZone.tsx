@@ -1,7 +1,8 @@
 // frontend/src/components/upload/UploadZone.tsx
 
-import React, { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { requestUploadUrl } from '../../services/api';
+import type { UploadUrlResponse } from '../../services/api';
 import { UploadCloud, File as FileIcon, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB limit
@@ -34,24 +35,6 @@ const UploadZone: React.FC<{ loanApplicationId?: string }> = ({ loanApplicationI
     return null;
   };
 
-  const handleFiles = (newFiles: FileList | File[]) => {
-    const newUploads: UploadableFile[] = Array.from(newFiles).map(file => {
-      const error = validateFile(file);
-      return {
-        id: crypto.randomUUID(),
-        file,
-        progress: 0,
-        status: error ? 'ERROR' : 'PENDING',
-        error: error || undefined
-      };
-    });
-
-    setUploads(prev => [...prev, ...newUploads]);
-    
-    // Automatically start valid uploads
-    newUploads.filter(u => u.status === 'PENDING').forEach(u => uploadFile(u));
-  };
-
   const uploadFile = async (uploadRecord: UploadableFile) => {
     // Reset status to uploading and clear any previous errors
     setUploads(prev => prev.map(u => u.id === uploadRecord.id ? { ...u, status: 'UPLOADING', progress: 0, error: undefined } : u));
@@ -61,17 +44,19 @@ const UploadZone: React.FC<{ loanApplicationId?: string }> = ({ loanApplicationI
       const checksum = await calculateChecksum(uploadRecord.file);
 
       // Task 17.3: Get Pre-signed URL from API Gateway, passing the checksum
-      const { upload_url_data } = await requestUploadUrl(
+      const response: UploadUrlResponse = await requestUploadUrl(
         uploadRecord.file.name, 
         uploadRecord.file.type, 
-        loanApplicationId,
+        loanApplicationId || '',
         checksum 
       );
+      
+      const { upload_url_data } = response;
 
       // Task 17.3: Prepare FormData for S3 Direct Post
       const formData = new FormData();
       Object.entries(upload_url_data.fields).forEach(([key, value]) => {
-        formData.append(key, value as string);
+        formData.append(key, value);
       });
       
       // Task 17.3: Append checksum to payload for AWS S3 to verify
@@ -108,14 +93,33 @@ const UploadZone: React.FC<{ loanApplicationId?: string }> = ({ loanApplicationI
       // Mark success
       setUploads(prev => prev.map(u => u.id === uploadRecord.id ? { ...u, status: 'SUCCESS', progress: 100 } : u));
 
-    } catch (error: any) {
+    } catch (error) {
       // Task 17.3: Handle upload errors with descriptive messages in the UI
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred during upload.';
       setUploads(prev => prev.map(u => u.id === uploadRecord.id ? { 
         ...u, 
         status: 'ERROR', 
-        error: error.message || 'An unexpected error occurred during upload.' 
+        error: errorMessage
       } : u));
     }
+  };
+
+  const handleFiles = (newFiles: FileList | File[]) => {
+    const newUploads: UploadableFile[] = Array.from(newFiles).map(file => {
+      const error = validateFile(file);
+      return {
+        id: crypto.randomUUID(),
+        file,
+        progress: 0,
+        status: error ? 'ERROR' : 'PENDING',
+        error: error || undefined
+      };
+    });
+
+    setUploads(prev => [...prev, ...newUploads]);
+    
+    // Automatically start valid uploads
+    newUploads.filter(u => u.status === 'PENDING').forEach(u => uploadFile(u));
   };
 
   // Drag and drop event handlers
@@ -124,7 +128,10 @@ const UploadZone: React.FC<{ loanApplicationId?: string }> = ({ loanApplicationI
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) handleFiles(e.dataTransfer.files);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleFiles(e.dataTransfer.files);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

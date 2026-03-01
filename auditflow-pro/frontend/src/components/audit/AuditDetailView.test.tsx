@@ -1,12 +1,25 @@
 // frontend/src/components/audit/AuditDetailView.test.tsx
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuditDetailView from './AuditDetailView';
 import * as AuthContextModule from '../../contexts/AuthContext';
+import type { AuthContextType } from '../../contexts/AuthContext';
 import * as api from '../../services/api';
+
+interface MockAuthUser {
+  username: string;
+  userId: string;
+  signInUserSession: {
+    accessToken: {
+      payload: {
+        'cognito:groups': string[];
+      };
+    };
+  };
+}
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
@@ -24,6 +37,7 @@ const mockAuditData = {
   status: 'COMPLETED',
   risk_score: 75,
   risk_level: 'HIGH',
+  audit_timestamp: '2024-01-01T00:00:00Z',
   golden_record: {
     first_name: { value: 'John' },
     last_name: { value: 'Doe' },
@@ -31,8 +45,8 @@ const mockAuditData = {
   },
   risk_factors: [{ description: 'Income discrepancy exceeds 10%' }],
   inconsistencies: [
-    { id: 'inc-1', field_name: 'Income', severity: 'CRITICAL', expected_value: '$50,000', actual_value: '$40,000', sources: [] },
-    { id: 'inc-2', field_name: 'Name', severity: 'LOW', expected_value: 'John', actual_value: 'Jon', sources: [] }
+    { id: 'inc-1', field_name: 'Income', severity: 'CRITICAL' as const, expected_value: '$50,000', actual_value: '$40,000', sources: [] },
+    { id: 'inc-2', field_name: 'Name', severity: 'LOW' as const, expected_value: 'John', actual_value: 'Jon', sources: [] }
   ]
 };
 
@@ -45,10 +59,18 @@ describe('AuditDetailView Component', () => {
   });
 
   const renderWithRole = (role: string) => {
+    const mockUser = {
+      username: 'test-user',
+      userId: 'test-user-id',
+      signInUserSession: { accessToken: { payload: { 'cognito:groups': [role] } } }
+    } as MockAuthUser;
+    
     vi.spyOn(AuthContextModule, 'useAuth').mockReturnValue({
-      user: { signInUserSession: { accessToken: { payload: { 'cognito:groups': [role] } } } },
-      login: vi.fn(), logout: vi.fn(), checkUser: vi.fn()
-    } as any);
+      user: mockUser,
+      login: vi.fn(),
+      logout: vi.fn(),
+      checkUser: vi.fn()
+    } as unknown as AuthContextType);
 
     return render(
       <QueryClientProvider client={queryClient}>

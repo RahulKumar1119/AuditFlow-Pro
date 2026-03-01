@@ -1,9 +1,10 @@
 // frontend/src/components/dashboard/AuditQueue.tsx
 
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAudits } from '../../services/api';
+import type { AuditRecord } from '../../services/api';
 import { Search, ChevronUp, ChevronDown, Filter, AlertTriangle } from 'lucide-react';
 
 // Interfaces for our state
@@ -52,7 +53,7 @@ const AuditQueue: React.FC = () => {
   const processedAudits = useMemo(() => {
     if (!data?.items) return [];
     
-    let filtered = data.items.filter((audit: any) => {
+    const filtered = data.items.filter((audit: AuditRecord) => {
       // 1. Search by Loan ID or Applicant Name
       const searchMatch = 
         (audit.loan_application_id || '').toLowerCase().includes(filters.search.toLowerCase()) ||
@@ -68,9 +69,9 @@ const AuditQueue: React.FC = () => {
     });
 
     // Sort Logic
-    filtered.sort((a: any, b: any) => {
-      let aVal = a[sortConfig.key];
-      let bVal = b[sortConfig.key];
+    filtered.sort((a: AuditRecord, b: AuditRecord) => {
+      let aVal: string | number = a[sortConfig.key] || 0;
+      let bVal: string | number = b[sortConfig.key] || 0;
 
       if (sortConfig.key === 'audit_timestamp') {
         aVal = new Date(aVal || 0).getTime();
@@ -201,9 +202,9 @@ const AuditQueue: React.FC = () => {
                   </td>
                 </tr>
               ) : (
-                processedAudits.map((audit: any) => {
+                processedAudits.map((audit: AuditRecord) => {
                   // Task 19.1: Highlight high-risk applications
-                  const isHighRisk = audit.risk_score > 50; 
+                  const isHighRisk = (audit.risk_score || 0) > 50; 
                   
                   return (
                     // Task 19.4: Make table rows clickable to view detailed audit records
@@ -213,14 +214,14 @@ const AuditQueue: React.FC = () => {
                       className={`cursor-pointer hover:bg-blue-50 transition-colors ${isHighRisk ? 'bg-red-50' : ''}`}
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(audit.audit_timestamp).toLocaleString()}
+                        {new Date(audit.audit_timestamp || '').toLocaleString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm font-medium text-blue-600">{audit.loan_application_id}</div>
                         <div className="text-sm text-gray-500">{audit.applicant_name || 'Processing...'}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={getStatusBadge(audit.status)}>{audit.status}</span>
+                        <span className={getStatusBadge(audit.status || 'UNKNOWN')}>{audit.status}</span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className={`flex items-center space-x-2 text-sm font-bold ${isHighRisk ? 'text-red-600' : 'text-gray-900'}`}>

@@ -1,6 +1,7 @@
 // frontend/src/components/auth/Login.tsx
 
-import React, { useState, FormEvent } from 'react';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 

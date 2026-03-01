@@ -1,9 +1,10 @@
 // frontend/src/components/viewer/DocumentViewer.tsx
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import type { ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { fetchDocumentViewUrl } from '../../services/api';
 import { ZoomIn, ZoomOut, Maximize, ChevronLeft, ChevronRight, ArrowUpToLine, ArrowDownToLine } from 'lucide-react';
 
@@ -30,7 +31,7 @@ interface Props {
   initialPage?: number;
   // Callbacks and refs for synchronized scrolling in side-by-side mode
   onZoomPan?: (state: { scale: number; positionX: number; positionY: number }) => void;
-  syncRef?: React.RefObject<ReactZoomPanPinchRef>;
+  syncRef?: React.RefObject<ReactZoomPanPinchRef | null>;
 }
 
 const DocumentViewer: React.FC<Props> = ({ 

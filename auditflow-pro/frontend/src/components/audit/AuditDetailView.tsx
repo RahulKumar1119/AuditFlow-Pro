@@ -8,13 +8,24 @@ import { useAuth } from '../../contexts/AuthContext';
 import { ShieldAlert, ArrowLeft, ShieldCheck, Eye, EyeOff, AlertCircle, User, DollarSign, Calendar, FileText, TrendingUp } from 'lucide-react';
 import InconsistencyPanel from './InconsistencyPanel';
 
+interface CognitoUser {
+  signInUserSession?: {
+    accessToken?: {
+      payload?: {
+        'cognito:groups'?: string[];
+      };
+    };
+  };
+}
+
 const AuditDetailView: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const [unmaskedFields, setUnmaskedFields] = useState<Set<string>>(new Set());
 
   // Extract user roles from Cognito token
-  const groups = user?.signInUserSession?.accessToken?.payload['cognito:groups'] || [];
+  const cognitoUser = user as unknown as CognitoUser;
+  const groups = cognitoUser?.signInUserSession?.accessToken?.payload?.['cognito:groups'] || [];
   const isAdmin = groups.includes('Administrator');
 
   const { data: audit, isLoading, isError } = useQuery({
@@ -125,7 +136,7 @@ const AuditDetailView: React.FC = () => {
                 <div className="mt-4 flex items-center space-x-4">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white backdrop-blur-sm">
                     <Calendar size={14} className="mr-1.5" />
-                    {new Date(audit.audit_timestamp).toLocaleDateString()}
+                    {new Date(audit.audit_timestamp || '').toLocaleDateString()}
                   </span>
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
                     audit.status === 'COMPLETED' ? 'bg-green-500/20 text-green-100' : 
@@ -242,7 +253,7 @@ const AuditDetailView: React.FC = () => {
                   <p className="text-red-100 text-xs mt-1">{audit.risk_factors.length} contributing factors</p>
                 </div>
                 <div className="divide-y divide-red-100">
-                  {audit.risk_factors.map((factor: any, idx: number) => (
+                  {audit.risk_factors.map((factor: { description: string }, idx: number) => (
                     <div key={idx} className="p-4 hover:bg-red-50/50 transition-colors">
                       <div className="flex items-start space-x-3">
                         <AlertCircle size={18} className="text-red-500 flex-shrink-0 mt-0.5" />

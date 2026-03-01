@@ -21,9 +21,9 @@ vi.mock('../../services/api', () => ({
 
 const mockData = {
   items: [
-    { audit_record_id: '1', loan_application_id: 'L-100', applicant_name: 'Alice', status: 'COMPLETED', risk_score: 20, audit_timestamp: '2026-01-01T10:00:00Z' },
-    { audit_record_id: '2', loan_application_id: 'L-200', applicant_name: 'Bob', status: 'PENDING', risk_score: 85, audit_timestamp: '2026-01-02T10:00:00Z' },
-    { audit_record_id: '3', loan_application_id: 'L-300', applicant_name: 'Charlie', status: 'FAILED', risk_score: 50, audit_timestamp: '2026-01-03T10:00:00Z' },
+    { audit_record_id: '1', loan_application_id: 'L-100', applicant_name: 'Alice', status: 'COMPLETED', risk_score: 20, risk_level: 'LOW', audit_timestamp: '2026-01-01T10:00:00Z' },
+    { audit_record_id: '2', loan_application_id: 'L-200', applicant_name: 'Bob', status: 'PENDING', risk_score: 85, risk_level: 'CRITICAL', audit_timestamp: '2026-01-02T10:00:00Z' },
+    { audit_record_id: '3', loan_application_id: 'L-300', applicant_name: 'Charlie', status: 'FAILED', risk_score: 50, risk_level: 'MEDIUM', audit_timestamp: '2026-01-03T10:00:00Z' },
   ]
 };
 

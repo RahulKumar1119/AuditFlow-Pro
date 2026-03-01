@@ -1,15 +1,23 @@
 // frontend/src/components/viewer/DocumentComparisonView.tsx
 
-import React, { useRef, useState } from 'react';
-import { ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
+import { useRef, useState } from 'react';
+import type { ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import DocumentViewer from './DocumentViewer';
 import { Link2, Link2Off } from 'lucide-react';
+
+interface Highlight {
+  id: string;
+  page: number;
+  box: { Width: number; Height: number; Left: number; Top: number };
+  value: string;
+  isFocused?: boolean;
+}
 
 interface ComparisonProps {
   loanApplicationId: string;
   leftDoc: { id: string; type: string; page: number };
   rightDoc: { id: string; type: string; page: number };
-  sharedHighlights?: any[]; 
+  sharedHighlights?: Highlight[]; 
 }
 
 const DocumentComparisonView: React.FC<ComparisonProps> = ({ loanApplicationId, leftDoc, rightDoc, sharedHighlights }) => {

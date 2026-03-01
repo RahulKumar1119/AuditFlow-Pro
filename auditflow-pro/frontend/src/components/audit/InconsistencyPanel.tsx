@@ -4,6 +4,8 @@ import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertCircle, Filter, FileText, ChevronUp, ChevronDown, AlertTriangle, XCircle, Info } from 'lucide-react';
 
+type JSXElement = React.ReactElement;
+
 interface SourceDoc {
   documentId: string;
   type: string;
@@ -33,7 +35,7 @@ const InconsistencyPanel: React.FC<Props> = ({ inconsistencies }) => {
   });
 
   const processedInconsistencies = useMemo(() => {
-    let processed = inconsistencies.filter(inc => 
+    const processed = inconsistencies.filter(inc => 
       severityFilter === 'ALL' || inc.severity === severityFilter
     );
 
@@ -65,7 +67,7 @@ const InconsistencyPanel: React.FC<Props> = ({ inconsistencies }) => {
   };
 
   const getSeverityConfig = (severity: string) => {
-    const configs: Record<string, { badge: string; icon: JSX.Element; bg: string }> = {
+    const configs: Record<string, { badge: string; icon: JSXElement; bg: string }> = {
       CRITICAL: {
         badge: 'bg-red-100 text-red-800 border-red-300',
         icon: <XCircle size={16} className="text-red-600" />,
