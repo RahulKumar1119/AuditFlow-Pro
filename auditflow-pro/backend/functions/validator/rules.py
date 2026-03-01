@@ -13,7 +13,7 @@ def get_bedrock_client():
     """Get or create Bedrock client (lazy initialization)."""
     global _bedrock_client
     if _bedrock_client is None:
-        _bedrock_client = boto3.client('bedrock-runtime', region_name='us-east-1')
+        _bedrock_client = boto3.client('bedrock-runtime', region_name='ap-south-1')
     return _bedrock_client
 
 def levenshtein_distance(s1: str, s2: str) -> int:

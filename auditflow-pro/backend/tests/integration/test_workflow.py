@@ -8,13 +8,13 @@ from botocore.exceptions import ClientError
 # This ARN would typically be injected via environment variables during CI/CD
 STATE_MACHINE_ARN = os.environ.get(
     'STATE_MACHINE_ARN', 
-    'arn:aws:states:us-east-1:123456789012:stateMachine:AuditFlowStateMachine'
+    'arn:aws:states:ap-south-1:123456789012:stateMachine:AuditFlowStateMachine'
 )
 
 @pytest.fixture
 def sfn_client():
     """Boto3 client for Step Functions."""
-    return boto3.client('stepfunctions', region_name=os.environ.get('AWS_REGION', 'us-east-1'))
+    return boto3.client('stepfunctions', region_name=os.environ.get('AWS_REGION', 'ap-south-1'))
 
 def wait_for_execution(sfn_client, execution_arn, timeout=60):
     """Helper to poll the execution status until it finishes."""

@@ -11,7 +11,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Initialize AWS clients
-sfn_client = boto3.client('stepfunctions', region_name=os.environ.get('AWS_REGION', 'us-east-1'))
+sfn_client = boto3.client('stepfunctions', region_name=os.environ.get('AWS_REGION', 'ap-south-1'))
 STATE_MACHINE_ARN = os.environ.get('STATE_MACHINE_ARN')
 
 # Requirement 1.4 & 10.3: Reject files > 50MB

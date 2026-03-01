@@ -7,7 +7,7 @@ from shared.repositories import DocumentRepository, AuditRecordRepository
 from shared.models import DocumentMetadata, AuditRecord, Inconsistency, RiskFactor, Alert
 
 # Set environment variables for testing
-os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
+os.environ['AWS_DEFAULT_REGION'] = 'ap-south-1'
 os.environ['DOCUMENTS_TABLE'] = 'AuditFlow-Documents-Test'
 os.environ['AUDIT_RECORDS_TABLE'] = 'AuditFlow-AuditRecords-Test'
 
@@ -15,7 +15,7 @@ os.environ['AUDIT_RECORDS_TABLE'] = 'AuditFlow-AuditRecords-Test'
 def dynamodb_mock():
     """Fixture to set up the mocked DynamoDB tables."""
     with mock_aws():
-        dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+        dynamodb = boto3.resource('dynamodb', region_name='ap-south-1')
         
         # Create the Documents table
         documents_table = dynamodb.create_table(

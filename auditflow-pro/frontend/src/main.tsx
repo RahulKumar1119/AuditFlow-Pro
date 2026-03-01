@@ -9,7 +9,7 @@ import './index.css'; // Make sure you have Tailwind/CSS imported here
 Amplify.configure({
   Auth: {
     Cognito: {
-      userPoolId: 'us-east-1_xxxxxxxxx',
+      userPoolId: 'ap-south-1_xxxxxxxxx',
       userPoolClientId: 'xxxxxxxxxxxxxxxxx',
     }
   }

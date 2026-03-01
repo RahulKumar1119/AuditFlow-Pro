@@ -32,7 +32,7 @@ Update the `.env` file with your AWS account details:
 nano .env
 
 # Update these values:
-AWS_REGION=us-east-1
+AWS_REGION=ap-south-1
 AWS_ACCOUNT_ID=<your-12-digit-account-id>
 ```
 
@@ -96,9 +96,9 @@ This will create:
 After infrastructure deployment, you'll see output like:
 
 ```
-User Pool ID: us-east-1_XXXXXXXXX
+User Pool ID: ap-south-1_XXXXXXXXX
 User Pool Client ID: XXXXXXXXXXXXXXXXXXXXXXXXXX
-Identity Pool ID: us-east-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+Identity Pool ID: ap-south-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 ```
 
 Copy these values to `frontend/.env`:
@@ -108,10 +108,10 @@ cd frontend
 nano .env
 
 # Update with your values:
-VITE_USER_POOL_ID=us-east-1_XXXXXXXXX
+VITE_USER_POOL_ID=ap-south-1_XXXXXXXXX
 VITE_USER_POOL_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXXX
-VITE_IDENTITY_POOL_ID=us-east-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-VITE_AWS_REGION=us-east-1
+VITE_IDENTITY_POOL_ID=ap-south-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+VITE_AWS_REGION=ap-south-1
 ```
 
 ### 7. Run Tests
@@ -156,7 +156,7 @@ Access the application at: `http://localhost:5173`
 aws configure
 # Enter your AWS Access Key ID
 # Enter your AWS Secret Access Key
-# Enter default region (e.g., us-east-1)
+# Enter default region (e.g., ap-south-1)
 # Enter default output format (json)
 ```
 

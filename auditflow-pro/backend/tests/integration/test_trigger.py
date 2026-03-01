@@ -10,12 +10,12 @@ from functions.trigger.app import lambda_handler
 @pytest.fixture
 def mock_aws_env():
     """Set up mocked AWS environment."""
-    os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
-    os.environ['STATE_MACHINE_ARN'] = 'arn:aws:states:us-east-1:123456789012:stateMachine:MockMachine'
+    os.environ['AWS_DEFAULT_REGION'] = 'ap-south-1'
+    os.environ['STATE_MACHINE_ARN'] = 'arn:aws:states:ap-south-1:123456789012:stateMachine:MockMachine'
     
     with mock_aws():
         # Mock Step Functions client
-        sfn = boto3.client('stepfunctions', region_name='us-east-1')
+        sfn = boto3.client('stepfunctions', region_name='ap-south-1')
         
         # We need to create a dummy state machine so start_execution doesn't fail
         role_arn = 'arn:aws:iam::123456789012:role/DummyRole'

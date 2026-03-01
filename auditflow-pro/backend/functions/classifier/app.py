@@ -10,7 +10,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Initialize client outside handler for connection reuse
-textract = boto3.client('textract', region_name=os.environ.get('AWS_REGION', 'us-east-1'))
+textract = boto3.client('textract', region_name=os.environ.get('AWS_REGION', 'ap-south-1'))
 
 def analyze_document_with_retry(bucket: str, key: str, document_id: str, max_retries: int = 3):
     """

@@ -6,13 +6,13 @@ from botocore.exceptions import ClientError
 from shared.storage import S3DocumentManager
 
 # Setup environment variables for the test
-os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
+os.environ['AWS_DEFAULT_REGION'] = 'ap-south-1'
 os.environ['S3_DOCUMENT_BUCKET'] = 'auditflow-test-bucket'
 
 @pytest.fixture
 def s3_mock():
     with mock_aws():
-        s3 = boto3.client('s3', region_name='us-east-1')
+        s3 = boto3.client('s3', region_name='ap-south-1')
         s3.create_bucket(Bucket=os.environ['S3_DOCUMENT_BUCKET'])
         yield s3
 

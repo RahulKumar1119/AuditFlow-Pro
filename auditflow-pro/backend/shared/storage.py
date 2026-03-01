@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 class S3DocumentManager:
     def __init__(self, s3_client=None):
         # We enforce signature_version='s3v4' which is required for secure pre-signed URLs
-        self.s3 = s3_client or boto3.client('s3', config=Config(signature_version='s3v4', region_name=os.environ.get('AWS_REGION', 'us-east-1')))
+        self.s3 = s3_client or boto3.client('s3', config=Config(signature_version='s3v4', region_name=os.environ.get('AWS_REGION', 'ap-south-1')))
         self.bucket_name = os.environ.get('S3_DOCUMENT_BUCKET', 'auditflow-documents-prod')
 
     def upload_document(self, file_path: str, object_key: str) -> str:

@@ -7,7 +7,7 @@ from moto import mock_aws
 from functions.reporter.app import lambda_handler, save_audit_record, trigger_alerts
 
 # Set environment variables for testing
-os.environ['AWS_DEFAULT_REGION'] = 'us-east-1'
+os.environ['AWS_DEFAULT_REGION'] = 'ap-south-1'
 os.environ['AUDIT_RECORDS_TABLE'] = 'AuditFlow-AuditRecords-Test'
 os.environ['DOCUMENTS_TABLE'] = 'AuditFlow-Documents-Test'
 
@@ -24,7 +24,7 @@ def mock_infrastructure(aws_credentials):
     """Set up mocked DynamoDB tables and SNS topic."""
     with mock_aws():
         # 1. Setup DynamoDB
-        dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+        dynamodb = boto3.resource('dynamodb', region_name='ap-south-1')
         
         audit_table = dynamodb.create_table(
             TableName=os.environ['AUDIT_RECORDS_TABLE'],
@@ -44,7 +44,7 @@ def mock_infrastructure(aws_credentials):
         doc_table.put_item(Item={'document_id': 'doc-123', 'processing_status': 'PROCESSING'})
         
         # 2. Setup SNS
-        sns = boto3.client('sns', region_name='us-east-1')
+        sns = boto3.client('sns', region_name='ap-south-1')
         topic = sns.create_topic(Name='AuditFlow-Alerts-Test')
         os.environ['ALERTS_TOPIC_ARN'] = topic['TopicArn']
         

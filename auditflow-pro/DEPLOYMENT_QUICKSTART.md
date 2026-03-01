@@ -51,8 +51,8 @@ This verifies:
 4. **Add Environment Variables**
    ```
    VITE_API_GATEWAY_URL=https://api.auditflowpro.online
-   VITE_AWS_REGION=us-east-1
-   VITE_COGNITO_USER_POOL_ID=us-east-1_XXXXXXXXX
+   VITE_AWS_REGION=ap-south-1
+   VITE_COGNITO_USER_POOL_ID=ap-south-1_XXXXXXXXX
    VITE_COGNITO_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXXX
    VITE_S3_BUCKET_NAME=auditflow-pro-documents
    NODE_VERSION=20
@@ -83,7 +83,7 @@ aws amplify update-app \
   --app-id YOUR_APP_ID \
   --environment-variables \
     VITE_API_GATEWAY_URL=https://api.auditflowpro.online \
-    VITE_AWS_REGION=us-east-1 \
+    VITE_AWS_REGION=ap-south-1 \
     NODE_VERSION=20
 
 # Start deployment
@@ -281,8 +281,8 @@ aws amplify start-job --app-id YOUR_APP_ID --branch-name main --job-type RELEASE
 | Variable | Example Value | Required |
 |----------|---------------|----------|
 | `VITE_API_GATEWAY_URL` | `https://api.auditflowpro.online` | Yes |
-| `VITE_AWS_REGION` | `us-east-1` | Yes |
-| `VITE_COGNITO_USER_POOL_ID` | `us-east-1_XXXXXXXXX` | Yes |
+| `VITE_AWS_REGION` | `ap-south-1` | Yes |
+| `VITE_COGNITO_USER_POOL_ID` | `ap-south-1_XXXXXXXXX` | Yes |
 | `VITE_COGNITO_CLIENT_ID` | `XXXXXXXXXXXXXXXXXXXXXXXXXX` | Yes |
 | `VITE_S3_BUCKET_NAME` | `auditflow-pro-documents` | Yes |
 | `NODE_VERSION` | `20` | Yes |

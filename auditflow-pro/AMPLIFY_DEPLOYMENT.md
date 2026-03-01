@@ -50,8 +50,8 @@ This guide provides step-by-step instructions for deploying the AuditFlow-Pro fr
    | Variable Name | Value | Description |
    |---------------|-------|-------------|
    | `VITE_API_GATEWAY_URL` | `https://api.auditflowpro.online` | API Gateway endpoint URL |
-   | `VITE_AWS_REGION` | `us-east-1` | AWS region for services |
-   | `VITE_COGNITO_USER_POOL_ID` | `us-east-1_XXXXXXXXX` | Cognito User Pool ID |
+   | `VITE_AWS_REGION` | `ap-south-1` | AWS region for services |
+   | `VITE_COGNITO_USER_POOL_ID` | `ap-south-1_XXXXXXXXX` | Cognito User Pool ID |
    | `VITE_COGNITO_CLIENT_ID` | `XXXXXXXXXXXXXXXXXXXXXXXXXX` | Cognito App Client ID |
    | `VITE_S3_BUCKET_NAME` | `auditflow-pro-documents` | S3 bucket for documents |
    | `NODE_VERSION` | `20` | Node.js version for build |
@@ -206,7 +206,7 @@ Amplify will provide DNS records to add to your domain registrar:
    
    # Subscribe email to topic
    aws sns subscribe \
-     --topic-arn arn:aws:sns:us-east-1:ACCOUNT_ID:amplify-build-notifications \
+     --topic-arn arn:aws:sns:ap-south-1:ACCOUNT_ID:amplify-build-notifications \
      --protocol email \
      --notification-endpoint admin@auditflowpro.online
    ```

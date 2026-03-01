@@ -16,8 +16,8 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Initialize clients outside handler for connection reuse
-textract = boto3.client('textract', region_name=os.environ.get('AWS_REGION', 'us-east-1'))
-comprehend = boto3.client('comprehend', region_name=os.environ.get('AWS_REGION', 'us-east-1'))
+textract = boto3.client('textract', region_name=os.environ.get('AWS_REGION', 'ap-south-1'))
+comprehend = boto3.client('comprehend', region_name=os.environ.get('AWS_REGION', 'ap-south-1'))
 
 # Configuration
 CONFIDENCE_THRESHOLD = float(os.environ.get('CONFIDENCE_THRESHOLD', '0.80'))
