@@ -1,26 +1,23 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - cd frontend
-        - echo "Installing dependencies..."
-        # If your build STILL fails after this update, change 'npm ci' to 'npm install'
-        - npm ci 
-    build:
-      commands:
-        - cd auditflow-pro/frontend
-        - echo "Building React TypeScript application..."
-        - npm run build
-  artifacts:
-    # Notice the path change here so Amplify knows where to find the output
-    baseDirectory: frontend/dist
-    files:
-      - '**/*'
-  cache:
-    paths:
-      # Notice the path change here so Amplify caches the correct folder
-      - auditflow-pro/frontend/node_modules/**/*
+applications:
+  - appRoot: auditflow-pro/frontend
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - echo "Installing dependencies..."
+            - npm ci
+        build:
+          commands:
+            - echo "Building React TypeScript application..."
+            - npm run build
+      artifacts:
+        baseDirectory: dist
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
   customHeaders:
     - pattern: '**/*'
       headers:

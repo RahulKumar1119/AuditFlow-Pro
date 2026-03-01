@@ -24,24 +24,28 @@ This guide provides step-by-step instructions for deploying the AuditFlow-Pro fr
    - Select the branch to deploy (e.g., `main` or `production`)
 
 3. **Configure Build Settings**
-   - Amplify will auto-detect the `amplify.yml` file in `auditflow-pro/frontend/`
+   - Amplify will auto-detect the `amplify.yml` file in the repository root
+   - **Important**: For monorepo projects, the `amplify.yml` must be at the repository root
+   - The configuration specifies the app root as `auditflow-pro/frontend`
    - Verify the build settings:
      ```yaml
      version: 1
-     frontend:
-       phases:
-         preBuild:
-           commands:
-             - npm ci
-         build:
-           commands:
-             - npm run build
-       artifacts:
-         baseDirectory: dist
-         files:
-           - '**/*'
+     applications:
+       - appRoot: auditflow-pro/frontend
+         frontend:
+           phases:
+             preBuild:
+               commands:
+                 - npm ci
+             build:
+               commands:
+                 - npm run build
+           artifacts:
+             baseDirectory: dist
+             files:
+               - '**/*'
      ```
-   - Set the app root directory: `auditflow-pro/frontend`
+   - Amplify will automatically use the `appRoot` to navigate to the correct directory
 
 4. **Configure Environment Variables**
    
