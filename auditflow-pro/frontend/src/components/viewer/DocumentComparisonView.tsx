@@ -33,23 +33,52 @@ const DocumentComparisonView: React.FC<ComparisonProps> = ({ loanApplicationId, 
   };
 
   return (
-    <div className="h-[800px] flex flex-col bg-white p-4 rounded-lg shadow border border-gray-200">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-bold text-gray-800">Side-by-Side Document Comparison</h3>
+    <div className="h-[800px] flex flex-col bg-gradient-to-br from-white to-gray-50 p-6 rounded-xl shadow-xl border border-gray-200">
+      {/* Enhanced header with gradient */}
+      <div className="flex justify-between items-center mb-6 pb-4 border-b-2 border-gradient-to-r from-blue-200 to-indigo-200">
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-md">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Side-by-Side Document Comparison
+          </h3>
+        </div>
         
+        {/* Enhanced sync toggle button */}
         <button 
           onClick={() => setIsSyncEnabled(!isSyncEnabled)}
-          className={`flex items-center space-x-2 px-3 py-1.5 rounded text-sm font-medium transition-colors ${isSyncEnabled ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}`}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 shadow-md hover:shadow-lg ${
+            isSyncEnabled 
+              ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:from-blue-600 hover:to-indigo-700' 
+              : 'bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300 border border-gray-300'
+          }`}
         >
-          {isSyncEnabled ? <><Link2 size={16}/> <span>Scroll Synced</span></> : <><Link2Off size={16}/> <span>Scroll Independent</span></>}
+          {isSyncEnabled ? (
+            <>
+              <Link2 size={18} className="animate-pulse" />
+              <span>Scroll Synced</span>
+            </>
+          ) : (
+            <>
+              <Link2Off size={18} />
+              <span>Scroll Independent</span>
+            </>
+          )}
         </button>
       </div>
       
-      {/* Split-view layout */}
-      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 h-full min-h-0">
-        <div className="h-full flex flex-col border border-gray-300 rounded overflow-hidden shadow-sm">
-          <div className="bg-gray-800 text-white text-xs px-3 py-1 font-mono flex justify-between">
-            <span>Source 1: {leftDoc.id}</span>
+      {/* Enhanced split-view layout */}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 h-full min-h-0">
+        {/* Left document panel */}
+        <div className="h-full flex flex-col border-2 border-gray-300 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-200">
+          <div className="bg-gradient-to-r from-slate-700 to-slate-800 text-white px-4 py-2.5 font-semibold flex items-center justify-between shadow-md">
+            <div className="flex items-center space-x-2">
+              <span className="text-xs bg-slate-600 px-2 py-1 rounded-md">Source 1</span>
+              <span className="text-sm">{leftDoc.id}</span>
+            </div>
           </div>
           <div className="flex-1 overflow-hidden">
             <DocumentViewer 
@@ -64,9 +93,13 @@ const DocumentComparisonView: React.FC<ComparisonProps> = ({ loanApplicationId, 
           </div>
         </div>
 
-        <div className="h-full flex flex-col border border-gray-300 rounded overflow-hidden shadow-sm">
-          <div className="bg-blue-800 text-white text-xs px-3 py-1 font-mono flex justify-between">
-            <span>Source 2: {rightDoc.id}</span>
+        {/* Right document panel */}
+        <div className="h-full flex flex-col border-2 border-blue-300 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-200">
+          <div className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white px-4 py-2.5 font-semibold flex items-center justify-between shadow-md">
+            <div className="flex items-center space-x-2">
+              <span className="text-xs bg-blue-600 px-2 py-1 rounded-md">Source 2</span>
+              <span className="text-sm">{rightDoc.id}</span>
+            </div>
           </div>
           <div className="flex-1 overflow-hidden">
             <DocumentViewer 

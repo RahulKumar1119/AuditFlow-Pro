@@ -550,28 +550,28 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Test navigation to detail view
     - _Requirements: 20.1_
 
-- [ ] 20. Implement React frontend - Audit Detail View
-  - [ ] 20.1 Create AuditDetailView component
+- [x] 20. Implement React frontend - Audit Detail View
+  - [x] 20.1 Create AuditDetailView component
     - Display complete audit record with all extracted data
     - Show Golden Record with consolidated applicant information
     - Display risk score with visual indicator and risk level
     - List all contributing risk factors with descriptions
     - _Requirements: 13.5_
 
-  - [ ] 20.2 Create InconsistencyPanel component
+  - [x] 20.2 Create InconsistencyPanel component
     - Display inconsistencies in sortable and filterable table
     - Show columns: field name, severity, expected value, actual value, source documents
     - Color-code by severity (Critical: red, High: orange, Medium: yellow, Low: gray)
     - Implement filtering by severity level
     - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.8_
 
-  - [ ] 20.3 Implement PII masking based on user role
+  - [x] 20.3 Implement PII masking based on user role
     - Mask first 5 digits of SSN for Loan Officer role
     - Display full PII for Administrator role with explicit request
     - Log PII access events
     - _Requirements: 7.5, 7.6, 7.7_
 
-  - [ ] 20.4 Add document page references
+  - [x] 20.4 Add document page references
     - Display clickable links to source documents for each inconsistency
     - Show page numbers where data was extracted
     - Navigate to DocumentViewer with page highlighting
@@ -583,34 +583,34 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Test inconsistency filtering
     - _Requirements: 20.1_
 
-- [ ] 21. Implement React frontend - Document Viewer
-  - [ ] 21.1 Create DocumentViewer component
+- [x] 21. Implement React frontend - Document Viewer
+  - [x] 21.1 Create DocumentViewer component
     - Integrate PDF.js or react-pdf for PDF rendering
     - Support image viewing for JPEG, PNG, TIFF formats
     - Implement embedded viewer without requiring downloads
     - Add zoom and pan controls for detailed inspection
     - _Requirements: 14.2, 14.3, 14.6_
 
-  - [ ] 21.2 Implement inconsistency highlighting
+  - [x] 21.2 Implement inconsistency highlighting
     - Overlay bounding boxes on extracted data fields
     - Highlight relevant sections when inconsistency is selected
     - Navigate to specific page when clicking document reference
     - Display extracted data values as tooltips on hover
     - _Requirements: 14.3, 14.5_
 
-  - [ ] 21.3 Implement side-by-side document comparison
+  - [x] 21.3 Implement side-by-side document comparison
     - Create split-view layout for comparing two documents
     - Synchronize scrolling between documents
     - Highlight corresponding fields in both documents
     - _Requirements: 14.4_
 
-  - [ ] 21.4 Integrate with API Gateway document endpoint
+  - [x] 21.4 Integrate with API Gateway document endpoint
     - Fetch pre-signed S3 URLs for secure document access
     - Handle document loading states and errors
     - Implement caching for viewed documents
     - _Requirements: 14.1_
 
-  - [ ]* 21.5 Write unit tests for DocumentViewer component
+  - [x]* 21.5 Write unit tests for DocumentViewer component
     - Test PDF rendering and navigation
     - Test highlighting and annotation display
     - Test side-by-side comparison

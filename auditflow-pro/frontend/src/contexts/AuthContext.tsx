@@ -2,7 +2,7 @@
 
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 // V6 Import Syntax
-import { signIn, signOut, getCurrentUser, SignInOutput } from 'aws-amplify/auth';
+import { signIn, signOut, getCurrentUser } from 'aws-amplify/auth';
 import type { AuthUser } from 'aws-amplify/auth';
 
 // Define types for authentication context
@@ -46,7 +46,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string): Promise<LoginResult> => {
     try {
-      const response: SignInOutput = await signIn({ username: email, password });
+      const response = await signIn({ username: email, password });
       // After successful sign in, get the current user
       const currentUser = await getCurrentUser();
       setUser(currentUser);

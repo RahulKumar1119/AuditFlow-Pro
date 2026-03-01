@@ -64,18 +64,38 @@ const DocumentViewer: React.FC<Props> = ({
   const currentPageHighlights = highlights.filter(h => h.page === pageNumber);
   const isPdf = fileType === 'application/pdf';
 
-  if (isLoading) return <div className="flex h-96 items-center justify-center bg-gray-50 border rounded animate-pulse">Loading secure document...</div>;
-  if (isError || !data?.view_url) return <div className="flex h-96 items-center justify-center bg-red-50 text-red-500 border rounded">Failed to load document securely.</div>;
+  if (isLoading) {
+    return (
+      <div className="flex h-96 items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg shadow-sm">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-blue-700 font-medium">Loading secure document...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  if (isError || !data?.view_url) {
+    return (
+      <div className="flex h-96 items-center justify-center bg-gradient-to-br from-red-50 to-pink-50 border border-red-200 rounded-lg shadow-sm">
+        <div className="text-center">
+          <div className="text-red-500 text-5xl mb-4">⚠️</div>
+          <p className="text-red-700 font-semibold text-lg">Failed to load document securely</p>
+          <p className="text-red-600 text-sm mt-2">Please try again or contact support</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col h-full bg-gray-100 border border-gray-300 rounded-lg overflow-hidden">
-      {/* Toolbar with Zoom, Pan, and explicit Navigation controls */}
-      <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-300 shadow-sm">
-        <div className="flex items-center space-x-2">
+    <div className="flex flex-col h-full bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-300 rounded-xl overflow-hidden shadow-lg">
+      {/* Enhanced Toolbar with gradient background */}
+      <div className="flex items-center justify-between px-6 py-3 bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 border-b border-slate-600 shadow-md">
+        <div className="flex items-center space-x-3">
           <button 
             disabled={pageNumber <= 1} 
             onClick={() => setPageNumber(1)} 
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors" 
+            className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 text-white shadow-sm hover:shadow-md" 
             title="Jump to Top"
           >
             <ArrowUpToLine size={18} />
@@ -83,49 +103,83 @@ const DocumentViewer: React.FC<Props> = ({
           <button 
             disabled={pageNumber <= 1} 
             onClick={() => setPageNumber(p => p - 1)} 
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors"
+            className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 text-white shadow-sm hover:shadow-md"
+            title="Previous Page"
           >
             <ChevronLeft size={18} />
           </button>
-          <span className="text-sm font-medium">Page {pageNumber} of {numPages}</span>
+          <div className="px-4 py-1.5 bg-slate-900/50 rounded-lg border border-slate-600">
+            <span className="text-sm font-semibold text-white">Page {pageNumber}</span>
+            <span className="text-xs text-slate-300 mx-1">of</span>
+            <span className="text-sm font-semibold text-slate-200">{numPages}</span>
+          </div>
           <button 
             disabled={pageNumber >= numPages} 
             onClick={() => setPageNumber(p => p + 1)} 
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors"
+            className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 text-white shadow-sm hover:shadow-md"
+            title="Next Page"
           >
             <ChevronRight size={18} />
           </button>
           <button 
             disabled={pageNumber >= numPages} 
             onClick={() => setPageNumber(numPages)} 
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-50 transition-colors" 
+            className="p-2 rounded-lg bg-slate-600/50 hover:bg-slate-600 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 text-white shadow-sm hover:shadow-md" 
             title="Jump to Bottom"
           >
             <ArrowDownToLine size={18} />
           </button>
         </div>
+        
+        {/* Document info badge */}
+        <div className="flex items-center space-x-2">
+          <span className="text-xs text-slate-300 font-medium">
+            {isPdf ? '📄 PDF Document' : '🖼️ Image Document'}
+          </span>
+        </div>
       </div>
 
-      {/* Embedded viewer with zoom and pan controls */}
-      <div className="flex-1 overflow-hidden relative cursor-grab active:cursor-grabbing bg-gray-200">
+      {/* Enhanced viewer with improved zoom controls */}
+      <div className="flex-1 overflow-hidden relative cursor-grab active:cursor-grabbing bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300">
         <TransformWrapper 
           ref={syncRef}
           initialScale={1} 
           minScale={0.5} 
           maxScale={4} 
           centerOnInit
-          onTransformed={(ref) => onZoomPan && onZoomPan(ref.state)} // Pass pan/zoom state up for syncing
+          onTransformed={(ref) => onZoomPan && onZoomPan(ref.state)}
         >
           {({ zoomIn, zoomOut, resetTransform }) => (
             <>
-              <div className="absolute top-4 right-4 z-10 flex flex-col space-y-2 bg-white rounded shadow-md p-1">
-                <button onClick={() => zoomIn()} className="p-1.5 hover:bg-gray-100 rounded transition-colors" title="Zoom In"><ZoomIn size={18} /></button>
-                <button onClick={() => zoomOut()} className="p-1.5 hover:bg-gray-100 rounded transition-colors" title="Zoom Out"><ZoomOut size={18} /></button>
-                <button onClick={() => resetTransform()} className="p-1.5 hover:bg-gray-100 rounded transition-colors" title="Reset Zoom"><Maximize size={18} /></button>
+              {/* Enhanced zoom control panel */}
+              <div className="absolute top-6 right-6 z-10 flex flex-col space-y-2 bg-white/95 backdrop-blur-sm rounded-xl shadow-xl p-2 border border-gray-200">
+                <button 
+                  onClick={() => zoomIn()} 
+                  className="p-2.5 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 rounded-lg transition-all duration-200 text-slate-700 hover:text-blue-600 hover:shadow-md group" 
+                  title="Zoom In"
+                >
+                  <ZoomIn size={20} className="group-hover:scale-110 transition-transform" />
+                </button>
+                <div className="h-px bg-gray-200"></div>
+                <button 
+                  onClick={() => zoomOut()} 
+                  className="p-2.5 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 rounded-lg transition-all duration-200 text-slate-700 hover:text-blue-600 hover:shadow-md group" 
+                  title="Zoom Out"
+                >
+                  <ZoomOut size={20} className="group-hover:scale-110 transition-transform" />
+                </button>
+                <div className="h-px bg-gray-200"></div>
+                <button 
+                  onClick={() => resetTransform()} 
+                  className="p-2.5 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 rounded-lg transition-all duration-200 text-slate-700 hover:text-blue-600 hover:shadow-md group" 
+                  title="Reset Zoom"
+                >
+                  <Maximize size={20} className="group-hover:scale-110 transition-transform" />
+                </button>
               </div>
 
               <TransformComponent wrapperClass="w-full h-full flex items-center justify-center">
-                <div className="relative inline-block shadow-lg bg-white">
+                <div className="relative inline-block shadow-2xl bg-white rounded-lg overflow-hidden border-4 border-white">
                   {/* Render Document (PDF or Image) */}
                   {isPdf ? (
                     <Document file={data.view_url} onLoadSuccess={onDocumentLoadSuccess} loading="Rendering PDF...">
@@ -135,12 +189,16 @@ const DocumentViewer: React.FC<Props> = ({
                     <img src={data.view_url} alt="Document" className="max-w-[800px] h-auto pointer-events-none" />
                   )}
 
-                  {/* Highlight Bounding Boxes Overlay */}
+                  {/* Enhanced Highlight Bounding Boxes Overlay */}
                   {currentPageHighlights.map((hl) => (
                     <div
                       key={hl.id}
-                      title={hl.value} // Tooltip on hover
-                      className={`absolute border-2 transition-colors duration-200 ${hl.isFocused ? 'border-red-500 bg-red-500/20 z-10' : 'border-blue-500 bg-blue-500/10 hover:bg-blue-500/30'}`}
+                      title={hl.value}
+                      className={`absolute border-2 transition-all duration-200 rounded-sm ${
+                        hl.isFocused 
+                          ? 'border-red-500 bg-red-500/25 z-10 shadow-lg ring-2 ring-red-400/50' 
+                          : 'border-blue-500 bg-blue-500/15 hover:bg-blue-500/30 hover:border-blue-600 hover:shadow-md'
+                      }`}
                       style={{
                         left: `${hl.box.Left * 100}%`,
                         top: `${hl.box.Top * 100}%`,

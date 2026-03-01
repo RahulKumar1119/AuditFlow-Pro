@@ -39,16 +39,16 @@ describe('Login Component', () => {
 
   it('renders login form correctly', () => {
     renderLogin();
-    expect(screen.getByPlaceholderText(/email address/i)).toBeDefined();
-    expect(screen.getByPlaceholderText(/password/i)).toBeDefined();
+    expect(screen.getByPlaceholderText(/you@company.com/i)).toBeDefined();
+    expect(screen.getByPlaceholderText(/enter your password/i)).toBeDefined();
     expect(screen.getByRole('button', { name: /sign in/i })).toBeDefined();
   });
 
   it('shows error when email format is invalid', async () => {
     renderLogin();
     
-    const emailInput = screen.getByPlaceholderText(/email address/i);
-    const passwordInput = screen.getByPlaceholderText(/password/i);
+    const emailInput = screen.getByPlaceholderText(/you@company.com/i);
+    const passwordInput = screen.getByPlaceholderText(/enter your password/i);
     const submitButton = screen.getByRole('button', { name: /sign in/i });
     
     fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
@@ -69,8 +69,8 @@ describe('Login Component', () => {
     mockLogin.mockResolvedValueOnce({ success: true });
     renderLogin();
 
-    fireEvent.change(screen.getByPlaceholderText(/email address/i), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'Password123!' } });
+    fireEvent.change(screen.getByPlaceholderText(/you@company.com/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText(/enter your password/i), { target: { value: 'Password123!' } });
     fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {

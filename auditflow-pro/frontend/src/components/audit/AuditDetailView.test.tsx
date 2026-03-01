@@ -103,9 +103,9 @@ describe('AuditDetailView Component', () => {
     expect(screen.getByText('CRITICAL')).toBeDefined();
     expect(screen.getByText('LOW')).toBeDefined();
 
-    // Filter to CRITICAL only
-    const filterSelect = screen.getByRole('combobox');
-    fireEvent.change(filterSelect, { target: { value: 'CRITICAL' } });
+    // Filter to CRITICAL only using the button
+    const criticalButton = screen.getByRole('button', { name: /Critical \(1\)/i });
+    fireEvent.click(criticalButton);
 
     expect(screen.getByText('CRITICAL')).toBeDefined();
     expect(screen.queryByText('LOW')).toBeNull(); // Low severity should disappear
@@ -142,7 +142,7 @@ describe('AuditDetailView Component', () => {
     expect(rows[3].textContent).toContain('CRITICAL');
 
     // Click Field Header to sort alphabetically (Address -> Income -> Zip Code)
-    const fieldHeader = screen.getByText('Field');
+    const fieldHeader = screen.getByText('Field Name');
     fireEvent.click(fieldHeader);
     
     rows = screen.getAllByRole('row');
