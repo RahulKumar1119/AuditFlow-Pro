@@ -414,6 +414,19 @@ def lambda_handler(event, context):
             )
             inconsistencies.append(inconsistency)
         
+        # Task 8.7: Generate Golden Record
+        logger.info("Generating Golden Record from all documents")
+        from datetime import datetime
+        created_timestamp = datetime.utcnow().isoformat() + 'Z'
+        
+        golden_record_dict = rules.generate_golden_record(
+            loan_application_id=loan_application_id,
+            documents=loaded_documents,
+            created_timestamp=created_timestamp
+        )
+        
+        logger.info(f"Golden Record generated with {len(golden_record_dict) - 2} fields")
+        
         # Prepare document summary for response
         document_summary = [
             {
@@ -435,10 +448,11 @@ def lambda_handler(event, context):
             "loan_application_id": loan_application_id,
             "documents": document_summary,
             "inconsistencies": inconsistencies_dict,
-            "validation_status": "NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE",
+            "golden_record": golden_record_dict,
+            "validation_status": "VALIDATION_COMPLETE_WITH_GOLDEN_RECORD",
             "documents_loaded": len(loaded_documents),
             "inconsistencies_found": len(inconsistencies),
-            "message": f"Name, address, income, DOB, and SSN validation complete: {len(inconsistencies)} inconsistencies found"
+            "message": f"Validation complete with Golden Record: {len(inconsistencies)} inconsistencies found"
         }
         
         logger.info(f"Validation initialization complete for loan application {loan_application_id}")

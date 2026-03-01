@@ -296,3 +296,335 @@ def validate_addresses(addresses: list) -> list:
                 logger.info(f"Address mismatch: {description}")
     
     return inconsistencies
+
+def generate_golden_record(loan_application_id: str, documents: list, created_timestamp: str) -> dict:
+    """
+    Task 8.7: Generate Golden Record by selecting the most reliable value for each field.
+    
+    Reliability hierarchy: Government ID > Tax Forms > W2 > Bank Statements
+    - Government ID (DRIVERS_LICENSE, ID_DOCUMENT): reliability = 4
+    - Tax Forms (TAX_FORM): reliability = 3
+    - W2: reliability = 2
+    - Bank Statements (BANK_STATEMENT): reliability = 1
+    
+    When sources have equal reliability, use the highest confidence value.
+    Store alternative values for reference.
+    
+    Args:
+        loan_application_id: The loan application identifier
+        documents: List of DocumentMetadata objects with extracted data
+        created_timestamp: Timestamp for the Golden Record creation
+    
+    Returns:
+        Dictionary representing the GoldenRecord with consolidated data
+    """
+    from datetime import datetime
+    
+    # Define reliability hierarchy
+    RELIABILITY_HIERARCHY = {
+        'DRIVERS_LICENSE': 4,
+        'ID_DOCUMENT': 4,
+        'TAX_FORM': 3,
+        'W2': 2,
+        'BANK_STATEMENT': 1
+    }
+    
+    def get_reliability(doc_type: str) -> int:
+        """Get reliability score for a document type."""
+        return RELIABILITY_HIERARCHY.get(doc_type, 0)
+    
+    def extract_field_value(field_data):
+        """Extract value and confidence from field data (handles dict and object formats)."""
+        if field_data is None:
+            return None, 0.0
+        
+        if isinstance(field_data, dict):
+            value = field_data.get('value')
+            confidence = field_data.get('confidence', 0.0)
+        elif hasattr(field_data, 'value'):
+            value = field_data.value
+            confidence = getattr(field_data, 'confidence', 0.0)
+        else:
+            value = str(field_data)
+            confidence = 1.0
+        
+        return value, float(confidence) if confidence else 0.0
+    
+    def select_best_value(candidates: list) -> dict:
+        """
+        Select the best value from candidates based on reliability and confidence.
+        
+        Args:
+            candidates: List of dicts with keys: value, source_document, confidence, reliability, doc_type
+        
+        Returns:
+            Dict with: value, source_document, confidence, alternative_values, verified_by
+        """
+        if not candidates:
+            return None
+        
+        # Sort by reliability (descending), then by confidence (descending)
+        sorted_candidates = sorted(
+            candidates,
+            key=lambda x: (x['reliability'], x['confidence']),
+            reverse=True
+        )
+        
+        # Best candidate is the first one
+        best = sorted_candidates[0]
+        
+        # Collect alternative values (excluding the best one)
+        alternative_values = []
+        verified_by = []
+        
+        for candidate in sorted_candidates[1:]:
+            # Only add as alternative if the value is different
+            if candidate['value'] != best['value']:
+                alternative_values.append(candidate['value'])
+            else:
+                # Same value from different source - add to verified_by
+                verified_by.append(candidate['source_document'])
+        
+        return {
+            'value': best['value'],
+            'source_document': best['source_document'],
+            'confidence': best['confidence'],
+            'alternative_values': alternative_values,
+            'verified_by': verified_by
+        }
+    
+    # Initialize field collectors
+    name_candidates = []
+    dob_candidates = []
+    ssn_candidates = []
+    address_candidates = []
+    employer_candidates = []
+    employer_ein_candidates = []
+    annual_income_candidates = []
+    bank_account_candidates = []
+    ending_balance_candidates = []
+    drivers_license_number_candidates = []
+    drivers_license_state_candidates = []
+    
+    # Extract fields from all documents
+    for doc in documents:
+        doc_type = doc.document_type
+        doc_id = doc.document_id
+        extracted_data = doc.extracted_data
+        reliability = get_reliability(doc_type)
+        
+        if not extracted_data:
+            continue
+        
+        # Extract name field (varies by document type)
+        name_field = None
+        if doc_type == 'W2' and 'employee_name' in extracted_data:
+            name_field = extracted_data['employee_name']
+        elif doc_type == 'BANK_STATEMENT' and 'account_holder_name' in extracted_data:
+            name_field = extracted_data['account_holder_name']
+        elif doc_type == 'TAX_FORM' and 'taxpayer_name' in extracted_data:
+            name_field = extracted_data['taxpayer_name']
+        elif doc_type in ['DRIVERS_LICENSE', 'ID_DOCUMENT'] and 'full_name' in extracted_data:
+            name_field = extracted_data['full_name']
+        
+        if name_field:
+            value, confidence = extract_field_value(name_field)
+            if value:
+                name_candidates.append({
+                    'value': value,
+                    'source_document': doc_id,
+                    'confidence': confidence,
+                    'reliability': reliability,
+                    'doc_type': doc_type
+                })
+        
+        # Extract date of birth (from identification documents)
+        if 'date_of_birth' in extracted_data:
+            value, confidence = extract_field_value(extracted_data['date_of_birth'])
+            if value:
+                dob_candidates.append({
+                    'value': value,
+                    'source_document': doc_id,
+                    'confidence': confidence,
+                    'reliability': reliability,
+                    'doc_type': doc_type
+                })
+        
+        # Extract SSN
+        ssn_field = None
+        if doc_type == 'W2' and 'employee_ssn' in extracted_data:
+            ssn_field = extracted_data['employee_ssn']
+        elif doc_type == 'TAX_FORM' and 'taxpayer_ssn' in extracted_data:
+            ssn_field = extracted_data['taxpayer_ssn']
+        
+        if ssn_field:
+            value, confidence = extract_field_value(ssn_field)
+            if value:
+                ssn_candidates.append({
+                    'value': value,
+                    'source_document': doc_id,
+                    'confidence': confidence,
+                    'reliability': reliability,
+                    'doc_type': doc_type
+                })
+        
+        # Extract address (varies by document type)
+        address_field = None
+        if doc_type == 'W2' and 'employee_address' in extracted_data:
+            address_field = extracted_data['employee_address']
+        elif doc_type == 'BANK_STATEMENT' and 'account_holder_address' in extracted_data:
+            address_field = extracted_data['account_holder_address']
+        elif doc_type == 'TAX_FORM' and 'address' in extracted_data:
+            address_field = extracted_data['address']
+        elif doc_type == 'DRIVERS_LICENSE' and 'address' in extracted_data:
+            address_field = extracted_data['address']
+        
+        if address_field:
+            value, confidence = extract_field_value(address_field)
+            if value:
+                address_candidates.append({
+                    'value': value,
+                    'source_document': doc_id,
+                    'confidence': confidence,
+                    'reliability': reliability,
+                    'doc_type': doc_type
+                })
+        
+        # Extract employer information (from W2)
+        if doc_type == 'W2':
+            if 'employer_name' in extracted_data:
+                value, confidence = extract_field_value(extracted_data['employer_name'])
+                if value:
+                    employer_candidates.append({
+                        'value': value,
+                        'source_document': doc_id,
+                        'confidence': confidence,
+                        'reliability': reliability,
+                        'doc_type': doc_type
+                    })
+            
+            if 'employer_ein' in extracted_data:
+                value, confidence = extract_field_value(extracted_data['employer_ein'])
+                if value:
+                    employer_ein_candidates.append({
+                        'value': value,
+                        'source_document': doc_id,
+                        'confidence': confidence,
+                        'reliability': reliability,
+                        'doc_type': doc_type
+                    })
+            
+            if 'wages' in extracted_data:
+                value, confidence = extract_field_value(extracted_data['wages'])
+                if value:
+                    annual_income_candidates.append({
+                        'value': value,
+                        'source_document': doc_id,
+                        'confidence': confidence,
+                        'reliability': reliability,
+                        'doc_type': doc_type
+                    })
+        
+        # Extract income from tax form
+        if doc_type == 'TAX_FORM' and 'adjusted_gross_income' in extracted_data:
+            value, confidence = extract_field_value(extracted_data['adjusted_gross_income'])
+            if value:
+                annual_income_candidates.append({
+                    'value': value,
+                    'source_document': doc_id,
+                    'confidence': confidence,
+                    'reliability': reliability,
+                    'doc_type': doc_type
+                })
+        
+        # Extract bank account information (from bank statement)
+        if doc_type == 'BANK_STATEMENT':
+            if 'account_number' in extracted_data:
+                value, confidence = extract_field_value(extracted_data['account_number'])
+                if value:
+                    bank_account_candidates.append({
+                        'value': value,
+                        'source_document': doc_id,
+                        'confidence': confidence,
+                        'reliability': reliability,
+                        'doc_type': doc_type
+                    })
+            
+            if 'ending_balance' in extracted_data:
+                value, confidence = extract_field_value(extracted_data['ending_balance'])
+                if value:
+                    ending_balance_candidates.append({
+                        'value': value,
+                        'source_document': doc_id,
+                        'confidence': confidence,
+                        'reliability': reliability,
+                        'doc_type': doc_type
+                    })
+        
+        # Extract driver's license information
+        if doc_type == 'DRIVERS_LICENSE':
+            if 'license_number' in extracted_data:
+                value, confidence = extract_field_value(extracted_data['license_number'])
+                if value:
+                    drivers_license_number_candidates.append({
+                        'value': value,
+                        'source_document': doc_id,
+                        'confidence': confidence,
+                        'reliability': reliability,
+                        'doc_type': doc_type
+                    })
+            
+            if 'state' in extracted_data:
+                value, confidence = extract_field_value(extracted_data['state'])
+                if value:
+                    drivers_license_state_candidates.append({
+                        'value': value,
+                        'source_document': doc_id,
+                        'confidence': confidence,
+                        'reliability': reliability,
+                        'doc_type': doc_type
+                    })
+    
+    # Build Golden Record by selecting best value for each field
+    golden_record = {
+        'loan_application_id': loan_application_id,
+        'created_timestamp': created_timestamp
+    }
+    
+    # Select best values for each field
+    if name_candidates:
+        golden_record['name'] = select_best_value(name_candidates)
+    
+    if dob_candidates:
+        golden_record['date_of_birth'] = select_best_value(dob_candidates)
+    
+    if ssn_candidates:
+        golden_record['ssn'] = select_best_value(ssn_candidates)
+    
+    if address_candidates:
+        golden_record['address'] = select_best_value(address_candidates)
+    
+    if employer_candidates:
+        golden_record['employer'] = select_best_value(employer_candidates)
+    
+    if employer_ein_candidates:
+        golden_record['employer_ein'] = select_best_value(employer_ein_candidates)
+    
+    if annual_income_candidates:
+        golden_record['annual_income'] = select_best_value(annual_income_candidates)
+    
+    if bank_account_candidates:
+        golden_record['bank_account'] = select_best_value(bank_account_candidates)
+    
+    if ending_balance_candidates:
+        golden_record['ending_balance'] = select_best_value(ending_balance_candidates)
+    
+    if drivers_license_number_candidates:
+        golden_record['drivers_license_number'] = select_best_value(drivers_license_number_candidates)
+    
+    if drivers_license_state_candidates:
+        golden_record['drivers_license_state'] = select_best_value(drivers_license_state_candidates)
+    
+    logger.info(f"Generated Golden Record for loan application {loan_application_id} with {len(golden_record) - 2} fields")
+    
+    return golden_record
