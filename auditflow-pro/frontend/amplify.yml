@@ -9,7 +9,7 @@ frontend:
         - npm ci 
     build:
       commands:
-        - cd frontend
+        - cd auditflow-pro/frontend
         - echo "Building React TypeScript application..."
         - npm run build
   artifacts:
@@ -20,7 +20,7 @@ frontend:
   cache:
     paths:
       # Notice the path change here so Amplify caches the correct folder
-      - frontend/node_modules/**/*
+      - auditflow-pro/frontend/node_modules/**/*
   customHeaders:
     - pattern: '**/*'
       headers:
