@@ -5,6 +5,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Login from './components/auth/Login';
 import MainLayout from './components/layout/MainLayout';
 import Dashboard from './components/dashboard/Dashboard';
+import Upload from './pages/Upload';
 
 // Initialize React Query client
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="upload" element={<Upload />} />
             {/* We will add the Audit Details route here later! */}
           </Route>
 

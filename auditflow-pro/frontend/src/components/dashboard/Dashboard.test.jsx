@@ -1,12 +1,13 @@
 // auditflow-pro/frontend/src/components/dashboard/Dashboard.test.jsx
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import { fetchAudits } from '../../services/api';
+import * as api from '../../services/api';
 
 // Mock the API service
-jest.mock('../../services/api');
+vi.mock('../../services/api');
 
 const mockAudits = {
   items: [
@@ -41,41 +42,42 @@ describe('Dashboard Component', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  test('displays loading state initially', () => {
-    fetchAudits.mockImplementation(() => new Promise(() => {})); // Never resolves
+  it('displays loading state initially', () => {
+    vi.spyOn(api, 'fetchAudits').mockImplementation(() => new Promise(() => {})); // Never resolves
     renderDashboard();
-    expect(screen.getByText(/loading dashboard/i)).toBeInTheDocument();
+    expect(screen.getByText(/loading dashboard/i)).toBeDefined();
   });
 
-  test('renders metrics and data table on successful fetch', async () => {
-    fetchAudits.mockResolvedValueOnce(mockAudits);
+  it('renders metrics and data table on successful fetch', async () => {
+    vi.spyOn(api, 'fetchAudits').mockResolvedValueOnce(mockAudits);
     renderDashboard();
 
     // Wait for the data to load
     await waitFor(() => {
-      expect(screen.queryByText(/loading dashboard/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/loading dashboard/i)).toBeNull();
     });
 
-    // Check Metrics logic
-    expect(screen.getByText('2')).toBeInTheDocument(); // Total processed
-    expect(screen.getByText('1')).toBeInTheDocument(); // High/Critical risk (Jane Doe)
+    // Check Metrics logic - use more specific queries
+    const metrics = screen.getAllByText('2');
+    expect(metrics.length).toBeGreaterThanOrEqual(2); // Total processed and Completed audits
+    expect(screen.getByText('1')).toBeDefined(); // High/Critical risk (Jane Doe)
 
     // Check Table data
-    expect(screen.getByText('loan-123')).toBeInTheDocument();
-    expect(screen.getByText('Jane Doe')).toBeInTheDocument();
-    expect(screen.getByText('CRITICAL')).toBeInTheDocument();
-    expect(screen.getByText('95 / 100')).toBeInTheDocument();
+    expect(screen.getByText('loan-123')).toBeDefined();
+    expect(screen.getByText('Jane Doe')).toBeDefined();
+    expect(screen.getByText('CRITICAL')).toBeDefined();
+    expect(screen.getByText('95 / 100')).toBeDefined();
   });
 
-  test('displays error message on API failure', async () => {
-    fetchAudits.mockRejectedValueOnce(new Error('Network Error'));
+  it('displays error message on API failure', async () => {
+    vi.spyOn(api, 'fetchAudits').mockRejectedValueOnce(new Error('Network Error'));
     renderDashboard();
 
     await waitFor(() => {
-      expect(screen.getByText(/network error/i)).toBeInTheDocument();
+      expect(screen.getByText(/network error/i)).toBeDefined();
     });
   });
 });

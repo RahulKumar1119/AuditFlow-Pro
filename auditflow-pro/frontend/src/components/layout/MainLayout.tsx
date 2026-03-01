@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, Navigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { LogOut, FileText, LayoutDashboard, Settings, Menu, X } from 'lucide-react';
+import { LogOut, FileText, LayoutDashboard, Settings, Menu, X, Upload as UploadIcon } from 'lucide-react';
 
 const MainLayout: React.FC = () => {
   const { user, logout } = useAuth();
@@ -58,6 +58,10 @@ const MainLayout: React.FC = () => {
             <LayoutDashboard size={20} />
             <span>Dashboard</span>
           </Link>
+          <Link to="/upload" className={navLinkClass('/upload')}>
+            <UploadIcon size={20} />
+            <span>Upload Documents</span>
+          </Link>
           <Link to="/audits" className={navLinkClass('/audits')}>
             <FileText size={20} />
             <span>Audit Records</span>
@@ -111,6 +115,10 @@ const MainLayout: React.FC = () => {
               <Link to="/dashboard" className={navLinkClass('/dashboard')}>
                 <LayoutDashboard size={20} />
                 <span>Dashboard</span>
+              </Link>
+              <Link to="/upload" className={navLinkClass('/upload')}>
+                <UploadIcon size={20} />
+                <span>Upload Documents</span>
               </Link>
               <Link to="/audits" className={navLinkClass('/audits')}>
                 <FileText size={20} />

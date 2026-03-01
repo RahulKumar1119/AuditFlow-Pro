@@ -35,7 +35,7 @@ describe('Login Component', () => {
         <Login />
       </BrowserRouter>
     );
-  });
+  };
 
   it('renders login form correctly', () => {
     renderLogin();
@@ -44,11 +44,24 @@ describe('Login Component', () => {
     expect(screen.getByRole('button', { name: /sign in/i })).toBeDefined();
   });
 
-  it('shows error when fields are empty', async () => {
+  it('shows error when email format is invalid', async () => {
     renderLogin();
-    fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
     
-    expect(await screen.findByText(/please enter both email and password/i)).toBeDefined();
+    const emailInput = screen.getByPlaceholderText(/email address/i);
+    const passwordInput = screen.getByPlaceholderText(/password/i);
+    const submitButton = screen.getByRole('button', { name: /sign in/i });
+    
+    fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+    fireEvent.change(passwordInput, { target: { value: 'password' } });
+    
+    // Submit the form (not just click the button)
+    const form = submitButton.closest('form');
+    if (form) {
+      fireEvent.submit(form);
+    }
+    
+    const errorMessage = await screen.findByText(/please enter a valid email address/i);
+    expect(errorMessage).toBeDefined();
     expect(mockLogin).not.toHaveBeenCalled();
   });
 

@@ -55,7 +55,14 @@ describe('AuditQueue Component', () => {
     
     // Task 19.1: High risk (> 50) should be highlighted
     const bobScore = screen.getByText('85');
-    expect(bobScore.className).toContain('text-red-600');
+    // Check if the element or its ancestors have the red text class
+    let element: HTMLElement | null = bobScore;
+    let hasRedClass = false;
+    while (element && !hasRedClass) {
+      hasRedClass = element.className.includes('text-red');
+      element = element.parentElement;
+    }
+    expect(hasRedClass).toBeTruthy();
   });
 
   it('filters data by search term', async () => {

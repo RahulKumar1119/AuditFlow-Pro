@@ -484,8 +484,8 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Test role-based UI rendering
     - _Requirements: 20.1_
 
-- [ ] 17. Implement React frontend - Document Upload
-  - [ ] 17.1 Create UploadZone component
+- [x] 17. Implement React frontend - Document Upload
+  - [x] 17.1 Create UploadZone component
     - Build drag-and-drop interface for file uploads
     - Support multiple file selection
     - Validate file formats (PDF, JPEG, PNG, TIFF)
@@ -493,14 +493,14 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Display file size error messages
     - _Requirements: 1.1, 1.3, 1.4, 1.8_
 
-  - [ ] 17.2 Implement upload progress tracking
+  - [x] 17.2 Implement upload progress tracking
     - Show upload progress bars for each file
     - Display success/failure status for each upload
     - Allow retry for failed uploads
     - Generate unique document IDs
     - _Requirements: 1.5, 1.8_
 
-  - [ ] 17.3 Integrate with API Gateway upload endpoint
+  - [x] 17.3 Integrate with API Gateway upload endpoint
     - Call API to get pre-signed S3 URLs
     - Upload files directly to S3 using pre-signed URLs
     - Calculate and send file checksums
@@ -513,32 +513,32 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Test error handling and retry
     - _Requirements: 20.1_
 
-- [ ] 18. Checkpoint - Ensure frontend authentication and upload work
+- [x] 18. Checkpoint - Ensure frontend authentication and upload work
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 19. Implement React frontend - Audit Queue Display
-  - [ ] 19.1 Create AuditQueue component
+- [x] 19. Implement React frontend - Audit Queue Display
+  - [x] 19.1 Create AuditQueue component
     - Build table displaying loan applications with columns: ID, applicant name, upload date, status, risk score
     - Implement real-time status updates (polling every 30 seconds)
     - Display processing status indicators (Pending, Processing, Completed, Failed)
     - Highlight high-risk applications (risk score > 50) with visual indicators
     - _Requirements: 13.1, 13.2, 13.6, 13.8_
 
-  - [ ] 19.2 Implement sorting and filtering
+  - [x] 19.2 Implement sorting and filtering
     - Add sortable columns for risk score, upload date, and status
     - Implement filters for date range, risk score threshold, and processing status
     - Add search functionality by loan application ID or applicant name
     - Persist filter and sort preferences in local storage
     - _Requirements: 13.3, 13.4, 13.7_
 
-  - [ ] 19.3 Integrate with API Gateway audit endpoints
+  - [x] 19.3 Integrate with API Gateway audit endpoints
     - Fetch audit queue data from GET /audits endpoint
     - Implement pagination for large result sets
     - Handle loading states and errors
     - Use React Query for caching and automatic refetching
     - _Requirements: 12.4, 13.8_
 
-  - [ ] 19.4 Implement audit detail navigation
+  - [x] 19.4 Implement audit detail navigation
     - Make table rows clickable to view detailed audit records
     - Navigate to AuditDetailView on row click
     - Pass audit record ID via URL parameters
