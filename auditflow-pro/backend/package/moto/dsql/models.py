@@ -90,5 +90,5 @@ dsql_backends = BackendDict(
     # currently botocore does not provide a dsql endpoint
     # https://github.com/boto/botocore/blob/e07cddc333fe4fb90efcd5d04324dd83f9cc3a57/botocore/data/endpoints.json
     use_boto3_regions=False,
-    additional_regions=["us-east-1", "us-east-2"],
+    additional_regions=["ap-south-1", "us-east-2"],
 )

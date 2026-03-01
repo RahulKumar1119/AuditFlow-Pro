@@ -1064,7 +1064,7 @@ DESCRIBE_LIFECYCLE_HOOKS_TEMPLATE = """<DescribeLifecycleHooksResponse xmlns="ht
           <LifecycleHookName>{{ lifecycle_hook.name }}</LifecycleHookName>
           <HeartbeatTimeout>{{ lifecycle_hook.timeout }}</HeartbeatTimeout>
           <DefaultResult>{{ lifecycle_hook.result }}</DefaultResult>
-          <NotificationTargetARN>arn:aws:sqs:us-east-1:123456789012:my-queue</NotificationTargetARN>
+          <NotificationTargetARN>arn:aws:sqs:ap-south-1:123456789012:my-queue</NotificationTargetARN>
         </member>
       {% endfor %}
     </LifecycleHooks>
@@ -1084,7 +1084,7 @@ DELETE_LIFECYCLE_HOOK_TEMPLATE = """<DeleteLifecycleHookResponse xmlns="http://a
 
 CREATE_SCALING_POLICY_TEMPLATE = """<PutScalingPolicyResponse xmlns="http://autoscaling.amazonaws.com/doc/2011-01-01/">
   <PutScalingPolicyResult>
-    <PolicyARN>arn:aws:autoscaling:us-east-1:803981987763:scalingPolicy:b0dcf5e8
+    <PolicyARN>arn:aws:autoscaling:ap-south-1:803981987763:scalingPolicy:b0dcf5e8
 -02e6-4e31-9719-0675d0dc31ae:autoScalingGroupName/my-test-asg:policyName/my-scal
 eout-policy</PolicyARN>
   </PutScalingPolicyResult>

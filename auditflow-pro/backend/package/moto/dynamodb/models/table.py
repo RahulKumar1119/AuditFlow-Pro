@@ -156,7 +156,7 @@ class StreamRecord(BaseModel):
             "eventName": event_name,
             "eventSource": "aws:dynamodb",
             "eventVersion": "1.0",
-            "awsRegion": "us-east-1",
+            "awsRegion": "ap-south-1",
             "dynamodb": {
                 "StreamViewType": stream_type,
                 "ApproximateCreationDateTime": utcnow().isoformat(),

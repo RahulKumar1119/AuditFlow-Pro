@@ -382,9 +382,9 @@
         "output": {
           "NotificationAttributes": {
             "example.com": {
-              "BounceTopic": "arn:aws:sns:us-east-1:EXAMPLE65304:ExampleTopic",
-              "ComplaintTopic": "arn:aws:sns:us-east-1:EXAMPLE65304:ExampleTopic",
-              "DeliveryTopic": "arn:aws:sns:us-east-1:EXAMPLE65304:ExampleTopic",
+              "BounceTopic": "arn:aws:sns:ap-south-1:EXAMPLE65304:ExampleTopic",
+              "ComplaintTopic": "arn:aws:sns:ap-south-1:EXAMPLE65304:ExampleTopic",
+              "DeliveryTopic": "arn:aws:sns:ap-south-1:EXAMPLE65304:ExampleTopic",
               "ForwardingEnabled": true,
               "HeadersInBounceNotificationsEnabled": false,
               "HeadersInComplaintNotificationsEnabled": false,
@@ -413,7 +413,7 @@
         },
         "output": {
           "Policies": {
-            "MyPolicy": "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Sid\":\"stmt1469123904194\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":[\"ses:SendEmail\",\"ses:SendRawEmail\"],\"Resource\":\"arn:aws:ses:us-east-1:EXAMPLE65304:identity/example.com\"}]}"
+            "MyPolicy": "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Sid\":\"stmt1469123904194\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":[\"ses:SendEmail\",\"ses:SendRawEmail\"],\"Resource\":\"arn:aws:ses:ap-south-1:EXAMPLE65304:identity/example.com\"}]}"
           }
         },
         "comments": {
@@ -626,7 +626,7 @@
       {
         "input": {
           "Identity": "example.com",
-          "Policy": "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Sid\":\"stmt1469123904194\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":[\"ses:SendEmail\",\"ses:SendRawEmail\"],\"Resource\":\"arn:aws:ses:us-east-1:EXAMPLE65304:identity/example.com\"}]}",
+          "Policy": "{\"Version\":\"2008-10-17\",\"Statement\":[{\"Sid\":\"stmt1469123904194\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":[\"ses:SendEmail\",\"ses:SendRawEmail\"],\"Resource\":\"arn:aws:ses:ap-south-1:EXAMPLE65304:identity/example.com\"}]}",
           "PolicyName": "MyPolicy"
         },
         "comments": {

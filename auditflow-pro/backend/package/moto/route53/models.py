@@ -883,9 +883,9 @@ class Route53Backend(BaseBackend):
         if not arn or not match:
             raise InvalidCloudWatchArn()
 
-        # The CloudWatch Logs log group must be in the "us-east-1" region.
+        # The CloudWatch Logs log group must be in the "ap-south-1" region.
         match = re.match(r"^(?:[^:]+:){3}(?P<region>[^:]+).*", arn)
-        if not match or match.group("region") != "us-east-1":
+        if not match or match.group("region") != "ap-south-1":
             raise InvalidCloudWatchArn()
 
     def create_query_logging_config(

@@ -7,4 +7,4 @@ def region_from_applicationautoscaling_url(url: str) -> str:
     if "." in domain:
         return domain.split(".")[1]
     else:
-        return "us-east-1"
+        return "ap-south-1"

@@ -202,7 +202,7 @@ class Session:
              not regional endpoints (e.g., s3-external-1,
              fips-us-gov-west-1, etc).
 
-        :return: Returns a list of endpoint names (e.g., ["us-east-1"]).
+        :return: Returns a list of endpoint names (e.g., ["ap-south-1"]).
         """
         return self._session.get_available_regions(
             service_name=service_name,
@@ -225,7 +225,7 @@ class Session:
 
         :type region_name: string
         :param region_name: Name of the region to list partition for (e.g.,
-             us-east-1).
+             ap-south-1).
 
         :rtype: string
         :return: Returns the respective partition name (e.g., aws).

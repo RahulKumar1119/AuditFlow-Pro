@@ -151,7 +151,7 @@ class MotoAPIResponse(BaseResponse):
 
         body = self._get_body(headers, request)
         account_id = body.get("account_id", DEFAULT_ACCOUNT_ID)
-        region = body.get("region", "us-east-1")
+        region = body.get("region", "ap-south-1")
 
         for result in body.get("results", []):
             rows = result["rows"]
@@ -189,7 +189,7 @@ class MotoAPIResponse(BaseResponse):
 
         body = self._get_body(headers, request)
         account_id = body.get("account_id", DEFAULT_ACCOUNT_ID)
-        region = body.get("region", "us-east-1")
+        region = body.get("region", "ap-south-1")
 
         for result in body.get("results", []):
             moto_api_backend.set_lambda_simple_result(
@@ -207,7 +207,7 @@ class MotoAPIResponse(BaseResponse):
 
         body = self._get_body(headers, request)
         account_id = body.get("account_id", DEFAULT_ACCOUNT_ID)
-        region = body.get("region", "us-east-1")
+        region = body.get("region", "ap-south-1")
 
         for result in body.get("results", []):
             moto_api_backend.set_resilience_result(
@@ -225,7 +225,7 @@ class MotoAPIResponse(BaseResponse):
 
         body = self._get_body(headers, request)
         account_id = body.get("account_id", DEFAULT_ACCOUNT_ID)
-        region = body.get("region", "us-east-1")
+        region = body.get("region", "ap-south-1")
 
         for result in body.get("results", []):
             data = result["data"]
@@ -248,7 +248,7 @@ class MotoAPIResponse(BaseResponse):
 
         body = self._get_body(headers, request)
         account_id = body.get("account_id", DEFAULT_ACCOUNT_ID)
-        region = body.get("region", "us-east-1")
+        region = body.get("region", "ap-south-1")
 
         for result in body.get("results", []):
             body = result["Body"]
@@ -275,7 +275,7 @@ class MotoAPIResponse(BaseResponse):
 
         body = self._get_body(headers, request)
         account_id = body.get("account_id", DEFAULT_ACCOUNT_ID)
-        region = body.get("region", "us-east-1")
+        region = body.get("region", "ap-south-1")
 
         for result in body.get("results", []):
             records = result.get("records")
@@ -304,7 +304,7 @@ class MotoAPIResponse(BaseResponse):
 
         body = self._get_body(headers, request)
         account_id = body.get("account_id", DEFAULT_ACCOUNT_ID)
-        region = body.get("region", "us-east-1")
+        region = body.get("region", "ap-south-1")
 
         for result in body.get("results", []):
             moto_api_backend.set_inspector2_findings_result(
@@ -324,7 +324,7 @@ class MotoAPIResponse(BaseResponse):
 
         body = self._get_body(headers, request)
         account_id = body.get("account_id", DEFAULT_ACCOUNT_ID)
-        region = body.get("region", "us-east-1")
+        region = body.get("region", "ap-south-1")
         results = body.get("results", {})
 
         for query in results:

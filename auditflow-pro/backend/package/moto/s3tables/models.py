@@ -419,5 +419,5 @@ class S3TablesBackend(BaseBackend):
 s3tables_backends = BackendDict(
     S3TablesBackend,
     "s3tables",
-    additional_regions=["us-east-1", "us-east-2", "us-west-2"],
+    additional_regions=["ap-south-1", "us-east-2", "us-west-2"],
 )

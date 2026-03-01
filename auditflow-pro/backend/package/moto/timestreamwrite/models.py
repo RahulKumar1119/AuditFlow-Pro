@@ -151,7 +151,7 @@ class TimestreamWriteBackend(BaseBackend):
         from moto.core import DEFAULT_ACCOUNT_ID as ACCOUNT_ID
         from moto.timestreamwrite.models import timestreamwrite_backends
 
-        backend = timestreamwrite_backends[ACCOUNT_ID]["us-east-1"]
+        backend = timestreamwrite_backends[ACCOUNT_ID]["ap-south-1"]
         records = backend.databases["mydatabase"].tables["mytable"].records
 
     """
@@ -246,7 +246,7 @@ class TimestreamWriteBackend(BaseBackend):
     def describe_endpoints(self) -> Dict[str, List[Dict[str, Any]]]:
         # https://docs.aws.amazon.com/timestream/latest/developerguide/Using-API.endpoint-discovery.how-it-works.html
         # Usually, the address look like this:
-        # ingest-cell1.timestream.us-east-1.amazonaws.com
+        # ingest-cell1.timestream.ap-south-1.amazonaws.com
         # Where 'cell1' can be any number, 'cell2', 'cell3', etc - whichever endpoint happens to be available for that particular account
         # We don't implement a cellular architecture in Moto though, so let's keep it simple
         return {
@@ -277,7 +277,7 @@ timestreamwrite_backends = BackendDict(
     TimestreamWriteBackend,
     "timestream-write",
     additional_regions=[
-        "us-east-1",
+        "ap-south-1",
         "us-east-2",
         "us-west-2",
         "eu-central-1",

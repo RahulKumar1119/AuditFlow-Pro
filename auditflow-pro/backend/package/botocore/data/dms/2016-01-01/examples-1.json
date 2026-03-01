@@ -4,7 +4,7 @@
     "AddTagsToResource": [
       {
         "input": {
-          "ResourceArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E",
+          "ResourceArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E",
           "Tags": [
             {
               "Key": "Acount",
@@ -36,7 +36,7 @@
           "EndpointType": "source",
           "EngineName": "mysql",
           "ExtraConnectionAttributes": "",
-          "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
+          "KmsKeyId": "arn:aws:kms:ap-south-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
           "Password": "pasword",
           "Port": 3306,
           "ServerName": "mydb.cx1llnox7iyx.us-west-2.rds.amazonaws.com",
@@ -51,11 +51,11 @@
         },
         "output": {
           "Endpoint": {
-            "EndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM",
+            "EndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM",
             "EndpointIdentifier": "test-endpoint-1",
             "EndpointType": "source",
             "EngineName": "mysql",
-            "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
+            "KmsKeyId": "arn:aws:kms:ap-south-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
             "Port": 3306,
             "ServerName": "mydb.cx1llnox7iyx.us-west-2.rds.amazonaws.com",
             "Status": "active",
@@ -102,12 +102,12 @@
             "AllocatedStorage": 5,
             "AutoMinorVersionUpgrade": true,
             "EngineVersion": "1.5.0",
-            "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
+            "KmsKeyId": "arn:aws:kms:ap-south-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
             "PendingModifiedValues": {
             },
             "PreferredMaintenanceWindow": "sun:06:00-sun:14:00",
             "PubliclyAccessible": true,
-            "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+            "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
             "ReplicationInstanceClass": "dms.t2.micro",
             "ReplicationInstanceIdentifier": "test-rep-1",
             "ReplicationInstanceStatus": "creating",
@@ -118,28 +118,28 @@
               "Subnets": [
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1d"
+                    "Name": "ap-south-1d"
                   },
                   "SubnetIdentifier": "subnet-f6dd91af",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1b"
+                    "Name": "ap-south-1b"
                   },
                   "SubnetIdentifier": "subnet-3605751d",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1c"
+                    "Name": "ap-south-1c"
                   },
                   "SubnetIdentifier": "subnet-c2daefb5",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1e"
+                    "Name": "ap-south-1e"
                   },
                   "SubnetIdentifier": "subnet-85e90cb8",
                   "SubnetStatus": "Active"
@@ -192,10 +192,10 @@
         "input": {
           "CdcStartTime": "2016-12-14T18:25:43Z",
           "MigrationType": "full-load",
-          "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+          "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
           "ReplicationTaskIdentifier": "task1",
           "ReplicationTaskSettings": "",
-          "SourceEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
+          "SourceEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
           "TableMappings": "file://mappingfile.json",
           "Tags": [
             {
@@ -203,20 +203,20 @@
               "Value": "24352226"
             }
           ],
-          "TargetEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
+          "TargetEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
         },
         "output": {
           "ReplicationTask": {
             "MigrationType": "full-load",
-            "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
-            "ReplicationTaskArn": "arn:aws:dms:us-east-1:123456789012:task:OEAMB3NXSTZ6LFYZFEPPBBXPYM",
+            "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+            "ReplicationTaskArn": "arn:aws:dms:ap-south-1:123456789012:task:OEAMB3NXSTZ6LFYZFEPPBBXPYM",
             "ReplicationTaskCreationDate": "2016-12-14T18:25:43Z",
             "ReplicationTaskIdentifier": "task1",
             "ReplicationTaskSettings": "{\"TargetMetadata\":{\"TargetSchema\":\"\",\"SupportLobs\":true,\"FullLobMode\":true,\"LobChunkSize\":64,\"LimitedSizeLobMode\":false,\"LobMaxSize\":0},\"FullLoadSettings\":{\"FullLoadEnabled\":true,\"ApplyChangesEnabled\":false,\"TargetTablePrepMode\":\"DROP_AND_CREATE\",\"CreatePkAfterFullLoad\":false,\"StopTaskCachedChangesApplied\":false,\"StopTaskCachedChangesNotApplied\":false,\"ResumeEnabled\":false,\"ResumeMinTableSize\":100000,\"ResumeOnlyClusteredPKTables\":true,\"MaxFullLoadSubTasks\":8,\"TransactionConsistencyTimeout\":600,\"CommitRate\":10000},\"Logging\":{\"EnableLogging\":false}}",
-            "SourceEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
+            "SourceEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
             "Status": "creating",
             "TableMappings": "file://mappingfile.json",
-            "TargetEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
+            "TargetEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
           }
         },
         "comments": {
@@ -233,7 +233,7 @@
     "DeleteCertificate": [
       {
         "input": {
-          "CertificateArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUSM457DE6XFJCJQ"
+          "CertificateArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUSM457DE6XFJCJQ"
         },
         "output": {
           "Certificate": {
@@ -253,8 +253,8 @@
     "DeleteConnection": [
       {
         "input": {
-          "EndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM",
-          "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ"
+          "EndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM",
+          "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ"
         },
         "output": {
           "Connection": {
@@ -274,15 +274,15 @@
     "DeleteEndpoint": [
       {
         "input": {
-          "EndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM"
+          "EndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM"
         },
         "output": {
           "Endpoint": {
-            "EndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM",
+            "EndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM",
             "EndpointIdentifier": "test-endpoint-1",
             "EndpointType": "source",
             "EngineName": "mysql",
-            "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
+            "KmsKeyId": "arn:aws:kms:ap-south-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
             "Port": 3306,
             "ServerName": "mydb.cx1llnox7iyx.us-west-2.rds.amazonaws.com",
             "Status": "active",
@@ -303,19 +303,19 @@
     "DeleteReplicationInstance": [
       {
         "input": {
-          "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ"
+          "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ"
         },
         "output": {
           "ReplicationInstance": {
             "AllocatedStorage": 5,
             "AutoMinorVersionUpgrade": true,
             "EngineVersion": "1.5.0",
-            "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
+            "KmsKeyId": "arn:aws:kms:ap-south-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
             "PendingModifiedValues": {
             },
             "PreferredMaintenanceWindow": "sun:06:00-sun:14:00",
             "PubliclyAccessible": true,
-            "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+            "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
             "ReplicationInstanceClass": "dms.t2.micro",
             "ReplicationInstanceIdentifier": "test-rep-1",
             "ReplicationInstanceStatus": "creating",
@@ -326,28 +326,28 @@
               "Subnets": [
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1d"
+                    "Name": "ap-south-1d"
                   },
                   "SubnetIdentifier": "subnet-f6dd91af",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1b"
+                    "Name": "ap-south-1b"
                   },
                   "SubnetIdentifier": "subnet-3605751d",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1c"
+                    "Name": "ap-south-1c"
                   },
                   "SubnetIdentifier": "subnet-c2daefb5",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1e"
+                    "Name": "ap-south-1e"
                   },
                   "SubnetIdentifier": "subnet-85e90cb8",
                   "SubnetStatus": "Active"
@@ -387,20 +387,20 @@
     "DeleteReplicationTask": [
       {
         "input": {
-          "ReplicationTaskArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ"
+          "ReplicationTaskArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ"
         },
         "output": {
           "ReplicationTask": {
             "MigrationType": "full-load",
-            "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
-            "ReplicationTaskArn": "arn:aws:dms:us-east-1:123456789012:task:OEAMB3NXSTZ6LFYZFEPPBBXPYM",
+            "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+            "ReplicationTaskArn": "arn:aws:dms:ap-south-1:123456789012:task:OEAMB3NXSTZ6LFYZFEPPBBXPYM",
             "ReplicationTaskCreationDate": "2016-12-14T18:25:43Z",
             "ReplicationTaskIdentifier": "task1",
             "ReplicationTaskSettings": "{\"TargetMetadata\":{\"TargetSchema\":\"\",\"SupportLobs\":true,\"FullLobMode\":true,\"LobChunkSize\":64,\"LimitedSizeLobMode\":false,\"LobMaxSize\":0},\"FullLoadSettings\":{\"FullLoadEnabled\":true,\"ApplyChangesEnabled\":false,\"TargetTablePrepMode\":\"DROP_AND_CREATE\",\"CreatePkAfterFullLoad\":false,\"StopTaskCachedChangesApplied\":false,\"StopTaskCachedChangesNotApplied\":false,\"ResumeEnabled\":false,\"ResumeMinTableSize\":100000,\"ResumeOnlyClusteredPKTables\":true,\"MaxFullLoadSubTasks\":8,\"TransactionConsistencyTimeout\":600,\"CommitRate\":10000},\"Logging\":{\"EnableLogging\":false}}",
-            "SourceEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
+            "SourceEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
             "Status": "creating",
             "TableMappings": "file://mappingfile.json",
-            "TargetEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
+            "TargetEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
           }
         },
         "comments": {
@@ -498,9 +498,9 @@
         "output": {
           "Connections": [
             {
-              "EndpointArn": "arn:aws:dms:us-east-arn:aws:dms:us-east-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
+              "EndpointArn": "arn:aws:dms:us-east-arn:aws:dms:ap-south-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
               "EndpointIdentifier": "testsrc1",
-              "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+              "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
               "ReplicationInstanceIdentifier": "test",
               "Status": "successful"
             }
@@ -853,7 +853,7 @@
           "EngineVersion": "1.5.0",
           "MultiAZ": true,
           "PreferredMaintenanceWindow": "sun:06:00-sun:14:00",
-          "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+          "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
           "ReplicationInstanceClass": "dms.t2.micro",
           "ReplicationInstanceIdentifier": "test-rep-1",
           "VpcSecurityGroupIds": [
@@ -865,12 +865,12 @@
             "AllocatedStorage": 5,
             "AutoMinorVersionUpgrade": true,
             "EngineVersion": "1.5.0",
-            "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
+            "KmsKeyId": "arn:aws:kms:ap-south-1:123456789012:key/4c1731d6-5435-ed4d-be13-d53411a7cfbd",
             "PendingModifiedValues": {
             },
             "PreferredMaintenanceWindow": "sun:06:00-sun:14:00",
             "PubliclyAccessible": true,
-            "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+            "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
             "ReplicationInstanceClass": "dms.t2.micro",
             "ReplicationInstanceIdentifier": "test-rep-1",
             "ReplicationInstanceStatus": "available",
@@ -881,28 +881,28 @@
               "Subnets": [
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1d"
+                    "Name": "ap-south-1d"
                   },
                   "SubnetIdentifier": "subnet-f6dd91af",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1b"
+                    "Name": "ap-south-1b"
                   },
                   "SubnetIdentifier": "subnet-3605751d",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1c"
+                    "Name": "ap-south-1c"
                   },
                   "SubnetIdentifier": "subnet-c2daefb5",
                   "SubnetStatus": "Active"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1e"
+                    "Name": "ap-south-1e"
                   },
                   "SubnetIdentifier": "subnet-85e90cb8",
                   "SubnetStatus": "Active"
@@ -969,7 +969,7 @@
     "RemoveTagsFromResource": [
       {
         "input": {
-          "ResourceArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E",
+          "ResourceArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E",
           "TagKeys": [
 
           ]
@@ -991,21 +991,21 @@
       {
         "input": {
           "CdcStartTime": "2016-12-14T13:33:20Z",
-          "ReplicationTaskArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+          "ReplicationTaskArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
           "StartReplicationTaskType": "start-replication"
         },
         "output": {
           "ReplicationTask": {
             "MigrationType": "full-load",
-            "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
-            "ReplicationTaskArn": "arn:aws:dms:us-east-1:123456789012:task:OEAMB3NXSTZ6LFYZFEPPBBXPYM",
+            "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+            "ReplicationTaskArn": "arn:aws:dms:ap-south-1:123456789012:task:OEAMB3NXSTZ6LFYZFEPPBBXPYM",
             "ReplicationTaskCreationDate": "2016-12-14T18:25:43Z",
             "ReplicationTaskIdentifier": "task1",
             "ReplicationTaskSettings": "{\"TargetMetadata\":{\"TargetSchema\":\"\",\"SupportLobs\":true,\"FullLobMode\":true,\"LobChunkSize\":64,\"LimitedSizeLobMode\":false,\"LobMaxSize\":0},\"FullLoadSettings\":{\"FullLoadEnabled\":true,\"ApplyChangesEnabled\":false,\"TargetTablePrepMode\":\"DROP_AND_CREATE\",\"CreatePkAfterFullLoad\":false,\"StopTaskCachedChangesApplied\":false,\"StopTaskCachedChangesNotApplied\":false,\"ResumeEnabled\":false,\"ResumeMinTableSize\":100000,\"ResumeOnlyClusteredPKTables\":true,\"MaxFullLoadSubTasks\":8,\"TransactionConsistencyTimeout\":600,\"CommitRate\":10000},\"Logging\":{\"EnableLogging\":false}}",
-            "SourceEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
+            "SourceEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
             "Status": "creating",
             "TableMappings": "file://mappingfile.json",
-            "TargetEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
+            "TargetEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
           }
         },
         "comments": {
@@ -1022,20 +1022,20 @@
     "StopReplicationTask": [
       {
         "input": {
-          "ReplicationTaskArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
+          "ReplicationTaskArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
         },
         "output": {
           "ReplicationTask": {
             "MigrationType": "full-load",
-            "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
-            "ReplicationTaskArn": "arn:aws:dms:us-east-1:123456789012:task:OEAMB3NXSTZ6LFYZFEPPBBXPYM",
+            "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ",
+            "ReplicationTaskArn": "arn:aws:dms:ap-south-1:123456789012:task:OEAMB3NXSTZ6LFYZFEPPBBXPYM",
             "ReplicationTaskCreationDate": "2016-12-14T18:25:43Z",
             "ReplicationTaskIdentifier": "task1",
             "ReplicationTaskSettings": "{\"TargetMetadata\":{\"TargetSchema\":\"\",\"SupportLobs\":true,\"FullLobMode\":true,\"LobChunkSize\":64,\"LimitedSizeLobMode\":false,\"LobMaxSize\":0},\"FullLoadSettings\":{\"FullLoadEnabled\":true,\"ApplyChangesEnabled\":false,\"TargetTablePrepMode\":\"DROP_AND_CREATE\",\"CreatePkAfterFullLoad\":false,\"StopTaskCachedChangesApplied\":false,\"StopTaskCachedChangesNotApplied\":false,\"ResumeEnabled\":false,\"ResumeMinTableSize\":100000,\"ResumeOnlyClusteredPKTables\":true,\"MaxFullLoadSubTasks\":8,\"TransactionConsistencyTimeout\":600,\"CommitRate\":10000},\"Logging\":{\"EnableLogging\":false}}",
-            "SourceEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
+            "SourceEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ZW5UAN6P4E77EC7YWHK4RZZ3BE",
             "Status": "creating",
             "TableMappings": "file://mappingfile.json",
-            "TargetEndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
+            "TargetEndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:ASXWXJZLNWNT5HTWCGV2BUJQ7E"
           }
         },
         "comments": {
@@ -1052,8 +1052,8 @@
     "TestConnection": [
       {
         "input": {
-          "EndpointArn": "arn:aws:dms:us-east-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM",
-          "ReplicationInstanceArn": "arn:aws:dms:us-east-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ"
+          "EndpointArn": "arn:aws:dms:ap-south-1:123456789012:endpoint:RAAR3R22XSH46S3PWLC3NJAWKM",
+          "ReplicationInstanceArn": "arn:aws:dms:ap-south-1:123456789012:rep:6UTDJGBOUS3VI3SUWA66XFJCJQ"
         },
         "output": {
           "Connection": {

@@ -88,7 +88,7 @@ def parse_region_from_url(url: str, use_default_region: bool = True) -> str:
     if match:
         region = match.group("region1") or match.group("region2")
     else:
-        region = "us-east-1" if use_default_region else None
+        region = "ap-south-1" if use_default_region else None
     return region
 
 

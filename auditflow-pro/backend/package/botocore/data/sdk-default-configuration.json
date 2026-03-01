@@ -47,7 +47,7 @@
     "configuration": {
       "retryMode": "<p>A retry mode specifies how the SDK attempts retries. See <a href=\"https://docs.aws.amazon.com/sdkref/latest/guide/setting-global-retry_mode.html\">Retry Mode</a></p>",
       "stsRegionalEndpoints": "<p>Specifies how the SDK determines the AWS service endpoint that it uses to talk to the AWS Security Token Service (AWS STS). See <a href=\"https://docs.aws.amazon.com/sdkref/latest/guide/setting-global-sts_regional_endpoints.html\">Setting STS Regional endpoints</a></p>",
-      "s3UsEast1RegionalEndpoints": "<p>Specifies how the SDK determines the AWS service endpoint that it uses to talk to the Amazon S3 for the us-east-1 region</p>",
+      "s3UsEast1RegionalEndpoints": "<p>Specifies how the SDK determines the AWS service endpoint that it uses to talk to the Amazon S3 for the ap-south-1 region</p>",
       "connectTimeoutInMillis": "<p>The amount of time after making an initial connection attempt on a socket, where if the client does not receive a completion of the connect handshake, the client gives up and fails the operation</p>",
       "tlsNegotiationTimeoutInMillis": "<p>The maximum amount of time that a TLS handshake is allowed to take from the time the CLIENT HELLO message is sent to ethe time the client and server have fully negotiated ciphers and exchanged keys</p>"
     }

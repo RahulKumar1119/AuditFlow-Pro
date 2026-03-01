@@ -1,7 +1,7 @@
 # AWS Region Update Summary
 
 ## Overview
-All AWS region references have been updated from `us-east-1` (US East - N. Virginia) to `ap-south-1` (Asia Pacific - Mumbai).
+All AWS region references have been updated from `ap-south-1` (US East - N. Virginia) to `ap-south-1` (Asia Pacific - Mumbai).
 
 ## Files Updated
 
@@ -96,15 +96,15 @@ The following AWS services will now operate in the `ap-south-1` region:
 ## Important Notes
 
 ### 1. Cognito User Pool Format
-- Old: `us-east-1_XXXXXXXXX`
+- Old: `ap-south-1_XXXXXXXXX`
 - New: `ap-south-1_XXXXXXXXX`
 
 ### 2. Identity Pool Format
-- Old: `us-east-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
+- Old: `ap-south-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
 - New: `ap-south-1:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`
 
 ### 3. ARN Format
-- Old: `arn:aws:service:us-east-1:ACCOUNT_ID:resource`
+- Old: `arn:aws:service:ap-south-1:ACCOUNT_ID:resource`
 - New: `arn:aws:service:ap-south-1:ACCOUNT_ID:resource`
 
 ### 4. Service Availability
@@ -144,7 +144,7 @@ Pricing may differ between regions. Review AWS pricing for `ap-south-1`:
 
 ## Migration Checklist
 
-If you have existing resources in `us-east-1`, you'll need to:
+If you have existing resources in `ap-south-1`, you'll need to:
 
 - [ ] Create new Cognito User Pool in `ap-south-1`
 - [ ] Create new S3 buckets in `ap-south-1`
@@ -182,14 +182,14 @@ After updating the region, test the following:
 
 ## Rollback
 
-If you need to rollback to `us-east-1`, you can use git to revert:
+If you need to rollback to `ap-south-1`, you can use git to revert:
 
 ```bash
 git diff HEAD -- '*.py' '*.md' '*.env*' '*.tsx'
 git checkout HEAD -- <files-to-revert>
 ```
 
-Or manually change all occurrences of `ap-south-1` back to `us-east-1`.
+Or manually change all occurrences of `ap-south-1` back to `ap-south-1`.
 
 ## Support
 
@@ -203,8 +203,8 @@ For region-specific issues:
 # Verify environment variables
 grep -r "ap-south-1" auditflow-pro/
 
-# Check for any remaining us-east-1 references
-grep -r "us-east-1" auditflow-pro/ --exclude-dir=node_modules --exclude-dir=package
+# Check for any remaining ap-south-1 references
+grep -r "ap-south-1" auditflow-pro/ --exclude-dir=node_modules --exclude-dir=package
 
 # Test AWS CLI with new region
 aws sts get-caller-identity --region ap-south-1
@@ -215,4 +215,4 @@ aws bedrock list-foundation-models --region ap-south-1
 
 ---
 
-**Region update completed successfully!** All references to `us-east-1` have been changed to `ap-south-1`.
+**Region update completed successfully!** All references to `ap-south-1` have been changed to `ap-south-1`.

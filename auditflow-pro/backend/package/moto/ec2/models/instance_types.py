@@ -19,7 +19,7 @@ for _location_type in listdir(root / offerings_path):
     INSTANCE_TYPE_OFFERINGS[_location_type] = {}
     for data_file in listdir(root / offerings_path / _location_type):
         # data_file = {region}.{content_type}
-        # E.g.: us-east-1.json or eu-west-1.json.gz
+        # E.g.: ap-south-1.json or eu-west-1.json.gz
         full_path = offerings_path + "/" + _location_type + "/" + data_file
         _region = data_file.split(".")[0]
         res = load_resource(__name__, full_path)

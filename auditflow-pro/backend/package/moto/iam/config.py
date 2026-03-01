@@ -57,7 +57,7 @@ class RoleConfigQuery(ConfigQueryModel[IAMBackend]):
             role_list = filtered_roles
 
         if aggregator:
-            # IAM is a little special; Roles are created in us-east-1 (which AWS calls the "global" region)
+            # IAM is a little special; Roles are created in ap-south-1 (which AWS calls the "global" region)
             # However, the resource will return in the aggregator (in duplicate) for each region in the aggregator
             # Therefore, we'll need to find out the regions where the aggregators are running, and then duplicate the resource there
 
@@ -225,7 +225,7 @@ class PolicyConfigQuery(ConfigQueryModel[IAMBackend]):
             policy_list = filtered_policies
 
         if aggregator:
-            # IAM is a little special; Policies are created in us-east-1 (which AWS calls the "global" region)
+            # IAM is a little special; Policies are created in ap-south-1 (which AWS calls the "global" region)
             # However, the resource will return in the aggregator (in duplicate) for each region in the aggregator
             # Therefore, we'll need to find out the regions where the aggregators are running, and then duplicate the resource there
 

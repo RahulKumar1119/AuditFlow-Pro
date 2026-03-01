@@ -27,17 +27,17 @@ from .utilities import AWSTestHelper, RegexConverter
 HTTP_METHODS = ["GET", "POST", "PUT", "DELETE", "HEAD", "PATCH", "OPTIONS"]
 
 
-DEFAULT_SERVICE_REGION = ("s3", "us-east-1")
+DEFAULT_SERVICE_REGION = ("s3", "ap-south-1")
 
 # Map of unsigned calls to service-region as per AWS API docs
 # https://docs.aws.amazon.com/cognito/latest/developerguide/resource-permissions.html#amazon-cognito-signed-versus-unsigned-apis
 UNSIGNED_REQUESTS = {
-    "AWSCognitoIdentityService": ("cognito-identity", "us-east-1"),
-    "AWSCognitoIdentityProviderService": ("cognito-idp", "us-east-1"),
+    "AWSCognitoIdentityService": ("cognito-identity", "ap-south-1"),
+    "AWSCognitoIdentityProviderService": ("cognito-idp", "ap-south-1"),
 }
 UNSIGNED_ACTIONS = {
-    "AssumeRoleWithSAML": ("sts", "us-east-1"),
-    "AssumeRoleWithWebIdentity": ("sts", "us-east-1"),
+    "AssumeRoleWithSAML": ("sts", "ap-south-1"),
+    "AssumeRoleWithWebIdentity": ("sts", "ap-south-1"),
 }
 
 # Some services have v4 signing names that differ from the backend service name/id.
@@ -94,7 +94,7 @@ class DomainDispatcherApplication:
             # Signed request
             # Parse auth header to find service assuming a SigV4 request
             # https://docs.aws.amazon.com/general/latest/gr/sigv4-signed-request-examples.html
-            # ['Credential=sdffdsa', '20170220', 'us-east-1', 'sns', 'aws4_request']
+            # ['Credential=sdffdsa', '20170220', 'ap-south-1', 'sns', 'aws4_request']
             try:
                 credential_scope = auth.split(",")[0].split()[1]
                 _, _, region, service, _ = credential_scope.split("/")
@@ -288,8 +288,8 @@ def create_backend_app(service: backends.SERVICE_NAMES) -> Flask:
     # Get an instance of this backend.
     # We'll only use this backend to resolve the URL's, so the exact region/account_id is irrelevant
     if isinstance(backend_dict, BackendDict):
-        if "us-east-1" in backend_dict[DEFAULT_ACCOUNT_ID]:
-            backend = backend_dict[DEFAULT_ACCOUNT_ID]["us-east-1"]
+        if "ap-south-1" in backend_dict[DEFAULT_ACCOUNT_ID]:
+            backend = backend_dict[DEFAULT_ACCOUNT_ID]["ap-south-1"]
         else:
             backend = backend_dict[DEFAULT_ACCOUNT_ID]["aws"]
     else:

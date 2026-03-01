@@ -134,7 +134,7 @@ class TimestreamQueryBackend(BaseBackend):
             }
             expected_results = {
                 "account_id": "123456789012",  # This is the default - can be omitted
-                "region": "us-east-1",  # This is the default - can be omitted
+                "region": "ap-south-1",  # This is the default - can be omitted
                 "results": {
                     # Use the exact querystring, and a list of results for it
                     # For example
@@ -168,7 +168,7 @@ class TimestreamQueryBackend(BaseBackend):
     def describe_endpoints(self) -> List[Dict[str, Union[str, int]]]:
         # https://docs.aws.amazon.com/timestream/latest/developerguide/Using-API.endpoint-discovery.how-it-works.html
         # Usually, the address look like this:
-        # query-cell1.timestream.us-east-1.amazonaws.com
+        # query-cell1.timestream.ap-south-1.amazonaws.com
         # Where 'cell1' can be any number, 'cell2', 'cell3', etc - whichever endpoint happens to be available for that particular account
         # We don't implement a cellular architecture in Moto though, so let's keep it simple
         return [
@@ -183,7 +183,7 @@ timestreamquery_backends = BackendDict(
     TimestreamQueryBackend,
     "timestream-query",
     additional_regions=[
-        "us-east-1",
+        "ap-south-1",
         "us-east-2",
         "us-west-2",
         "eu-central-1",

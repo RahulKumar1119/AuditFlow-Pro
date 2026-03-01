@@ -6,14 +6,14 @@
         "input": {
           "ActivationKey": "29AV1-3OFV9-VVIUB-NKT0I-LRO6V",
           "GatewayName": "My_Gateway",
-          "GatewayRegion": "us-east-1",
+          "GatewayRegion": "ap-south-1",
           "GatewayTimezone": "GMT-12:00",
           "GatewayType": "STORED",
           "MediumChangerType": "AWS-Gateway-VTL",
           "TapeDriveType": "IBM-ULT3580-TD5"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-11A2222B"
         },
         "comments": {
           "input": {
@@ -33,10 +33,10 @@
             "pci-0000:03:00.0-scsi-0:0:0:0",
             "pci-0000:03:00.0-scsi-0:0:1:0"
           ],
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -52,7 +52,7 @@
     "AddTagsToResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B",
+          "ResourceARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-11A2222B",
           "Tags": [
             {
               "Key": "Dev Gatgeway Region",
@@ -61,7 +61,7 @@
           ]
         },
         "output": {
-          "ResourceARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B"
+          "ResourceARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-11A2222B"
         },
         "comments": {
           "input": {
@@ -81,10 +81,10 @@
             "pci-0000:03:00.0-scsi-0:0:0:0",
             "pci-0000:03:00.0-scsi-0:0:1:0"
           ],
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -104,10 +104,10 @@
             "pci-0000:03:00.0-scsi-0:0:0:0",
             "pci-0000:03:00.0-scsi-0:0:1:0"
           ],
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -123,11 +123,11 @@
     "CancelArchival": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/AMZN01A2A4"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/AMZN01A2A4"
         },
         "output": {
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/AMZN01A2A4"
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/AMZN01A2A4"
         },
         "comments": {
           "input": {
@@ -143,11 +143,11 @@
     "CancelRetrieval": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/AMZN01A2A4"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/AMZN01A2A4"
         },
         "output": {
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/AMZN01A2A4"
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/AMZN01A2A4"
         },
         "comments": {
           "input": {
@@ -164,15 +164,15 @@
       {
         "input": {
           "ClientToken": "cachedvol112233",
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "NetworkInterfaceId": "10.1.1.1",
           "SnapshotId": "snap-f47b7b94",
           "TargetName": "my-volume",
           "VolumeSizeInBytes": 536870912000
         },
         "output": {
-          "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume",
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume",
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "comments": {
           "input": {
@@ -189,11 +189,11 @@
       {
         "input": {
           "SnapshotDescription": "My root volume snapshot as of 10/03/2017",
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "output": {
           "SnapshotId": "snap-78e22663",
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "comments": {
           "input": {
@@ -210,11 +210,11 @@
       {
         "input": {
           "SnapshotDescription": "My root volume snapshot as of 2017-06-30T10:10:10.000Z",
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "output": {
           "SnapshotId": "snap-78e22663",
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
           "VolumeRecoveryPointTime": "2017-06-30T10:10:10.000Z"
         },
         "comments": {
@@ -232,15 +232,15 @@
       {
         "input": {
           "DiskId": "pci-0000:03:00.0-scsi-0:0:0:0",
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "NetworkInterfaceId": "10.1.1.1",
           "PreserveExistingData": true,
           "SnapshotId": "snap-f47b7b94",
           "TargetName": "my-volume"
         },
         "output": {
-          "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume",
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
+          "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume",
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
           "VolumeSizeInBytes": 1099511627776
         },
         "comments": {
@@ -257,12 +257,12 @@
     "CreateTapeWithBarcode": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B",
           "TapeBarcode": "TEST12345",
           "TapeSizeInBytes": 107374182400
         },
         "output": {
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST12345"
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST12345"
         },
         "comments": {
           "input": {
@@ -279,16 +279,16 @@
       {
         "input": {
           "ClientToken": "77777",
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B",
           "NumTapesToCreate": 3,
           "TapeBarcodePrefix": "TEST",
           "TapeSizeInBytes": 107374182400
         },
         "output": {
           "TapeARNs": [
-            "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST38A29D",
-            "arn:aws:storagegateway:us-east-1:204469490176:tape/TEST3AA29F",
-            "arn:aws:storagegateway:us-east-1:204469490176:tape/TEST3BA29E"
+            "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST38A29D",
+            "arn:aws:storagegateway:ap-south-1:204469490176:tape/TEST3AA29F",
+            "arn:aws:storagegateway:ap-south-1:204469490176:tape/TEST3BA29E"
           ]
         },
         "comments": {
@@ -306,10 +306,10 @@
       {
         "input": {
           "BandwidthType": "All",
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -326,11 +326,11 @@
       {
         "input": {
           "InitiatorName": "iqn.1991-05.com.microsoft:computername.domain.example.com",
-          "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
+          "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
         },
         "output": {
           "InitiatorName": "iqn.1991-05.com.microsoft:computername.domain.example.com",
-          "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
+          "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
         },
         "comments": {
           "input": {
@@ -346,10 +346,10 @@
     "DeleteGateway": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -365,10 +365,10 @@
     "DeleteSnapshotSchedule": [
       {
         "input": {
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "output": {
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "comments": {
           "input": {
@@ -384,11 +384,11 @@
     "DeleteTape": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:204469490176:gateway/sgw-12A3456B",
-          "TapeARN": "arn:aws:storagegateway:us-east-1:204469490176:tape/TEST05A2A0"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:204469490176:gateway/sgw-12A3456B",
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:204469490176:tape/TEST05A2A0"
         },
         "output": {
-          "TapeARN": "arn:aws:storagegateway:us-east-1:204469490176:tape/TEST05A2A0"
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:204469490176:tape/TEST05A2A0"
         },
         "comments": {
           "input": {
@@ -404,10 +404,10 @@
     "DeleteTapeArchive": [
       {
         "input": {
-          "TapeARN": "arn:aws:storagegateway:us-east-1:204469490176:tape/TEST05A2A0"
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:204469490176:tape/TEST05A2A0"
         },
         "output": {
-          "TapeARN": "arn:aws:storagegateway:us-east-1:204469490176:tape/TEST05A2A0"
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:204469490176:tape/TEST05A2A0"
         },
         "comments": {
           "input": {
@@ -423,10 +423,10 @@
     "DeleteVolume": [
       {
         "input": {
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "output": {
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "comments": {
           "input": {
@@ -442,12 +442,12 @@
     "DescribeBandwidthRateLimit": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
           "AverageDownloadRateLimitInBitsPerSec": 204800,
           "AverageUploadRateLimitInBitsPerSec": 102400,
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -463,7 +463,7 @@
     "DescribeCache": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
           "CacheAllocatedInBytes": 2199023255552,
@@ -475,7 +475,7 @@
             "pci-0000:03:00.0-scsi-0:0:0:0",
             "pci-0000:04:00.0-scsi-0:1:0:0"
           ],
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -492,13 +492,13 @@
       {
         "input": {
           "VolumeARNs": [
-            "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+            "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
           ]
         },
         "output": {
           "CachediSCSIVolumes": [
             {
-              "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
+              "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
               "VolumeId": "vol-1122AABB",
               "VolumeSizeInBytes": 1099511627776,
               "VolumeStatus": "AVAILABLE",
@@ -508,7 +508,7 @@
                 "LunNumber": 1,
                 "NetworkInterfaceId": "10.243.43.207",
                 "NetworkInterfacePort": 3260,
-                "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
+                "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
               }
             }
           ]
@@ -527,7 +527,7 @@
     "DescribeChapCredentials": [
       {
         "input": {
-          "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
+          "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
         },
         "output": {
           "ChapCredentials": [
@@ -535,7 +535,7 @@
               "InitiatorName": "iqn.1991-05.com.microsoft:computername.domain.example.com",
               "SecretToAuthenticateInitiator": "111111111111",
               "SecretToAuthenticateTarget": "222222222222",
-              "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
+              "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
             }
           ]
         },
@@ -553,10 +553,10 @@
     "DescribeGatewayInformation": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "GatewayId": "sgw-AABB1122",
           "GatewayName": "My_Gateway",
           "GatewayNetworkInterfaces": [
@@ -584,11 +584,11 @@
     "DescribeMaintenanceStartTime": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
           "DayOfWeek": 2,
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "HourOfDay": 15,
           "MinuteOfHour": 35,
           "Timezone": "GMT+7:00"
@@ -607,14 +607,14 @@
     "DescribeSnapshotSchedule": [
       {
         "input": {
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "output": {
           "Description": "sgw-AABB1122:vol-AABB1122:Schedule",
           "RecurrenceInHours": 24,
           "StartAt": 6,
           "Timezone": "GMT+7:00",
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "comments": {
           "input": {
@@ -631,14 +631,14 @@
       {
         "input": {
           "VolumeARNs": [
-            "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+            "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
           ]
         },
         "output": {
           "StorediSCSIVolumes": [
             {
               "PreservedExistingData": false,
-              "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
+              "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
               "VolumeDiskId": "pci-0000:03:00.0-scsi-0:0:0:0",
               "VolumeId": "vol-1122AABB",
               "VolumeProgress": 23.7,
@@ -648,7 +648,7 @@
                 "ChapEnabled": true,
                 "NetworkInterfaceId": "10.243.43.207",
                 "NetworkInterfacePort": 3260,
-                "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
+                "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
               }
             }
           ]
@@ -670,8 +670,8 @@
           "Limit": 123,
           "Marker": "1",
           "TapeARNs": [
-            "arn:aws:storagegateway:us-east-1:999999999999:tape/AM08A1AD",
-            "arn:aws:storagegateway:us-east-1:999999999999:tape/AMZN01A2A4"
+            "arn:aws:storagegateway:ap-south-1:999999999999:tape/AM08A1AD",
+            "arn:aws:storagegateway:ap-south-1:999999999999:tape/AMZN01A2A4"
           ]
         },
         "output": {
@@ -679,14 +679,14 @@
           "TapeArchives": [
             {
               "CompletionTime": "2016-12-16T13:50Z",
-              "TapeARN": "arn:aws:storagegateway:us-east-1:999999999:tape/AM08A1AD",
+              "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999:tape/AM08A1AD",
               "TapeBarcode": "AM08A1AD",
               "TapeSizeInBytes": 107374182400,
               "TapeStatus": "ARCHIVED"
             },
             {
               "CompletionTime": "2016-12-16T13:59Z",
-              "TapeARN": "arn:aws:storagegateway:us-east-1:999999999:tape/AMZN01A2A4",
+              "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999:tape/AMZN01A2A4",
               "TapeBarcode": "AMZN01A2A4",
               "TapeSizeInBytes": 429496729600,
               "TapeStatus": "ARCHIVED"
@@ -707,16 +707,16 @@
     "DescribeTapeRecoveryPoints": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "Limit": 1,
           "Marker": "1"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "Marker": "1",
           "TapeRecoveryPointInfos": [
             {
-              "TapeARN": "arn:aws:storagegateway:us-east-1:999999999:tape/AMZN01A2A4",
+              "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999:tape/AMZN01A2A4",
               "TapeRecoveryPointTime": "2016-12-16T13:50Z",
               "TapeSizeInBytes": 1471550497,
               "TapeStatus": "AVAILABLE"
@@ -737,25 +737,25 @@
     "DescribeTapes": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B",
           "Limit": 2,
           "Marker": "1",
           "TapeARNs": [
-            "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST04A2A1",
-            "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST05A2A0"
+            "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST04A2A1",
+            "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST05A2A0"
           ]
         },
         "output": {
           "Marker": "1",
           "Tapes": [
             {
-              "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST04A2A1",
+              "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST04A2A1",
               "TapeBarcode": "TEST04A2A1",
               "TapeSizeInBytes": 107374182400,
               "TapeStatus": "AVAILABLE"
             },
             {
-              "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST05A2A0",
+              "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST05A2A0",
               "TapeBarcode": "TEST05A2A0",
               "TapeSizeInBytes": 107374182400,
               "TapeStatus": "AVAILABLE"
@@ -776,14 +776,14 @@
     "DescribeUploadBuffer": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
           "DiskIds": [
             "pci-0000:03:00.0-scsi-0:0:0:0",
             "pci-0000:04:00.0-scsi-0:1:0:0"
           ],
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "UploadBufferAllocatedInBytes": 0,
           "UploadBufferUsedInBytes": 161061273600
         },
@@ -799,14 +799,14 @@
       },
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
           "DiskIds": [
             "pci-0000:03:00.0-scsi-0:0:0:0",
             "pci-0000:04:00.0-scsi-0:1:0:0"
           ],
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "UploadBufferAllocatedInBytes": 161061273600,
           "UploadBufferUsedInBytes": 0
         },
@@ -824,7 +824,7 @@
     "DescribeVTLDevices": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B",
           "Limit": 123,
           "Marker": "1",
           "VTLDeviceARNs": [
@@ -832,7 +832,7 @@
           ]
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B",
           "Marker": "1",
           "VTLDevices": [
             {
@@ -840,9 +840,9 @@
                 "ChapEnabled": false,
                 "NetworkInterfaceId": "10.243.43.207",
                 "NetworkInterfacePort": 3260,
-                "TargetARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:sgw-1fad4876-mediachanger"
+                "TargetARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:sgw-1fad4876-mediachanger"
               },
-              "VTLDeviceARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_MEDIACHANGER_00001",
+              "VTLDeviceARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_MEDIACHANGER_00001",
               "VTLDeviceProductIdentifier": "L700",
               "VTLDeviceType": "Medium Changer",
               "VTLDeviceVendor": "STK"
@@ -852,9 +852,9 @@
                 "ChapEnabled": false,
                 "NetworkInterfaceId": "10.243.43.209",
                 "NetworkInterfacePort": 3260,
-                "TargetARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:sgw-1fad4876-tapedrive-01"
+                "TargetARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:sgw-1fad4876-tapedrive-01"
               },
-              "VTLDeviceARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_TAPEDRIVE_00001",
+              "VTLDeviceARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_TAPEDRIVE_00001",
               "VTLDeviceProductIdentifier": "ULT3580-TD5",
               "VTLDeviceType": "Tape Drive",
               "VTLDeviceVendor": "IBM"
@@ -864,9 +864,9 @@
                 "ChapEnabled": false,
                 "NetworkInterfaceId": "10.243.43.209",
                 "NetworkInterfacePort": 3260,
-                "TargetARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:sgw-1fad4876-tapedrive-02"
+                "TargetARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:sgw-1fad4876-tapedrive-02"
               },
-              "VTLDeviceARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_TAPEDRIVE_00002",
+              "VTLDeviceARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_TAPEDRIVE_00002",
               "VTLDeviceProductIdentifier": "ULT3580-TD5",
               "VTLDeviceType": "Tape Drive",
               "VTLDeviceVendor": "IBM"
@@ -887,14 +887,14 @@
     "DescribeWorkingStorage": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
           "DiskIds": [
             "pci-0000:03:00.0-scsi-0:0:0:0",
             "pci-0000:03:00.0-scsi-0:0:1:0"
           ],
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "WorkingStorageAllocatedInBytes": 2199023255552,
           "WorkingStorageUsedInBytes": 789207040
         },
@@ -912,10 +912,10 @@
     "DisableGateway": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -937,10 +937,10 @@
         "output": {
           "Gateways": [
             {
-              "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+              "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
             },
             {
-              "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-23A4567C"
+              "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-23A4567C"
             }
           ],
           "Marker": "1"
@@ -959,7 +959,7 @@
     "ListLocalDisks": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
           "Disks": [
@@ -981,7 +981,7 @@
               "DiskStatus": "present"
             }
           ],
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -999,11 +999,11 @@
         "input": {
           "Limit": 1,
           "Marker": "1",
-          "ResourceARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B"
+          "ResourceARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-11A2222B"
         },
         "output": {
           "Marker": "1",
-          "ResourceARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B",
+          "ResourceARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-11A2222B",
           "Tags": [
             {
               "Key": "Dev Gatgeway Region",
@@ -1025,13 +1025,13 @@
     "ListVolumeRecoveryPoints": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "VolumeRecoveryPointInfos": [
             {
-              "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
+              "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
               "VolumeRecoveryPointTime": "2012-09-04T21:08:44.627Z",
               "VolumeSizeInBytes": 536870912000
             }
@@ -1051,26 +1051,26 @@
     "ListVolumes": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "Limit": 2,
           "Marker": "1"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "Marker": "1",
           "VolumeInfos": [
             {
-              "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+              "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
               "GatewayId": "sgw-12A3456B",
-              "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
+              "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB",
               "VolumeId": "vol-1122AABB",
               "VolumeSizeInBytes": 107374182400,
               "VolumeType": "STORED"
             },
             {
-              "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-13B4567C",
+              "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-13B4567C",
               "GatewayId": "sgw-gw-13B4567C",
-              "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-13B4567C/volume/vol-3344CCDD",
+              "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-13B4567C/volume/vol-3344CCDD",
               "VolumeId": "vol-1122AABB",
               "VolumeSizeInBytes": 107374182400,
               "VolumeType": "STORED"
@@ -1091,14 +1091,14 @@
     "RemoveTagsFromResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B",
+          "ResourceARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-11A2222B",
           "TagKeys": [
             "Dev Gatgeway Region",
             "East Coast"
           ]
         },
         "output": {
-          "ResourceARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-11A2222B"
+          "ResourceARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-11A2222B"
         },
         "comments": {
           "input": {
@@ -1114,10 +1114,10 @@
     "ResetCache": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-13B4567C"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-13B4567C"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-13B4567C"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-13B4567C"
         },
         "comments": {
           "input": {
@@ -1133,11 +1133,11 @@
     "RetrieveTapeArchive": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST0AA2AF"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B",
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST0AA2AF"
         },
         "output": {
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST0AA2AF"
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST0AA2AF"
         },
         "comments": {
           "input": {
@@ -1153,11 +1153,11 @@
     "RetrieveTapeRecoveryPoint": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST0AA2AF"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B",
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST0AA2AF"
         },
         "output": {
-          "TapeARN": "arn:aws:storagegateway:us-east-1:999999999999:tape/TEST0AA2AF"
+          "TapeARN": "arn:aws:storagegateway:ap-south-1:999999999999:tape/TEST0AA2AF"
         },
         "comments": {
           "input": {
@@ -1173,11 +1173,11 @@
     "SetLocalConsolePassword": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B",
           "LocalConsolePassword": "PassWordMustBeAtLeast6Chars."
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -1193,10 +1193,10 @@
     "ShutdownGateway": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -1212,10 +1212,10 @@
     "StartGateway": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -1233,10 +1233,10 @@
         "input": {
           "AverageDownloadRateLimitInBitsPerSec": 102400,
           "AverageUploadRateLimitInBitsPerSec": 51200,
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -1255,11 +1255,11 @@
           "InitiatorName": "iqn.1991-05.com.microsoft:computername.domain.example.com",
           "SecretToAuthenticateInitiator": "111111111111",
           "SecretToAuthenticateTarget": "222222222222",
-          "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
+          "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
         },
         "output": {
           "InitiatorName": "iqn.1991-05.com.microsoft:computername.domain.example.com",
-          "TargetARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
+          "TargetARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/target/iqn.1997-05.com.amazon:myvolume"
         },
         "comments": {
           "input": {
@@ -1275,12 +1275,12 @@
     "UpdateGatewayInformation": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "GatewayName": "MyGateway2",
           "GatewayTimezone": "GMT-12:00"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "GatewayName": ""
         },
         "comments": {
@@ -1297,10 +1297,10 @@
     "UpdateGatewaySoftwareNow": [
       {
         "input": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -1317,12 +1317,12 @@
       {
         "input": {
           "DayOfWeek": 2,
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B",
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B",
           "HourOfDay": 0,
           "MinuteOfHour": 30
         },
         "output": {
-          "GatewayARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B"
+          "GatewayARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B"
         },
         "comments": {
           "input": {
@@ -1341,10 +1341,10 @@
           "Description": "Hourly snapshot",
           "RecurrenceInHours": 1,
           "StartAt": 0,
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "output": {
-          "VolumeARN": "arn:aws:storagegateway:us-east-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
+          "VolumeARN": "arn:aws:storagegateway:ap-south-1:111122223333:gateway/sgw-12A3456B/volume/vol-1122AABB"
         },
         "comments": {
           "input": {
@@ -1361,10 +1361,10 @@
       {
         "input": {
           "DeviceType": "Medium Changer",
-          "VTLDeviceARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_MEDIACHANGER_00001"
+          "VTLDeviceARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_MEDIACHANGER_00001"
         },
         "output": {
-          "VTLDeviceARN": "arn:aws:storagegateway:us-east-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_MEDIACHANGER_00001"
+          "VTLDeviceARN": "arn:aws:storagegateway:ap-south-1:999999999999:gateway/sgw-12A3456B/device/AMZN_SGW-1FAD4876_MEDIACHANGER_00001"
         },
         "comments": {
           "input": {

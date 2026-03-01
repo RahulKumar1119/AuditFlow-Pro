@@ -2404,14 +2404,14 @@ class LambdaBackend(BaseBackend):
 
         .. sourcecode:: python
 
-            expected_results = {"results": ["test", "test 2"], "region": "us-east-1"}
+            expected_results = {"results": ["test", "test 2"], "region": "ap-south-1"}
             resp = requests.post(
                 "http://motoapi.amazonaws.com/moto-api/static/lambda-simple/response",
                 json=expected_results
             )
             assert resp.status_code == 201
 
-            client = boto3.client("lambda", region_name="us-east-1")
+            client = boto3.client("lambda", region_name="ap-south-1")
             resp = client.invoke(...) # resp["Payload"].read().decode() == "test"
             resp = client.invoke(...) # resp["Payload"].read().decode() == "test2"
         """

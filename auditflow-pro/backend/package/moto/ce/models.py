@@ -199,7 +199,7 @@ class CostExplorerBackend(BaseBackend):
             )
             assert resp.status_code == 201
 
-            ce = boto3.client("ce", region_name="us-east-1")
+            ce = boto3.client("ce", region_name="ap-south-1")
             resp = ce.get_cost_and_usage(...)
         """
         default_result: Dict[str, Any] = {

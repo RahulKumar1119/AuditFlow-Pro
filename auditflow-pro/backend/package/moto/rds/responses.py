@@ -16,7 +16,7 @@ class RDSResponse(BaseResponse):
     @property
     def global_backend(self) -> RDSBackend:
         """Return backend instance of the region that stores Global Clusters"""
-        return rds_backends[self.current_account]["us-east-1"]
+        return rds_backends[self.current_account]["ap-south-1"]
 
     def _get_db_kwargs(self) -> Dict[str, Any]:
         args = {

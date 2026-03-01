@@ -1402,7 +1402,7 @@
     "ReplicateKey": [
       {
         "input": {
-          "KeyId": "arn:aws:kms:us-east-1:111122223333:key/mrk-1234abcd12ab34cd56ef1234567890ab",
+          "KeyId": "arn:aws:kms:ap-south-1:111122223333:key/mrk-1234abcd12ab34cd56ef1234567890ab",
           "ReplicaRegion": "us-west-2"
         },
         "output": {
@@ -1424,8 +1424,8 @@
             "MultiRegionConfiguration": {
               "MultiRegionKeyType": "REPLICA",
               "PrimaryKey": {
-                "Arn": "arn:aws:kms:us-east-1:111122223333:key/mrk-1234abcd12ab34cd56ef1234567890ab",
-                "Region": "us-east-1"
+                "Arn": "arn:aws:kms:ap-south-1:111122223333:key/mrk-1234abcd12ab34cd56ef1234567890ab",
+                "Region": "ap-south-1"
               },
               "ReplicaKeys": [
                 {
@@ -1452,7 +1452,7 @@
             "ReplicaTags": "The tags on the replica key, if any."
           }
         },
-        "description": "This example creates a multi-Region replica key in us-west-2 of a multi-Region primary key in us-east-1. ",
+        "description": "This example creates a multi-Region replica key in us-west-2 of a multi-Region primary key in ap-south-1. ",
         "id": "to-replicate-a-multi-region-key-in-a-different-aws-region-1628622402887",
         "title": "To replicate a multi-Region key in a different AWS Region"
       }

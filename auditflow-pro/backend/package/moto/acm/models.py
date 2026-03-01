@@ -119,7 +119,7 @@ class CertBundle(BaseModel):
         certificate: bytes,
         private_key: bytes,
         chain: Optional[bytes] = None,
-        region: str = "us-east-1",
+        region: str = "ap-south-1",
         arn: Optional[str] = None,
         cert_type: str = "IMPORTED",
         cert_status: str = "ISSUED",

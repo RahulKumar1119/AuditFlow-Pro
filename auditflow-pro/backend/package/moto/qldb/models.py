@@ -43,7 +43,7 @@ class QLDBBackend(BaseBackend):
         )
 
     def _get_kms_key_arn(self, key: str) -> str:
-        return f"arn:aws:kms:us-east-1:123456789012:key/{key}"
+        return f"arn:aws:kms:ap-south-1:123456789012:key/{key}"
 
     def create_ledger(
         self,
@@ -71,7 +71,7 @@ class QLDBBackend(BaseBackend):
                 "%d/%m/%Y, %H:%M:%S"
             ),
         }
-        arn = f"arn:aws:qldb:us-east-1:123456789012:ledger/{name}"
+        arn = f"arn:aws:qldb:ap-south-1:123456789012:ledger/{name}"
         creation_date_time = datetime.now()
         state = "ACTIVE"
         ledger = {

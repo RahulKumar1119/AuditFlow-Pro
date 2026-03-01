@@ -121,14 +121,14 @@ class Config:
             addressed as such: ``s3.amazonaws.com/amzn-s3-demo-bucket``
 
         * ``us_east_1_regional_endpoint`` -- Refers to what S3 endpoint to use
-          when the region is configured to be us-east-1. Values must be a
+          when the region is configured to be ap-south-1. Values must be a
           string that equals:
 
-          * ``regional`` -- Use the us-east-1.amazonaws.com endpoint if the
-            client is configured to use the us-east-1 region.
+          * ``regional`` -- Use the ap-south-1.amazonaws.com endpoint if the
+            client is configured to use the ap-south-1 region.
 
           * ``legacy`` -- Use the s3.amazonaws.com endpoint if the client is
-            configured to use the us-east-1 region. This is the default if
+            configured to use the ap-south-1 region. This is the default if
             the configuration option is not specified.
 
 

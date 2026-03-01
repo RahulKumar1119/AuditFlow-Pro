@@ -375,7 +375,7 @@ Notification
             "SignatureVersion": signature_version,
             "Signature": base64.b64encode(signature).decode("utf-8"),
             "SigningCertURL": f"https://sns.{region}.amazonaws.com/{key_name}",
-            "UnsubscribeURL": f"https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:{self.account_id}:{self.topic.name}:2bcfbf39-05c3-41de-beaa-fcfcc21c8f55",
+            "UnsubscribeURL": f"https://sns.ap-south-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:ap-south-1:{self.account_id}:{self.topic.name}:2bcfbf39-05c3-41de-beaa-fcfcc21c8f55",
         }
         if subject:
             post_data["Subject"] = subject
@@ -478,7 +478,7 @@ class SNSBackend(BaseBackend):
 
         from moto.core import DEFAULT_ACCOUNT_ID
         from moto.sns import sns_backends
-        sns_backend = sns_backends[DEFAULT_ACCOUNT_ID]["us-east-1"]  # Use the appropriate account/region
+        sns_backend = sns_backends[DEFAULT_ACCOUNT_ID]["ap-south-1"]  # Use the appropriate account/region
         all_send_notifications = sns_backend.topics[topic_arn].sent_notifications
 
     Note that, as this is an internal API, the exact format may differ per versions.

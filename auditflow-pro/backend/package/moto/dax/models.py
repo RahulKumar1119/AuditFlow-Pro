@@ -36,8 +36,8 @@ class DaxNode:
             "Port": endpoint.port,
         }
         self.create_time = unix_time()
-        # AWS spreads nodes across zones, i.e. three nodes will probably end up in us-east-1a, us-east-1b, us-east-1c
-        # For simplicity, we'll 'deploy' everything to us-east-1a
+        # AWS spreads nodes across zones, i.e. three nodes will probably end up in ap-south-1a, ap-south-1b, ap-south-1c
+        # For simplicity, we'll 'deploy' everything to ap-south-1a
         self.availability_zone = f"{endpoint.region}a"
         self.status = "available"
         self.parameter_status = "in-sync"

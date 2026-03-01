@@ -62,7 +62,7 @@ class BaseEndpointResolver:
             (e.g., s3)
 
         :type region_name: string
-        :param region_name: Region/endpoint name to resolve (e.g., us-east-1)
+        :param region_name: Region/endpoint name to resolve (e.g., ap-south-1)
             if no region is provided, the first found partition-wide endpoint
             will be used if available.
 
@@ -107,7 +107,7 @@ class BaseEndpointResolver:
         :param allow_non_regional: Set to True to include endpoints that are
              not regional endpoints (e.g., s3-external-1,
              fips-us-gov-west-1, etc).
-        :return: Returns a list of endpoint names (e.g., ["us-east-1"]).
+        :return: Returns a list of endpoint names (e.g., ["ap-south-1"]).
         """
         raise NotImplementedError
 
@@ -202,7 +202,7 @@ class EndpointResolver(BaseEndpointResolver):
             and use_dualstack_endpoint
             and region_name is None
         ):
-            region_name = 'us-east-1'
+            region_name = 'ap-south-1'
 
         if partition_name is not None:
             valid_partition = None
@@ -433,10 +433,10 @@ class EndpointResolverBuiltins(str, Enum):
     # for the SDK client (bool)
     AWS_USE_DUALSTACK = "AWS::UseDualStack"
     # Whether the global endpoint should be used with STS, rather than the
-    # regional endpoint for us-east-1 (bool)
+    # regional endpoint for ap-south-1 (bool)
     AWS_STS_USE_GLOBAL_ENDPOINT = "AWS::STS::UseGlobalEndpoint"
     # Whether the global endpoint should be used with S3, rather than the
-    # regional endpoint for us-east-1 (bool)
+    # regional endpoint for ap-south-1 (bool)
     AWS_S3_USE_GLOBAL_ENDPOINT = "AWS::S3::UseGlobalEndpoint"
     # Whether S3 Transfer Acceleration has been requested (bool)
     AWS_S3_ACCELERATE = "AWS::S3::Accelerate"

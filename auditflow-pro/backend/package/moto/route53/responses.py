@@ -860,7 +860,7 @@ GET_HEALTH_CHECK_STATUS_RESPONSE = """<?xml version="1.0" encoding="UTF-8"?>
    <HealthCheckObservations>
       <HealthCheckObservation>
          <IPAddress>127.0.13.37</IPAddress>
-         <Region>us-east-1</Region>
+         <Region>ap-south-1</Region>
          <StatusReport>
             <CheckedTime>{{ timestamp }}</CheckedTime>
             <Status>Success: HTTP Status Code: 200. Resolved IP: 127.0.13.37. OK</Status>

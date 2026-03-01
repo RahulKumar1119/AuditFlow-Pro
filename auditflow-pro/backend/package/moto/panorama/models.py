@@ -590,7 +590,7 @@ panorama_backends = BackendDict(
     "panorama",
     False,
     additional_regions=[
-        "us-east-1",
+        "ap-south-1",
         "us-west-2",
         "ca-central-1",
         "eu-west-1",

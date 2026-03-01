@@ -308,7 +308,7 @@ class Stack(BaseModel):
         attributes: Optional[Dict[str, Any]] = None,
         default_os: str = "Ubuntu 12.04 LTS",
         hostname_theme: str = "Layer_Dependent",
-        default_availability_zone: str = "us-east-1a",
+        default_availability_zone: str = "ap-south-1a",
         default_subnet_id: str = "subnet-73981004",
         custom_json: Optional[str] = None,
         configuration_manager: Optional[Dict[str, Any]] = None,

@@ -101,7 +101,7 @@ class FakeLoadBalancer(CloudFormationModel):
         self.subnets = subnets or []
         self.vpc_id = vpc_id
         self.tags: Dict[str, str] = {}
-        self.dns_name = f"{name}.us-east-1.elb.amazonaws.com"
+        self.dns_name = f"{name}.ap-south-1.elb.amazonaws.com"
 
         for port in ports:
             listener = FakeListener(

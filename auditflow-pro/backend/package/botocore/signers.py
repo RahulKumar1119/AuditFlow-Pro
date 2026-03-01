@@ -49,7 +49,7 @@ class RequestSigner:
     :param service_id: The service id for the service, e.g. ``S3``
 
     :type region_name: string
-    :param region_name: Name of the service region, e.g. ``us-east-1``
+    :param region_name: Name of the service region, e.g. ``ap-south-1``
 
     :type signing_name: string
     :param signing_name: Service signing name. This is usually the
@@ -267,7 +267,7 @@ class RequestSigner:
                              ``emr`` vs. ``elasticmapreduce``.
 
         :type region_name: string
-        :param region_name: Name of the service region, e.g. ``us-east-1``
+        :param region_name: Name of the service region, e.g. ``ap-south-1``
 
         :type signature_version: string
         :param signature_version: Signature name like ``v4``.
@@ -983,7 +983,7 @@ def _should_use_global_endpoint(client):
             return False
         if (
             s3_config.get('us_east_1_regional_endpoint') == 'regional'
-            and client.meta.config.region_name == 'us-east-1'
+            and client.meta.config.region_name == 'ap-south-1'
         ):
             return False
         if s3_config.get('addressing_style') == 'virtual':

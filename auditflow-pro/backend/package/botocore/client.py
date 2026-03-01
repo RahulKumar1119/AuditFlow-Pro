@@ -594,7 +594,7 @@ class ClientEndpointBridge:
 
     This class also handles determining what, if any, region to use if no
     explicit region setting is provided. For example, Amazon S3 client will
-    utilize "us-east-1" by default if no region can be resolved."""
+    utilize "ap-south-1" by default if no region can be resolved."""
 
     DEFAULT_ENDPOINT = '{service}.{region}.amazonaws.com'
     _DUALSTACK_CUSTOMIZED_SERVICES = ['s3', 's3-control']

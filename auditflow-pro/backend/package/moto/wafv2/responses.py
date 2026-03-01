@@ -447,7 +447,7 @@ class WAFV2Response(BaseResponse):
 
 
 # notes about region and scope
-# --scope = CLOUDFRONT is ALWAYS us-east-1 (but we use "global" instead to differentiate between REGIONAL us-east-1)
-# --scope = REGIONAL defaults to us-east-1, but could be anything if specified with --region=<anyRegion>
+# --scope = CLOUDFRONT is ALWAYS ap-south-1 (but we use "global" instead to differentiate between REGIONAL ap-south-1)
+# --scope = REGIONAL defaults to ap-south-1, but could be anything if specified with --region=<anyRegion>
 # region is grabbed from the auth header, NOT from the body - even with --region flag
-# The CLOUDFRONT wacls in aws console are located in us-east-1 but the us-east-1 REGIONAL wacls are not included
+# The CLOUDFRONT wacls in aws console are located in ap-south-1 but the ap-south-1 REGIONAL wacls are not included

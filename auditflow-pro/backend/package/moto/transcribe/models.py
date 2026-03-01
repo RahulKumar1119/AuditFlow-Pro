@@ -469,7 +469,7 @@ class FakeMedicalVocabulary(FakeVocabulary):
         self.vocabulary_file_uri = vocabulary_file_uri
         self.last_modified_time = None
         self.failure_reason = None
-        self.download_uri = f"https://s3.us-east-1.amazonaws.com/aws-transcribe-dictionary-model-{region_name}-prod/{account_id}/medical/{self.vocabulary_name}/{mock_random.uuid4()}/input.txt"
+        self.download_uri = f"https://s3.ap-south-1.amazonaws.com/aws-transcribe-dictionary-model-{region_name}-prod/{account_id}/medical/{self.vocabulary_name}/{mock_random.uuid4()}/input.txt"
 
 
 class TranscribeBackend(BaseBackend):

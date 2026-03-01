@@ -75,7 +75,7 @@
             "LanguageCode": "en-US",
             "LastModified": 1478542980.117,
             "LexemesCount": 1,
-            "LexiconArn": "arn:aws:polly:us-east-1:123456789012:lexicon/example",
+            "LexiconArn": "arn:aws:polly:ap-south-1:123456789012:lexicon/example",
             "Size": 503
           }
         },
@@ -102,7 +102,7 @@
                 "LanguageCode": "en-US",
                 "LastModified": 1478542980.117,
                 "LexemesCount": 1,
-                "LexiconArn": "arn:aws:polly:us-east-1:123456789012:lexicon/example",
+                "LexiconArn": "arn:aws:polly:ap-south-1:123456789012:lexicon/example",
                 "Size": 503
               },
               "Name": "example"

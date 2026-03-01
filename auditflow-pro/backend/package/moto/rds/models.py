@@ -2293,7 +2293,7 @@ class RDSBackend(BaseBackend):
         #     "MajorEngineVersion": "10",
         #     "Options": [],
         #     "AllowsVpcAndNonVpcInstanceMemberships": true,
-        #     "OptionGroupArn": "arn:aws:rds:us-east-1:{account}:og:default:postgres-10"
+        #     "OptionGroupArn": "arn:aws:rds:ap-south-1:{account}:og:default:postgres-10"
         # }
         # The CLI does not allow deletion of default groups
 

@@ -1416,7 +1416,7 @@ class RestAPI(CloudFormationModel):
 class DomainName(BaseModel):
     def __init__(self, domain_name: str, **kwargs: Any):
         self.domain_name = domain_name
-        region = kwargs.get("region_name") or "us-east-1"
+        region = kwargs.get("region_name") or "ap-south-1"
         self.regional_domain_name = (
             f"d-{create_id()}.execute-api.{region}.amazonaws.com"
         )
@@ -1620,7 +1620,7 @@ class APIGatewayBackend(BaseBackend):
             uri="http://httpbin.org/robots.txt",
             integrationHttpMethod="GET"
         )
-        deploy_url = f"https://{api_id}.execute-api.us-east-1.amazonaws.com/dev"
+        deploy_url = f"https://{api_id}.execute-api.ap-south-1.amazonaws.com/dev"
         assert requests.get(deploy_url).content == b"a fake response"
 
     Limitations:

@@ -9,7 +9,7 @@
         "output": {
           "cluster": {
             "activeServicesCount": 0,
-            "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/my_cluster",
+            "clusterArn": "arn:aws:ecs:ap-south-1:012345678910:cluster/my_cluster",
             "clusterName": "my_cluster",
             "pendingTasksCount": 0,
             "registeredContainerInstancesCount": 0,
@@ -37,7 +37,7 @@
         },
         "output": {
           "service": {
-            "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/default",
+            "clusterArn": "arn:aws:ecs:ap-south-1:012345678910:cluster/default",
             "createdAt": "2016-08-29T16:13:47.298Z",
             "deploymentConfiguration": {
               "maximumPercent": 200,
@@ -51,7 +51,7 @@
                 "pendingCount": 0,
                 "runningCount": 0,
                 "status": "PRIMARY",
-                "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/hello_world:6",
+                "taskDefinition": "arn:aws:ecs:ap-south-1:012345678910:task-definition/hello_world:6",
                 "updatedAt": "2016-08-29T16:13:47.298Z"
               },
               {
@@ -61,7 +61,7 @@
                 "pendingCount": 0,
                 "runningCount": 0,
                 "status": "ACTIVE",
-                "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/hello_world:6",
+                "taskDefinition": "arn:aws:ecs:ap-south-1:012345678910:task-definition/hello_world:6",
                 "updatedAt": "2016-08-29T16:11:38.941Z"
               }
             ],
@@ -74,10 +74,10 @@
             ],
             "pendingCount": 0,
             "runningCount": 0,
-            "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/ecs-simple-service",
+            "serviceArn": "arn:aws:ecs:ap-south-1:012345678910:service/ecs-simple-service",
             "serviceName": "ecs-simple-service",
             "status": "ACTIVE",
-            "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/hello_world:6"
+            "taskDefinition": "arn:aws:ecs:ap-south-1:012345678910:task-definition/hello_world:6"
           }
         },
         "comments": {
@@ -106,7 +106,7 @@
         },
         "output": {
           "service": {
-            "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/default",
+            "clusterArn": "arn:aws:ecs:ap-south-1:012345678910:cluster/default",
             "createdAt": "2016-08-29T16:02:54.884Z",
             "deploymentConfiguration": {
               "maximumPercent": 200,
@@ -120,7 +120,7 @@
                 "pendingCount": 0,
                 "runningCount": 0,
                 "status": "PRIMARY",
-                "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/console-sample-app-static:6",
+                "taskDefinition": "arn:aws:ecs:ap-south-1:012345678910:task-definition/console-sample-app-static:6",
                 "updatedAt": "2016-08-29T16:02:54.884Z"
               }
             ],
@@ -138,10 +138,10 @@
             "pendingCount": 0,
             "roleArn": "arn:aws:iam::012345678910:role/ecsServiceRole",
             "runningCount": 0,
-            "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/ecs-simple-service-elb",
+            "serviceArn": "arn:aws:ecs:ap-south-1:012345678910:service/ecs-simple-service-elb",
             "serviceName": "ecs-simple-service-elb",
             "status": "ACTIVE",
-            "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/console-sample-app-static:6"
+            "taskDefinition": "arn:aws:ecs:ap-south-1:012345678910:task-definition/console-sample-app-static:6"
           }
         },
         "comments": {
@@ -208,7 +208,7 @@
         "output": {
           "cluster": {
             "activeServicesCount": 0,
-            "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/my_cluster",
+            "clusterArn": "arn:aws:ecs:ap-south-1:012345678910:cluster/my_cluster",
             "clusterName": "my_cluster",
             "pendingTasksCount": 0,
             "registeredContainerInstancesCount": 0,
@@ -275,7 +275,7 @@
         "output": {
           "clusters": [
             {
-              "clusterArn": "arn:aws:ecs:us-east-1:aws_account_id:cluster/default",
+              "clusterArn": "arn:aws:ecs:ap-south-1:aws_account_id:cluster/default",
               "clusterName": "default",
               "status": "ACTIVE"
             }
@@ -307,7 +307,7 @@
           "containerInstances": [
             {
               "agentConnected": true,
-              "containerInstanceArn": "arn:aws:ecs:us-east-1:012345678910:container-instance/f2756532-8f13-4d53-87c9-aed50dc94cd7",
+              "containerInstanceArn": "arn:aws:ecs:ap-south-1:012345678910:container-instance/f2756532-8f13-4d53-87c9-aed50dc94cd7",
               "ec2InstanceId": "i-807f3249",
               "pendingTasksCount": 0,
               "registeredResources": [
@@ -401,7 +401,7 @@
           ],
           "services": [
             {
-              "clusterArn": "arn:aws:ecs:us-east-1:012345678910:cluster/default",
+              "clusterArn": "arn:aws:ecs:ap-south-1:012345678910:cluster/default",
               "createdAt": "2016-08-29T16:25:52.130Z",
               "deploymentConfiguration": {
                 "maximumPercent": 200,
@@ -415,7 +415,7 @@
                   "pendingCount": 0,
                   "runningCount": 0,
                   "status": "PRIMARY",
-                  "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/hello_world:6",
+                  "taskDefinition": "arn:aws:ecs:ap-south-1:012345678910:task-definition/hello_world:6",
                   "updatedAt": "2016-08-29T16:25:52.130Z"
                 }
               ],
@@ -432,10 +432,10 @@
               ],
               "pendingCount": 0,
               "runningCount": 0,
-              "serviceArn": "arn:aws:ecs:us-east-1:012345678910:service/ecs-simple-service",
+              "serviceArn": "arn:aws:ecs:ap-south-1:012345678910:service/ecs-simple-service",
               "serviceName": "ecs-simple-service",
               "status": "ACTIVE",
-              "taskDefinition": "arn:aws:ecs:us-east-1:012345678910:task-definition/hello_world:6"
+              "taskDefinition": "arn:aws:ecs:ap-south-1:012345678910:task-definition/hello_world:6"
             }
           ]
         },
@@ -509,7 +509,7 @@
             ],
             "family": "hello_world",
             "revision": 8,
-            "taskDefinitionArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/hello_world:8",
+            "taskDefinitionArn": "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/hello_world:8",
             "volumes": [
 
             ]
@@ -657,8 +657,8 @@
         },
         "output": {
           "clusterArns": [
-            "arn:aws:ecs:us-east-1:<aws_account_id>:cluster/test",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:cluster/default"
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:cluster/test",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:cluster/default"
           ]
         },
         "comments": {
@@ -679,8 +679,8 @@
         },
         "output": {
           "containerInstanceArns": [
-            "arn:aws:ecs:us-east-1:<aws_account_id>:container-instance/f6bbb147-5370-4ace-8c73-c7181ded911f",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:container-instance/ffe3d344-77e2-476c-a4d0-bf560ad50acb"
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:container-instance/f6bbb147-5370-4ace-8c73-c7181ded911f",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:container-instance/ffe3d344-77e2-476c-a4d0-bf560ad50acb"
           ]
         },
         "comments": {
@@ -700,7 +700,7 @@
         },
         "output": {
           "serviceArns": [
-            "arn:aws:ecs:us-east-1:012345678910:service/my-http-service"
+            "arn:aws:ecs:ap-south-1:012345678910:service/my-http-service"
           ]
         },
         "comments": {
@@ -787,12 +787,12 @@
         },
         "output": {
           "taskDefinitionArns": [
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/sleep300:2",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/sleep360:1",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/wordpress:3",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/wordpress:4",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/wordpress:5",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/wordpress:6"
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/sleep300:2",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/sleep360:1",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/wordpress:3",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/wordpress:4",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/wordpress:5",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/wordpress:6"
           ]
         },
         "comments": {
@@ -811,10 +811,10 @@
         },
         "output": {
           "taskDefinitionArns": [
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/wordpress:3",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/wordpress:4",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/wordpress:5",
-            "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/wordpress:6"
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/wordpress:3",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/wordpress:4",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/wordpress:5",
+            "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/wordpress:6"
           ]
         },
         "comments": {
@@ -835,8 +835,8 @@
         },
         "output": {
           "taskArns": [
-            "arn:aws:ecs:us-east-1:012345678910:task/0cc43cdb-3bee-4407-9c26-c0e6ea5bee84",
-            "arn:aws:ecs:us-east-1:012345678910:task/6b809ef6-c67e-4467-921f-ee261c15a0a1"
+            "arn:aws:ecs:ap-south-1:012345678910:task/0cc43cdb-3bee-4407-9c26-c0e6ea5bee84",
+            "arn:aws:ecs:ap-south-1:012345678910:task/6b809ef6-c67e-4467-921f-ee261c15a0a1"
           ]
         },
         "comments": {
@@ -856,7 +856,7 @@
         },
         "output": {
           "taskArns": [
-            "arn:aws:ecs:us-east-1:012345678910:task/0cc43cdb-3bee-4407-9c26-c0e6ea5bee84"
+            "arn:aws:ecs:ap-south-1:012345678910:task/0cc43cdb-3bee-4407-9c26-c0e6ea5bee84"
           ]
         },
         "comments": {
@@ -992,7 +992,7 @@
             ],
             "family": "sleep360",
             "revision": 1,
-            "taskDefinitionArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/sleep360:19",
+            "taskDefinitionArn": "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/sleep360:19",
             "volumes": [
 
             ]
@@ -1018,13 +1018,13 @@
         "output": {
           "tasks": [
             {
-              "containerInstanceArn": "arn:aws:ecs:us-east-1:<aws_account_id>:container-instance/ffe3d344-77e2-476c-a4d0-bf560ad50acb",
+              "containerInstanceArn": "arn:aws:ecs:ap-south-1:<aws_account_id>:container-instance/ffe3d344-77e2-476c-a4d0-bf560ad50acb",
               "containers": [
                 {
                   "name": "sleep",
-                  "containerArn": "arn:aws:ecs:us-east-1:<aws_account_id>:container/58591c8e-be29-4ddf-95aa-ee459d4c59fd",
+                  "containerArn": "arn:aws:ecs:ap-south-1:<aws_account_id>:container/58591c8e-be29-4ddf-95aa-ee459d4c59fd",
                   "lastStatus": "PENDING",
-                  "taskArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task/a9f21ea7-c9f5-44b1-b8e6-b31f50ed33c0"
+                  "taskArn": "arn:aws:ecs:ap-south-1:<aws_account_id>:task/a9f21ea7-c9f5-44b1-b8e6-b31f50ed33c0"
                 }
               ],
               "desiredStatus": "RUNNING",
@@ -1036,8 +1036,8 @@
                   }
                 ]
               },
-              "taskArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task/a9f21ea7-c9f5-44b1-b8e6-b31f50ed33c0",
-              "taskDefinitionArn": "arn:aws:ecs:us-east-1:<aws_account_id>:task-definition/sleep360:1"
+              "taskArn": "arn:aws:ecs:ap-south-1:<aws_account_id>:task/a9f21ea7-c9f5-44b1-b8e6-b31f50ed33c0",
+              "taskDefinitionArn": "arn:aws:ecs:ap-south-1:<aws_account_id>:task-definition/sleep360:1"
             }
           ]
         },

@@ -52,7 +52,7 @@ LEGACY_GLOBAL_STS_REGIONS = [
     'eu-west-2',
     'eu-west-3',
     'sa-east-1',
-    'us-east-1',
+    'ap-south-1',
     'us-east-2',
     'us-west-1',
     'us-west-2',
@@ -444,12 +444,12 @@ class ClientArgsCreator:
             endpoint_config, resolve_endpoint_kwargs['endpoint_bridge']
         )
         # For backwards compatibility reasons, we want to make sure the
-        # client.meta.region_name will remain us-east-1 if we forced the
+        # client.meta.region_name will remain ap-south-1 if we forced the
         # endpoint to be the global region. Specifically, if this value
         # changes to aws-global, it breaks logic where a user is checking
-        # for us-east-1 as the global endpoint such as in creating buckets.
+        # for ap-south-1 as the global endpoint such as in creating buckets.
         if force_s3_global and endpoint_config['region_name'] == 'aws-global':
-            endpoint_config['region_name'] = 'us-east-1'
+            endpoint_config['region_name'] = 'ap-south-1'
         return endpoint_config
 
     def _should_force_s3_global(self, region_name, s3_config):
@@ -458,7 +458,7 @@ class ClientArgsCreator:
             s3_regional_config = s3_config['us_east_1_regional_endpoint']
             self._validate_s3_regional_config(s3_regional_config)
 
-        is_global_region = region_name in ('us-east-1', None)
+        is_global_region = region_name in ('ap-south-1', None)
         return s3_regional_config == 'legacy' and is_global_region
 
     def _validate_s3_regional_config(self, config_val):
@@ -524,7 +524,7 @@ class ClientArgsCreator:
     def _set_global_sts_endpoint(self, endpoint_config, is_secure):
         scheme = 'https' if is_secure else 'http'
         endpoint_config['endpoint_url'] = f'{scheme}://sts.amazonaws.com'
-        endpoint_config['signing_region'] = 'us-east-1'
+        endpoint_config['signing_region'] = 'ap-south-1'
 
     def _resolve_endpoint(
         self,

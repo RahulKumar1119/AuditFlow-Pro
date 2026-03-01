@@ -12,7 +12,7 @@
         "output": {
           "builds": [
             {
-              "arn": "arn:aws:codebuild:us-east-1:123456789012:build/codebuild-demo-project:9b0ac37f-d19e-4254-9079-f47e9a389eEX",
+              "arn": "arn:aws:codebuild:ap-south-1:123456789012:build/codebuild-demo-project:9b0ac37f-d19e-4254-9079-f47e9a389eEX",
               "artifacts": {
                 "location": "arn:aws:s3:::codebuild-123456789012-output-bucket/codebuild-demo-project"
               },
@@ -32,7 +32,7 @@
               "id": "codebuild-demo-project:9b0ac37f-d19e-4254-9079-f47e9a389eEX",
               "initiator": "MyDemoUser",
               "logs": {
-                "deepLink": "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logEvent:group=/aws/codebuild/codebuild-demo-project;stream=9b0ac37f-d19e-4254-9079-f47e9a389eEX",
+                "deepLink": "https://console.aws.amazon.com/cloudwatch/home?region=ap-south-1#logEvent:group=/aws/codebuild/codebuild-demo-project;stream=9b0ac37f-d19e-4254-9079-f47e9a389eEX",
                 "groupName": "/aws/codebuild/codebuild-demo-project",
                 "streamName": "9b0ac37f-d19e-4254-9079-f47e9a389eEX"
               },
@@ -139,7 +139,7 @@
               "timeoutInMinutes": 60
             },
             {
-              "arn": "arn:aws:codebuild:us-east-1:123456789012:build/codebuild-demo-project:b79a46f7-1473-4636-a23f-da9c45c208EX",
+              "arn": "arn:aws:codebuild:ap-south-1:123456789012:build/codebuild-demo-project:b79a46f7-1473-4636-a23f-da9c45c208EX",
               "artifacts": {
                 "location": "arn:aws:s3:::codebuild-123456789012-output-bucket/codebuild-demo-project"
               },
@@ -159,7 +159,7 @@
               "id": "codebuild-demo-project:b79a46f7-1473-4636-a23f-da9c45c208EX",
               "initiator": "MyDemoUser",
               "logs": {
-                "deepLink": "https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logEvent:group=/aws/codebuild/codebuild-demo-project;stream=b79a46f7-1473-4636-a23f-da9c45c208EX",
+                "deepLink": "https://console.aws.amazon.com/cloudwatch/home?region=ap-south-1#logEvent:group=/aws/codebuild/codebuild-demo-project;stream=b79a46f7-1473-4636-a23f-da9c45c208EX",
                 "groupName": "/aws/codebuild/codebuild-demo-project",
                 "streamName": "b79a46f7-1473-4636-a23f-da9c45c208EX"
               },

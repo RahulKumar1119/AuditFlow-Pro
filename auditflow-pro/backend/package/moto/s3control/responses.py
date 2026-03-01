@@ -150,19 +150,19 @@ GET_ACCESS_POINT_TEMPLATE = """<GetAccessPointResult>
   <Endpoints>
       <entry>
           <key>ipv4</key>
-          <value>s3-accesspoint.us-east-1.amazonaws.com</value>
+          <value>s3-accesspoint.ap-south-1.amazonaws.com</value>
       </entry>
       <entry>
           <key>fips</key>
-          <value>s3-accesspoint-fips.us-east-1.amazonaws.com</value>
+          <value>s3-accesspoint-fips.ap-south-1.amazonaws.com</value>
       </entry>
       <entry>
           <key>fips_dualstack</key>
-          <value>s3-accesspoint-fips.dualstack.us-east-1.amazonaws.com</value>
+          <value>s3-accesspoint-fips.dualstack.ap-south-1.amazonaws.com</value>
       </entry>
       <entry>
           <key>dualstack</key>
-          <value>s3-accesspoint.dualstack.us-east-1.amazonaws.com</value>
+          <value>s3-accesspoint.dualstack.ap-south-1.amazonaws.com</value>
       </entry>
   </Endpoints>
 </GetAccessPointResult>

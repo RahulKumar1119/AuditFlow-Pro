@@ -24407,7 +24407,7 @@ aws_managed_policies_data = """
      ],
      "Condition":{
       "StringEquals":{
-       "aws:RequestedRegion":"us-east-1"
+       "aws:RequestedRegion":"ap-south-1"
       }
      },
      "Effect":"Allow",
@@ -27074,7 +27074,7 @@ aws_managed_policies_data = """
      ],
      "Effect":"Allow",
      "Resource":[
-      "arn:aws:execute-api:us-east-1:098862408343:9xpmnvs5h4/prod/POST/metrics",
+      "arn:aws:execute-api:ap-south-1:098862408343:9xpmnvs5h4/prod/POST/metrics",
       "arn:aws:signer:*:*:/signing-profiles/*",
       "arn:aws:signer:*:*:/signing-jobs/*",
       "arn:aws:iam::*:role/idt-*",
@@ -27309,7 +27309,7 @@ aws_managed_policies_data = """
      ],
      "Effect":"Allow",
      "Resource":[
-      "arn:aws:execute-api:us-east-1:098862408343:9xpmnvs5h4/prod/POST/metrics",
+      "arn:aws:execute-api:ap-south-1:098862408343:9xpmnvs5h4/prod/POST/metrics",
       "arn:aws:lambda:*:*:function:idt-*",
       "arn:aws:iot:*:*:cert/*"
      ],
@@ -29772,7 +29772,7 @@ aws_managed_policies_data = """
       "ec2:ModifySnapshotAttribute"
      ],
      "Effect":"Allow",
-     "Resource":"arn:aws:ec2:us-east-1::snapshot/snap-*"
+     "Resource":"arn:aws:ec2:ap-south-1::snapshot/snap-*"
     },
     {
      "Action":[
@@ -29952,7 +29952,7 @@ aws_managed_policies_data = """
      "Effect":"Allow",
      "Resource":[
       "arn:aws:ssm:eu-central-1:906690553262:automation-definition/*",
-      "arn:aws:ssm:us-east-1:058657716661:automation-definition/*",
+      "arn:aws:ssm:ap-south-1:058657716661:automation-definition/*",
       "arn:aws:ssm:ap-northeast-1:340648487307:automation-definition/*",
       "arn:aws:ssm:eu-west-1:564714592864:automation-definition/*",
       "arn:aws:ssm:us-west-2:243045473901:automation-definition/*",
@@ -29969,7 +29969,7 @@ aws_managed_policies_data = """
       "StringLike":{
        "iam:AssociatedResourceARN":[
         "arn:aws:ssm:eu-central-1:906690553262:automation-definition/*",
-        "arn:aws:ssm:us-east-1:058657716661:automation-definition/*",
+        "arn:aws:ssm:ap-south-1:058657716661:automation-definition/*",
         "arn:aws:ssm:ap-northeast-1:340648487307:automation-definition/*",
         "arn:aws:ssm:eu-west-1:564714592864:automation-definition/*",
         "arn:aws:ssm:us-west-2:243045473901:automation-definition/*",
@@ -30111,7 +30111,7 @@ aws_managed_policies_data = """
      "Effect":"Allow",
      "Resource":[
       "arn:aws:ssm:eu-central-1:906690553262:automation-definition/*",
-      "arn:aws:ssm:us-east-1:058657716661:automation-definition/*",
+      "arn:aws:ssm:ap-south-1:058657716661:automation-definition/*",
       "arn:aws:ssm:ap-northeast-1:340648487307:automation-definition/*",
       "arn:aws:ssm:eu-west-1:564714592864:automation-definition/*",
       "arn:aws:ssm:us-west-2:243045473901:automation-definition/*",
@@ -30128,7 +30128,7 @@ aws_managed_policies_data = """
       "StringLike":{
        "iam:AssociatedResourceARN":[
         "arn:aws:ssm:eu-central-1:906690553262:automation-definition/*",
-        "arn:aws:ssm:us-east-1:058657716661:automation-definition/*",
+        "arn:aws:ssm:ap-south-1:058657716661:automation-definition/*",
         "arn:aws:ssm:ap-northeast-1:340648487307:automation-definition/*",
         "arn:aws:ssm:eu-west-1:564714592864:automation-definition/*",
         "arn:aws:ssm:us-west-2:243045473901:automation-definition/*",
@@ -55860,7 +55860,7 @@ aws_managed_policies_data = """
      ],
      "Effect":"Allow",
      "Resource":[
-      "arn:aws:a4b:us-east-1:*:device/*/*:A2IWO7UEGWV4TL"
+      "arn:aws:a4b:ap-south-1:*:device/*/*:A2IWO7UEGWV4TL"
      ]
     },
     {
@@ -55904,8 +55904,8 @@ aws_managed_policies_data = """
      ],
      "Effect":"Allow",
      "Resource":[
-      "arn:aws:a4b:us-east-1:*:device/*/*:A2IWO7UEGWV4TL",
-      "arn:aws:a4b:us-east-1:*:room/*"
+      "arn:aws:a4b:ap-south-1:*:device/*/*:A2IWO7UEGWV4TL",
+      "arn:aws:a4b:ap-south-1:*:room/*"
      ]
     },
     {
@@ -55995,8 +55995,8 @@ aws_managed_policies_data = """
      ],
      "Effect":"Allow",
      "Resource":[
-      "arn:aws:a4b:us-east-1:*:device/*/*:A238TWV36W3S92",
-      "arn:aws:a4b:us-east-1:*:device/*/*:A1FUZ1SC53VJXD"
+      "arn:aws:a4b:ap-south-1:*:device/*/*:A238TWV36W3S92",
+      "arn:aws:a4b:ap-south-1:*:device/*/*:A1FUZ1SC53VJXD"
      ]
     },
     {
@@ -56031,9 +56031,9 @@ aws_managed_policies_data = """
      ],
      "Effect":"Allow",
      "Resource":[
-      "arn:aws:a4b:us-east-1:*:device/*/*:A238TWV36W3S92",
-      "arn:aws:a4b:us-east-1:*:device/*/*:A1FUZ1SC53VJXD",
-      "arn:aws:a4b:us-east-1:*:room/*"
+      "arn:aws:a4b:ap-south-1:*:device/*/*:A238TWV36W3S92",
+      "arn:aws:a4b:ap-south-1:*:device/*/*:A1FUZ1SC53VJXD",
+      "arn:aws:a4b:ap-south-1:*:room/*"
      ]
     },
     {
@@ -62596,7 +62596,7 @@ aws_managed_policies_data = """
      "Effect":"Allow",
      "Resource":[
       "arn:aws:s3:::jumpstart-cache-prod-us-west-2/*",
-      "arn:aws:s3:::jumpstart-cache-prod-us-east-1/*",
+      "arn:aws:s3:::jumpstart-cache-prod-ap-south-1/*",
       "arn:aws:s3:::jumpstart-cache-prod-us-east-2/*",
       "arn:aws:s3:::jumpstart-cache-prod-eu-west-1/*",
       "arn:aws:s3:::jumpstart-cache-prod-eu-central-1/*",
@@ -78492,12 +78492,12 @@ aws_managed_policies_data = """
      ],
      "Condition":{
       "StringLike":{
-       "secretsmanager:ResourceTag/aws:secretsmanager:owningService":"rds-beta-us-east-1"
+       "secretsmanager:ResourceTag/aws:secretsmanager:owningService":"rds-beta-ap-south-1"
       }
      },
      "Effect":"Allow",
      "Resource":[
-      "arn:aws:secretsmanager:*:*:secret:rds-beta-us-east-1!*"
+      "arn:aws:secretsmanager:*:*:secret:rds-beta-ap-south-1!*"
      ]
     },
     {
@@ -78510,11 +78510,11 @@ aws_managed_policies_data = """
        ]
       },
       "StringLike":{
-       "secretsmanager:ResourceTag/aws:secretsmanager:owningService":"rds-beta-us-east-1"
+       "secretsmanager:ResourceTag/aws:secretsmanager:owningService":"rds-beta-ap-south-1"
       }
      },
      "Effect":"Allow",
-     "Resource":"arn:aws:secretsmanager:*:*:secret:rds-beta-us-east-1!*"
+     "Resource":"arn:aws:secretsmanager:*:*:secret:rds-beta-ap-south-1!*"
     }
    ],
    "Version":"2012-10-17"
@@ -85485,7 +85485,7 @@ aws_managed_policies_data = """
      "Effect":"Allow",
      "Resource":[
       "arn:aws:s3:::jumpstart-cache-prod-us-west-2/*",
-      "arn:aws:s3:::jumpstart-cache-prod-us-east-1/*",
+      "arn:aws:s3:::jumpstart-cache-prod-ap-south-1/*",
       "arn:aws:s3:::jumpstart-cache-prod-us-east-2/*",
       "arn:aws:s3:::jumpstart-cache-prod-eu-west-1/*",
       "arn:aws:s3:::jumpstart-cache-prod-eu-central-1/*",

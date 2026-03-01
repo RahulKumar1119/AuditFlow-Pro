@@ -274,7 +274,7 @@ class MyModel:
         self.value = value
 
     def save(self):
-        s3 = boto3.client("s3", region_name="us-east-1")
+        s3 = boto3.client("s3", region_name="ap-south-1")
         s3.put_object(Bucket="mybucket", Key=self.name, Body=self.value)
 ```
 
@@ -290,7 +290,7 @@ from mymodule import MyModel
 
 @mock_aws
 def test_my_model_save():
-    conn = boto3.resource("s3", region_name="us-east-1")
+    conn = boto3.resource("s3", region_name="ap-south-1")
     # We need to create the bucket since this is all in Moto's 'virtual' AWS account
     conn.create_bucket(Bucket="mybucket")
     model_instance = MyModel("steve", "is awesome")

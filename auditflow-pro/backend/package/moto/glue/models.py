@@ -103,7 +103,7 @@ class FakeDevEndpoint(BaseModel):
         self.created_timestamp = utcnow()
         self.last_modified_timestamp = self.created_timestamp
         self.status = "READY"
-        self.availability_zone = "us-east-1a"
+        self.availability_zone = "ap-south-1a"
         self.vpc_id = "vpc-12345678"
         self.yarn_endpoint_address = f"yarn-{endpoint_name}.glue.amazonaws.com"
         self.private_address = "10.0.0.1"

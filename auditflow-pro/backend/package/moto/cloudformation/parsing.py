@@ -82,7 +82,7 @@ NULL_MODELS = [
     "AWS::CloudFormation::WaitConditionHandle",
 ]
 
-DEFAULT_REGION = "us-east-1"
+DEFAULT_REGION = "ap-south-1"
 
 logger = logging.getLogger("moto")
 

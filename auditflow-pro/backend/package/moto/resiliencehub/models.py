@@ -270,7 +270,7 @@ class ResilienceHubBackend(BaseBackend):
 
             summary1 = {"appArn": "app_arn1", "appVersion": "some version", ...}
             summary2 = {"appArn": "app_arn2", ...}
-            results = {"results": [[summary1, summary2], [summary2]], "region": "us-east-1"}
+            results = {"results": [[summary1, summary2], [summary2]], "region": "ap-south-1"}
             resp = requests.post(
                 "http://motoapi.amazonaws.com/moto-api/static/resilience-hub-assessments/response",
                 json=results,
@@ -278,7 +278,7 @@ class ResilienceHubBackend(BaseBackend):
 
             assert resp.status_code == 201
 
-            client = boto3.client("lambda", region_name="us-east-1")
+            client = boto3.client("lambda", region_name="ap-south-1")
             # First result
             resp = client.list_app_assessments() # [summary1, summary2]
             # Second result

@@ -52,7 +52,7 @@ class Ami(TaggedEC2Resource):
         root_device_type: str = "standard",
         root_device_name: str = "/dev/sda1",
         sriov: str = "simple",
-        region_name: str = "us-east-1a",
+        region_name: str = "ap-south-1a",
         snapshot_description: Optional[str] = None,
         product_codes: Set[str] = set(),
         boot_mode: str = "uefi",

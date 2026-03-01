@@ -270,9 +270,9 @@ cd infrastructure
 
 ### Verify Tables
 ```bash
-aws dynamodb list-tables --region us-east-1
-aws dynamodb describe-table --table-name AuditFlow-Documents --region us-east-1
-aws dynamodb describe-table --table-name AuditFlow-AuditRecords --region us-east-1
+aws dynamodb list-tables --region ap-south-1
+aws dynamodb describe-table --table-name AuditFlow-Documents --region ap-south-1
+aws dynamodb describe-table --table-name AuditFlow-AuditRecords --region ap-south-1
 ```
 
 ---

@@ -1105,7 +1105,7 @@ class Session:
 
         :type region_name: string
         :param region_name: Name of the region to list partition for (e.g.,
-             us-east-1).
+             ap-south-1).
 
         :rtype: string
         :return: Returns the respective partition name (e.g., aws).
@@ -1132,7 +1132,7 @@ class Session:
         :param allow_non_regional: Set to True to include endpoints that are
              not regional endpoints (e.g., s3-external-1,
              fips-us-gov-west-1, etc).
-        :return: Returns a list of endpoint names (e.g., ["us-east-1"]).
+        :return: Returns a list of endpoint names (e.g., ["ap-south-1"]).
         """
         resolver = self._get_internal_component('endpoint_resolver')
         results = []

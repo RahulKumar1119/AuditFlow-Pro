@@ -294,7 +294,7 @@ class AthenaBackend(BaseBackend):
 
             expected_results = {
                 "account_id": "123456789012",  # This is the default - can be omitted
-                "region": "us-east-1",  # This is the default - can be omitted
+                "region": "ap-south-1",  # This is the default - can be omitted
                 "results": [
                     {
                         "rows": [{"Data": [{"VarCharValue": "1"}]}],
@@ -320,7 +320,7 @@ class AthenaBackend(BaseBackend):
             )
             assert resp.status_code == 201
 
-            client = boto3.client("athena", region_name="us-east-1")
+            client = boto3.client("athena", region_name="ap-south-1")
             details = client.get_query_execution(QueryExecutionId="any_id")["QueryExecution"]
 
         .. note:: The exact QueryExecutionId is not relevant here, but will likely be whatever value is returned by start_query_execution

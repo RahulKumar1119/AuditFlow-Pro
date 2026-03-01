@@ -89,8 +89,8 @@ def validate_template_cfn_lint(template: str) -> List[Any]:
         # Initialize the ruleset to be applied (no overrules, no excludes)
         rules = get_rules([], [], [])
 
-        # Use us-east-1 region (spec file) for validation
-        regions = ["us-east-1"]
+        # Use ap-south-1 region (spec file) for validation
+        regions = ["ap-south-1"]
 
         # Process all the rules and gather the errors
         return run_checks(abs_filename, template, rules, regions)
@@ -108,8 +108,8 @@ def validate_template_cfn_lint(template: str) -> List[Any]:
         # Initialize the ruleset to be applied (no overrules, no excludes)
         rules = get_rules([], [], [])
 
-        # Use us-east-1 region (spec file) for validation
-        regions = ["us-east-1"]
+        # Use ap-south-1 region (spec file) for validation
+        regions = ["ap-south-1"]
 
         # Process all the rules and gather the errors
         return lint(template, rules, regions)

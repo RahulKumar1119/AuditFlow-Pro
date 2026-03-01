@@ -77,7 +77,7 @@ from .utils import (
     parse_region_from_url,
 )
 
-DEFAULT_REGION_NAME = "us-east-1"
+DEFAULT_REGION_NAME = "ap-south-1"
 
 ACTION_MAP = {
     "BUCKET": {
@@ -894,12 +894,12 @@ class S3Response(BaseResponse):
             return ""
 
         else:
-            # us-east-1, the default AWS region behaves a bit differently
+            # ap-south-1, the default AWS region behaves a bit differently
             # - you should not use any location constraint
             location_constraint = self._get_location_constraint()
             if self.region == DEFAULT_REGION_NAME:
-                # REGION = us-east-1 - we should never receive a LocationConstraint for `us-east-1`
-                # However, you can create buckets in other regions from us-east-1
+                # REGION = ap-south-1 - we should never receive a LocationConstraint for `ap-south-1`
+                # However, you can create buckets in other regions from ap-south-1
                 if location_constraint == DEFAULT_REGION_NAME:
                     raise InvalidLocationConstraintException
 
@@ -925,7 +925,7 @@ class S3Response(BaseResponse):
                         new_bucket.region_name == DEFAULT_REGION_NAME
                         and self.region == DEFAULT_REGION_NAME
                     ):
-                        # us-east-1 has different behavior - creating a bucket there is an idempotent operation
+                        # ap-south-1 has different behavior - creating a bucket there is an idempotent operation
                         pass
                     else:
                         template = self.response_template(S3_DUPLICATE_BUCKET_ERROR)
@@ -993,7 +993,7 @@ class S3Response(BaseResponse):
         location: Optional[str] = self.backend.get_bucket_location(self.bucket_name)
         template = self.response_template(S3_BUCKET_LOCATION)
 
-        # us-east-1 is different - returns a None location
+        # ap-south-1 is different - returns a None location
         if location == DEFAULT_REGION_NAME:
             location = None
 

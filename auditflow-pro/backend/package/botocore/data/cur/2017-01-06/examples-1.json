@@ -36,7 +36,7 @@
               "ReportName": "ExampleReport",
               "S3Bucket": "example-s3-bucket",
               "S3Prefix": "exampleprefix",
-              "S3Region": "us-east-1",
+              "S3Region": "ap-south-1",
               "TimeUnit": "HOURLY"
             },
             {
@@ -51,7 +51,7 @@
               "ReportName": "ExampleReport2",
               "S3Bucket": "example-s3-bucket",
               "S3Prefix": "exampleprefix",
-              "S3Region": "us-east-1",
+              "S3Region": "ap-south-1",
               "TimeUnit": "HOURLY"
             }
           ]
@@ -83,7 +83,7 @@
             "ReportName": "ExampleReport",
             "S3Bucket": "example-s3-bucket",
             "S3Prefix": "exampleprefix",
-            "S3Region": "us-east-1",
+            "S3Region": "ap-south-1",
             "TimeUnit": "DAILY"
           }
         },

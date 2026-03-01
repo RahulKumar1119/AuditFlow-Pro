@@ -529,7 +529,7 @@
               "s3:ObjectCreated:Put"
             ],
             "Id": "MDQ2OGQ4NDEtOTBmNi00YTM4LTk0NzYtZDIwN2I3NWQ1NjIx",
-            "Queue": "arn:aws:sqs:us-east-1:acct-id:S3ObjectCreatedEventQueue"
+            "Queue": "arn:aws:sqs:ap-south-1:acct-id:S3ObjectCreatedEventQueue"
           },
           "TopicConfiguration": {
             "Event": "s3:ObjectCreated:Copy",
@@ -537,7 +537,7 @@
               "s3:ObjectCreated:Copy"
             ],
             "Id": "YTVkMWEzZGUtNTY1NS00ZmE2LWJjYjktMmRlY2QwODFkNTJi",
-            "Topic": "arn:aws:sns:us-east-1:acct-id:S3ObjectCreatedEventTopic"
+            "Topic": "arn:aws:sns:ap-south-1:acct-id:S3ObjectCreatedEventTopic"
           }
         },
         "comments": {
@@ -561,7 +561,7 @@
               "s3:ObjectCreated:Put"
             ],
             "Id": "MDQ2OGQ4NDEtOTBmNi00YTM4LTk0NzYtZDIwN2I3NWQ1NjIx",
-            "Queue": "arn:aws:sqs:us-east-1:acct-id:S3ObjectCreatedEventQueue"
+            "Queue": "arn:aws:sqs:ap-south-1:acct-id:S3ObjectCreatedEventQueue"
           },
           "TopicConfiguration": {
             "Event": "s3:ObjectCreated:Copy",
@@ -569,7 +569,7 @@
               "s3:ObjectCreated:Copy"
             ],
             "Id": "YTVkMWEzZGUtNTY1NS00ZmE2LWJjYjktMmRlY2QwODFkNTJi",
-            "Topic": "arn:aws:sns:us-east-1:acct-id:S3ObjectCreatedEventTopic"
+            "Topic": "arn:aws:sns:ap-south-1:acct-id:S3ObjectCreatedEventTopic"
           }
         },
         "comments": {

@@ -4,7 +4,7 @@
 
 set -e
 
-REGION="${AWS_REGION:-us-east-1}"
+REGION="${AWS_REGION:-ap-south-1}"
 
 echo "Configuring DynamoDB tables..."
 

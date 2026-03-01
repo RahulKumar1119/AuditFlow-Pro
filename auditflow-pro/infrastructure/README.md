@@ -98,7 +98,7 @@ Deletes all infrastructure (use with caution):
 Set the AWS region before deployment:
 
 ```bash
-export AWS_REGION=us-east-1
+export AWS_REGION=ap-south-1
 ```
 
 Or modify the default in each script.

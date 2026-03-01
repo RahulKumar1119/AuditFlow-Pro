@@ -114,7 +114,7 @@ Future encrypted format (Task 23.3):
   "employee_ssn": {
     "encrypted_value": "AQICAHh...base64...",
     "encrypted_dek": "AQICAHh...base64...",
-    "encryption_key_id": "arn:aws:kms:us-east-1:123456789012:key/...",
+    "encryption_key_id": "arn:aws:kms:ap-south-1:123456789012:key/...",
     "encryption_algorithm": "AES-256-GCM",
     "confidence": 0.99,
     "requires_manual_review": false,

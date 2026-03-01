@@ -25,7 +25,7 @@
     "AddTagsToResource": [
       {
         "input": {
-          "ResourceName": "arn:aws:rds:us-east-1:992648334831:og:mymysqloptiongroup",
+          "ResourceName": "arn:aws:rds:ap-south-1:992648334831:og:mymysqloptiongroup",
           "Tags": [
             {
               "Key": "Staging",
@@ -49,7 +49,7 @@
         "input": {
           "ApplyAction": "system-update",
           "OptInType": "immediate",
-          "ResourceIdentifier": "arn:aws:rds:us-east-1:992648334831:db:mymysqlinstance"
+          "ResourceIdentifier": "arn:aws:rds:ap-south-1:992648334831:db:mymysqlinstance"
         },
         "output": {
           "ResourcePendingMaintenanceActions": {
@@ -199,7 +199,7 @@
       {
         "input": {
           "AvailabilityZones": [
-            "us-east-1a"
+            "ap-south-1a"
           ],
           "BackupRetentionPeriod": 1,
           "DBClusterIdentifier": "mydbcluster",
@@ -298,7 +298,7 @@
     "CreateDBInstanceReadReplica": [
       {
         "input": {
-          "AvailabilityZone": "us-east-1a",
+          "AvailabilityZone": "ap-south-1a",
           "CopyTagsToSnapshot": true,
           "DBInstanceClass": "db.t2.micro",
           "DBInstanceIdentifier": "mydbreadreplica",
@@ -423,7 +423,7 @@
           "EventCategories": [
             "availability"
           ],
-          "SnsTopicArn": "arn:aws:sns:us-east-1:992648334831:MyDemoSNSTopic",
+          "SnsTopicArn": "arn:aws:sns:ap-south-1:992648334831:MyDemoSNSTopic",
           "SourceIds": [
             "mymysqlinstance"
           ],
@@ -1118,7 +1118,7 @@
     "DescribePendingMaintenanceActions": [
       {
         "input": {
-          "ResourceIdentifier": "arn:aws:rds:us-east-1:992648334831:db:mymysqlinstance"
+          "ResourceIdentifier": "arn:aws:rds:ap-south-1:992648334831:db:mymysqlinstance"
         },
         "output": {
         },
@@ -1285,7 +1285,7 @@
     "ListTagsForResource": [
       {
         "input": {
-          "ResourceName": "arn:aws:rds:us-east-1:992648334831:og:mymysqloptiongroup"
+          "ResourceName": "arn:aws:rds:ap-south-1:992648334831:og:mymysqloptiongroup"
         },
         "output": {
         },
@@ -1621,7 +1621,7 @@
     "RemoveTagsFromResource": [
       {
         "input": {
-          "ResourceName": "arn:aws:rds:us-east-1:992648334831:og:mydboptiongroup",
+          "ResourceName": "arn:aws:rds:ap-south-1:992648334831:og:mydboptiongroup",
           "TagKeys": [
             "MyKey"
           ]

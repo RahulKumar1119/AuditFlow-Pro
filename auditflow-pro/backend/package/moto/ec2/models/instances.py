@@ -108,7 +108,7 @@ class Instance(TaggedEC2Resource, BotoInstance, CloudFormationModel):
         self.user_data = user_data
         self.security_groups = security_groups
         self.instance_type: str = kwargs.get("instance_type", "m1.small")
-        self.region_name = kwargs.get("region_name", "us-east-1")
+        self.region_name = kwargs.get("region_name", "ap-south-1")
         placement = kwargs.get("placement", None)
         self.placement_hostid = kwargs.get("placement_hostid")
         self.subnet_id = kwargs.get("subnet_id")
@@ -243,7 +243,7 @@ class Instance(TaggedEC2Resource, BotoInstance, CloudFormationModel):
     @property
     def private_dns(self) -> str:
         formatted_ip = self.private_ip.replace(".", "-")  # type: ignore[union-attr]
-        if self.region_name == "us-east-1":
+        if self.region_name == "ap-south-1":
             return f"ip-{formatted_ip}.ec2.internal"
         else:
             return f"ip-{formatted_ip}.{self.region_name}.compute.internal"
@@ -256,7 +256,7 @@ class Instance(TaggedEC2Resource, BotoInstance, CloudFormationModel):
     def public_dns(self) -> Optional[str]:
         if self.public_ip:
             formatted_ip = self.public_ip.replace(".", "-")
-            if self.region_name == "us-east-1":
+            if self.region_name == "ap-south-1":
                 return f"ec2-{formatted_ip}.compute-1.amazonaws.com"
             else:
                 return f"ec2-{formatted_ip}.{self.region_name}.compute.amazonaws.com"
@@ -641,7 +641,7 @@ class InstanceBackend:
         Enable this validation by setting the environment variable `MOTO_ENABLE_KEYPAIR_VALIDATION=true`
         """
         location_type = "availability-zone" if kwargs.get("placement") else "region"
-        default_region = "us-east-1"
+        default_region = "ap-south-1"
         if settings.ENABLE_KEYPAIR_VALIDATION:
             self.describe_key_pairs(key_names=[kwargs.get("key_name")])  # type: ignore[attr-defined]
         if settings.ENABLE_AMI_VALIDATION:

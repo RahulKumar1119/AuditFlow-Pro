@@ -509,7 +509,7 @@
     "ListTagsForResource": [
       {
         "input": {
-          "ResourceArn": "arn:aws:appconfig:us-east-1:111122223333:application/339ohji"
+          "ResourceArn": "arn:aws:appconfig:ap-south-1:111122223333:application/339ohji"
         },
         "output": {
           "Tags": {
@@ -591,7 +591,7 @@
     "TagResource": [
       {
         "input": {
-          "ResourceArn": "arn:aws:appconfig:us-east-1:111122223333:application/339ohji",
+          "ResourceArn": "arn:aws:appconfig:ap-south-1:111122223333:application/339ohji",
           "Tags": {
             "group1": "1"
           }
@@ -606,7 +606,7 @@
     "UntagResource": [
       {
         "input": {
-          "ResourceArn": "arn:aws:appconfig:us-east-1:111122223333:application/339ohji",
+          "ResourceArn": "arn:aws:appconfig:ap-south-1:111122223333:application/339ohji",
           "TagKeys": [
             "group1"
           ]

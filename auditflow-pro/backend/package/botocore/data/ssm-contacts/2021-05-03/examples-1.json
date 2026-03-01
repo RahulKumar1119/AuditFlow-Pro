@@ -57,7 +57,7 @@
     "CreateContactChannel": [
       {
         "input": {
-          "ContactId": "arn:aws:ssm-contacts:us-east-1:111122223333:contact/akuam",
+          "ContactId": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact/akuam",
           "DeliveryAddress": {
             "SimpleAddress": "+15005550199"
           },
@@ -65,7 +65,7 @@
           "Type": "SMS"
         },
         "output": {
-          "ContactChannelArn": "arn:aws:ssm-contacts:us-east-1:111122223333:contact-channel/akuam/02f506b9-ea5d-4764-af89-2daa793ff024"
+          "ContactChannelArn": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact-channel/akuam/02f506b9-ea5d-4764-af89-2daa793ff024"
         },
         "comments": {
           "input": {
@@ -95,7 +95,7 @@
     "DeleteContact": [
       {
         "input": {
-          "ContactId": "arn:aws:ssm-contacts:us-east-1:111122223333:contact/alejr"
+          "ContactId": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact/alejr"
         },
         "output": {
         },
@@ -109,7 +109,7 @@
     "DeleteContactChannel": [
       {
         "input": {
-          "ContactChannelId": "arn:aws:ssm-contacts:us-east-1:111122223333:contact-channel/akuam/13149bad-52ee-45ea-ae1e-45857f78f9b2"
+          "ContactChannelId": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact-channel/akuam/13149bad-52ee-45ea-ae1e-45857f78f9b2"
         },
         "output": {
         },
@@ -304,10 +304,10 @@
     "GetContactPolicy": [
       {
         "input": {
-          "ContactArn": "arn:aws:ssm-contacts:us-east-1:111122223333:contact/akuam"
+          "ContactArn": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact/akuam"
         },
         "output": {
-          "ContactArn": "arn:aws:ssm-contacts:us-east-1:111122223333:contact/akuam",
+          "ContactArn": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact/akuam",
           "Policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"SharePolicyForDocumentationDralia\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"222233334444\"},\"Action\":[\"ssm-contacts:GetContact\",\"ssm-contacts:StartEngagement\",\"ssm-contacts:DescribeEngagement\",\"ssm-contacts:ListPagesByEngagement\",\"ssm-contacts:StopEngagement\"],\"Resource\":[\"arn:aws:ssm-contacts:*:111122223333:contact/akuam\",\"arn:aws:ssm-contacts:*:111122223333:engagement/akuam/*\"]}]}"
         },
         "comments": {
@@ -506,7 +506,7 @@
     "ListTagsForResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:ssm-contacts:us-east-1:111122223333:contact/akuam"
+          "ResourceARN": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact/akuam"
         },
         "output": {
           "Tags": [
@@ -526,7 +526,7 @@
     "PutContactPolicy": [
       {
         "input": {
-          "ContactArn": "arn:aws:ssm-contacts:us-east-1:111122223333:contact/akuam",
+          "ContactArn": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact/akuam",
           "Policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"ExampleResourcePolicy\",\"Action\":[\"ssm-contacts:GetContact\",\"ssm-contacts:StartEngagement\",\"ssm-contacts:DescribeEngagement\",\"ssm-contacts:ListPagesByEngagement\",\"ssm-contacts:StopEngagement\"],\"Principal\":{\"AWS\":\"222233334444\"},\"Effect\":\"Allow\",\"Resource\":[\"arn:aws:ssm-contacts:*:111122223333:contact/akuam\",\"arn:aws:ssm-contacts:*:111122223333:engagement/akuam/*\"]}]}"
         },
         "output": {
@@ -541,7 +541,7 @@
     "SendActivationCode": [
       {
         "input": {
-          "ContactChannelId": "arn:aws:ssm-contacts:us-east-1:111122223333:contact-channel/akuam/8ddae2d1-12c8-4e45-b852-c8587266c400"
+          "ContactChannelId": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact-channel/akuam/8ddae2d1-12c8-4e45-b852-c8587266c400"
         },
         "output": {
         },
@@ -607,7 +607,7 @@
     "TagResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:ssm-contacts:us-east-1:111122223333:contact/akuam",
+          "ResourceARN": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact/akuam",
           "Tags": [
             {
               "Key": "group1",
@@ -627,7 +627,7 @@
     "UntagResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:ssm-contacts:us-east-1:111122223333:contact/akuam",
+          "ResourceARN": "arn:aws:ssm-contacts:ap-south-1:111122223333:contact/akuam",
           "TagKeys": [
             "group1"
           ]

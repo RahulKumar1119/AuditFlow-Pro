@@ -155,7 +155,7 @@ class ConfigQueryModel(Generic[SERVICE_BACKEND]):
                     'name': 'The name of the resource',
                     'id': 'The ID of the resource',
                     'region': 'The region of the resource -- if global, then you may want to have the calling logic pass in the
-                               aggregator region in for the resource region -- or just us-east-1 :P'
+                               aggregator region in for the resource region -- or just ap-south-1 :P'
                 }
                 , ...
             ]

@@ -20,7 +20,7 @@ This script will:
 
 - AWS CLI installed and configured
 - AWS credentials with DynamoDB permissions
-- Region set (default: us-east-1, override with `AWS_REGION` env var)
+- Region set (default: ap-south-1, override with `AWS_REGION` env var)
 
 ## Tables Created
 
@@ -61,19 +61,19 @@ After running the script, verify tables were created:
 
 ```bash
 # List all tables
-aws dynamodb list-tables --region us-east-1
+aws dynamodb list-tables --region ap-south-1
 
 # Describe Documents table
-aws dynamodb describe-table --table-name AuditFlow-Documents --region us-east-1
+aws dynamodb describe-table --table-name AuditFlow-Documents --region ap-south-1
 
 # Describe Audit Records table
-aws dynamodb describe-table --table-name AuditFlow-AuditRecords --region us-east-1
+aws dynamodb describe-table --table-name AuditFlow-AuditRecords --region ap-south-1
 ```
 
 ## Configuration
 
 The script uses environment variables:
-- `AWS_REGION` - AWS region (default: us-east-1)
+- `AWS_REGION` - AWS region (default: ap-south-1)
 
 Example with custom region:
 ```bash
@@ -94,12 +94,12 @@ AWS_REGION=ap-south-1 ./create_dynamodb_tables.sh
 The script checks if tables exist and skips creation. To recreate:
 ```bash
 # Delete existing tables
-aws dynamodb delete-table --table-name AuditFlow-Documents --region us-east-1
-aws dynamodb delete-table --table-name AuditFlow-AuditRecords --region us-east-1
+aws dynamodb delete-table --table-name AuditFlow-Documents --region ap-south-1
+aws dynamodb delete-table --table-name AuditFlow-AuditRecords --region ap-south-1
 
 # Wait for deletion
-aws dynamodb wait table-not-exists --table-name AuditFlow-Documents --region us-east-1
-aws dynamodb wait table-not-exists --table-name AuditFlow-AuditRecords --region us-east-1
+aws dynamodb wait table-not-exists --table-name AuditFlow-Documents --region ap-south-1
+aws dynamodb wait table-not-exists --table-name AuditFlow-AuditRecords --region ap-south-1
 
 # Run creation script again
 ./create_dynamodb_tables.sh

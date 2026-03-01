@@ -516,7 +516,7 @@
     "ListTagsForResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:servicediscovery:us-east-1:123456789012:namespace/ns-ylexjili4cdxy3xm"
+          "ResourceARN": "arn:aws:servicediscovery:ap-south-1:123456789012:namespace/ns-ylexjili4cdxy3xm"
         },
         "output": {
           "Tags": [
@@ -569,7 +569,7 @@
     "TagResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:servicediscovery:us-east-1:123456789012:namespace/ns-ylexjili4cdxy3xm",
+          "ResourceARN": "arn:aws:servicediscovery:ap-south-1:123456789012:namespace/ns-ylexjili4cdxy3xm",
           "Tags": [
             {
               "Key": "Department",
@@ -597,7 +597,7 @@
     "UntagResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:servicediscovery:us-east-1:123456789012:namespace/ns-ylexjili4cdxy3xm",
+          "ResourceARN": "arn:aws:servicediscovery:ap-south-1:123456789012:namespace/ns-ylexjili4cdxy3xm",
           "TagKeys": [
             "Project",
             "Department"

@@ -343,7 +343,7 @@
       {
         "input": {
           "Description": "This is my copied snapshot.",
-          "DestinationRegion": "us-east-1",
+          "DestinationRegion": "ap-south-1",
           "SourceRegion": "us-west-2",
           "SourceSnapshotId": "snap-066877671789bd71b"
         },
@@ -356,7 +356,7 @@
           "output": {
           }
         },
-        "description": "This example copies a snapshot with the snapshot ID of ``snap-066877671789bd71b`` from the ``us-west-2`` region to the ``us-east-1`` region and adds a short description to identify the snapshot.",
+        "description": "This example copies a snapshot with the snapshot ID of ``snap-066877671789bd71b`` from the ``us-west-2`` region to the ``ap-south-1`` region and adds a short description to identify the snapshot.",
         "id": "to-copy-a-snapshot-1472502259774",
         "title": "To copy a snapshot"
       }
@@ -583,7 +583,7 @@
         },
         "output": {
           "NetworkInterface": {
-            "AvailabilityZone": "us-east-1d",
+            "AvailabilityZone": "ap-south-1d",
             "Description": "my network interface",
             "Groups": [
               {
@@ -805,12 +805,12 @@
     "CreateVolume": [
       {
         "input": {
-          "AvailabilityZone": "us-east-1a",
+          "AvailabilityZone": "ap-south-1a",
           "Size": 80,
           "VolumeType": "gp2"
         },
         "output": {
-          "AvailabilityZone": "us-east-1a",
+          "AvailabilityZone": "ap-south-1a",
           "CreateTime": "2016-08-29T18:52:32.724Z",
           "Encrypted": false,
           "Iops": 240,
@@ -826,13 +826,13 @@
           "output": {
           }
         },
-        "description": "This example creates an 80 GiB General Purpose (SSD) volume in the Availability Zone ``us-east-1a``.",
+        "description": "This example creates an 80 GiB General Purpose (SSD) volume in the Availability Zone ``ap-south-1a``.",
         "id": "to-create-a-new-volume-1472496724296",
         "title": "To create a new volume"
       },
       {
         "input": {
-          "AvailabilityZone": "us-east-1a",
+          "AvailabilityZone": "ap-south-1a",
           "Iops": 1000,
           "SnapshotId": "snap-066877671789bd71b",
           "VolumeType": "io1"
@@ -841,7 +841,7 @@
           "Attachments": [
 
           ],
-          "AvailabilityZone": "us-east-1a",
+          "AvailabilityZone": "ap-south-1a",
           "CreateTime": "2016-08-29T18:52:32.724Z",
           "Iops": 1000,
           "Size": 500,
@@ -859,7 +859,7 @@
           "output": {
           }
         },
-        "description": "This example creates a new Provisioned IOPS (SSD) volume with 1000 provisioned IOPS from a snapshot in the Availability Zone ``us-east-1a``.",
+        "description": "This example creates a new Provisioned IOPS (SSD) volume with 1000 provisioned IOPS from a snapshot in the Availability Zone ``ap-south-1a``.",
         "id": "to-create-a-new-provisioned-iops-ssd-volume-from-a-snapshot-1472498975176",
         "title": "To create a new Provisioned IOPS (SSD) volume from a snapshot"
       }
@@ -1382,33 +1382,33 @@
               "Messages": [
 
               ],
-              "RegionName": "us-east-1",
+              "RegionName": "ap-south-1",
               "State": "available",
-              "ZoneName": "us-east-1b"
+              "ZoneName": "ap-south-1b"
             },
             {
               "Messages": [
 
               ],
-              "RegionName": "us-east-1",
+              "RegionName": "ap-south-1",
               "State": "available",
-              "ZoneName": "us-east-1c"
+              "ZoneName": "ap-south-1c"
             },
             {
               "Messages": [
 
               ],
-              "RegionName": "us-east-1",
+              "RegionName": "ap-south-1",
               "State": "available",
-              "ZoneName": "us-east-1d"
+              "ZoneName": "ap-south-1d"
             },
             {
               "Messages": [
 
               ],
-              "RegionName": "us-east-1",
+              "RegionName": "ap-south-1",
               "State": "available",
-              "ZoneName": "us-east-1e"
+              "ZoneName": "ap-south-1e"
             }
           ]
         },
@@ -1873,7 +1873,7 @@
                 "InstanceOwnerId": "123456789012",
                 "Status": "attached"
               },
-              "AvailabilityZone": "us-east-1d",
+              "AvailabilityZone": "ap-south-1d",
               "Description": "my network interface",
               "Groups": [
                 {
@@ -1954,8 +1954,8 @@
               "RegionName": "ap-northeast-1"
             },
             {
-              "Endpoint": "ec2.us-east-1.amazonaws.com",
-              "RegionName": "us-east-1"
+              "Endpoint": "ec2.ap-south-1.amazonaws.com",
+              "RegionName": "ap-south-1"
             },
             {
               "Endpoint": "ec2.sa-east-1.amazonaws.com",
@@ -2498,7 +2498,7 @@
         "output": {
           "Subnets": [
             {
-              "AvailabilityZone": "us-east-1c",
+              "AvailabilityZone": "ap-south-1c",
               "AvailableIpAddressCount": 251,
               "CidrBlock": "10.0.1.0/24",
               "DefaultForAz": false,
@@ -2595,7 +2595,7 @@
               "Actions": [
 
               ],
-              "AvailabilityZone": "us-east-1a",
+              "AvailabilityZone": "ap-south-1a",
               "Events": [
 
               ],
@@ -2671,7 +2671,7 @@
                   "VolumeId": "vol-049df61146c4d7901"
                 }
               ],
-              "AvailabilityZone": "us-east-1a",
+              "AvailabilityZone": "ap-south-1a",
               "CreateTime": "2013-12-18T22:35:00.084Z",
               "Size": 8,
               "SnapshotId": "snap-1234567890abcdef0",
@@ -2721,7 +2721,7 @@
                   "VolumeId": "vol-049df61146c4d7901"
                 }
               ],
-              "AvailabilityZone": "us-east-1a",
+              "AvailabilityZone": "ap-south-1a",
               "CreateTime": "2013-12-18T22:35:00.084Z",
               "Size": 8,
               "SnapshotId": "snap-1234567890abcdef0",

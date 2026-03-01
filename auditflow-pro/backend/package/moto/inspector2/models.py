@@ -194,14 +194,14 @@ class Inspector2Backend(BaseBackend):
                     # .. other findings as required
                 ],
                 "account_id": "123456789012",  # This is the default - can be omitted
-                "region": "us-east-1",  # This is the default - can be omitted
+                "region": "ap-south-1",  # This is the default - can be omitted
             }
             resp = requests.post(
                 "http://motoapi.amazonaws.com/moto-api/static/inspector2/findings-results",
                 json=findings,
             )
 
-            inspector2 = boto3.client("inspector2", region_name="us-east-1")
+            inspector2 = boto3.client("inspector2", region_name="ap-south-1")
             findings = inspector2.list_findings()["findings"]
 
         """

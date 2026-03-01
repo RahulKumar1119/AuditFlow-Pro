@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     from moto.apigateway.models import Stage
 
 
-US_EAST_1_REGION = "us-east-1"
+US_EAST_1_REGION = "ap-south-1"
 GLOBAL_REGION = "global"
 APIGATEWAY_REGEX = (
     ARN_PARTITION_REGEX

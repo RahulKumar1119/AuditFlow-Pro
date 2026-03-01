@@ -219,5 +219,5 @@ class SupportBackend(BaseBackend):
 
 
 support_backends = BackendDict(
-    SupportBackend, "support", use_boto3_regions=False, additional_regions=["us-east-1"]
+    SupportBackend, "support", use_boto3_regions=False, additional_regions=["ap-south-1"]
 )

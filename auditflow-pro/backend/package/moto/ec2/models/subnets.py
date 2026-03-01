@@ -362,7 +362,7 @@ class SubnetBackend:
         map_public_ip_on_launch = default_for_az
 
         if availability_zone is None and not availability_zone_id:
-            availability_zone = "us-east-1a"
+            availability_zone = "ap-south-1a"
         try:
             if availability_zone:
                 availability_zone_data = next(

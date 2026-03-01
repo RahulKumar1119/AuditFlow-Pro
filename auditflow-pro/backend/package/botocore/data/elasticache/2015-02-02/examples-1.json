@@ -4,7 +4,7 @@
     "AddTagsToResource": [
       {
         "input": {
-          "ResourceName": "arn:aws:elasticache:us-east-1:1234567890:cluster:my-mem-cluster",
+          "ResourceName": "arn:aws:elasticache:ap-south-1:1234567890:cluster:my-mem-cluster",
           "Tags": [
             {
               "Key": "APIVersion",
@@ -84,7 +84,7 @@
             ],
             "NumCacheNodes": 1,
             "Port": 6379,
-            "PreferredAvailabilityZone": "us-east-1c",
+            "PreferredAvailabilityZone": "ap-south-1c",
             "PreferredMaintenanceWindow": "tue:09:30-tue:10:30",
             "SnapshotName": "my-snapshot-copy",
             "SnapshotRetentionLimit": 7,
@@ -164,7 +164,7 @@
           "EngineVersion": "3.2.4",
           "NumCacheNodes": 1,
           "Port": 6379,
-          "PreferredAvailabilityZone": "us-east-1c",
+          "PreferredAvailabilityZone": "ap-south-1c",
           "SnapshotRetentionLimit": 7
         },
         "output": {
@@ -190,7 +190,7 @@
             "NumCacheNodes": 1,
             "PendingModifiedValues": {
             },
-            "PreferredAvailabilityZone": "us-east-1c",
+            "PreferredAvailabilityZone": "ap-south-1c",
             "PreferredMaintenanceWindow": "fri: 05: 30-fri: 06: 30",
             "SnapshotRetentionLimit": 7,
             "SnapshotWindow": "10: 00-11: 00"
@@ -267,19 +267,19 @@
             "Subnets": [
               {
                 "SubnetAvailabilityZone": {
-                  "Name": "us-east-1a"
+                  "Name": "ap-south-1a"
                 },
                 "SubnetIdentifier": "subnet-6f28c982"
               },
               {
                 "SubnetAvailabilityZone": {
-                  "Name": "us-east-1c"
+                  "Name": "ap-south-1c"
                 },
                 "SubnetIdentifier": "subnet-bcd382f3"
               },
               {
                 "SubnetAvailabilityZone": {
-                  "Name": "us-east-1b"
+                  "Name": "ap-south-1b"
                 },
                 "SubnetIdentifier": "subnet-845b3e7c0"
               }
@@ -345,18 +345,18 @@
           "EngineVersion": "3.2.4",
           "NodeGroupConfiguration": [
             {
-              "PrimaryAvailabilityZone": "us-east-1c",
+              "PrimaryAvailabilityZone": "ap-south-1c",
               "ReplicaAvailabilityZones": [
-                "us-east-1b"
+                "ap-south-1b"
               ],
               "ReplicaCount": 1,
               "Slots": "0-8999"
             },
             {
-              "PrimaryAvailabilityZone": "us-east-1a",
+              "PrimaryAvailabilityZone": "ap-south-1a",
               "ReplicaAvailabilityZones": [
-                "us-east-1a",
-                "us-east-1c"
+                "ap-south-1a",
+                "ap-south-1c"
               ],
               "ReplicaCount": 2,
               "Slots": "9000-16383"
@@ -682,7 +682,7 @@
             ],
             "NumCacheNodes": 1,
             "Port": 6379,
-            "PreferredAvailabilityZone": "us-east-1c",
+            "PreferredAvailabilityZone": "ap-south-1c",
             "PreferredMaintenanceWindow": "fri:05:30-fri:06:30",
             "SnapshotName": "snapshot-20161212",
             "SnapshotRetentionLimit": 7,
@@ -770,7 +770,7 @@
                   "CacheNodeCreateTime": "2016-12-21T21:59:43.794Z",
                   "CacheNodeId": "0001",
                   "CacheNodeStatus": "available",
-                  "CustomerAvailabilityZone": "us-east-1b",
+                  "CustomerAvailabilityZone": "ap-south-1b",
                   "Endpoint": {
                     "Address": "my-mem-cluster.ameaqx.0001.use1.cache.amazonaws.com",
                     "Port": 11211
@@ -781,7 +781,7 @@
                   "CacheNodeCreateTime": "2016-12-21T21:59:43.794Z",
                   "CacheNodeId": "0002",
                   "CacheNodeStatus": "available",
-                  "CustomerAvailabilityZone": "us-east-1a",
+                  "CustomerAvailabilityZone": "ap-south-1a",
                   "Endpoint": {
                     "Address": "my-mem-cluster.ameaqx.0002.use1.cache.amazonaws.com",
                     "Port": 11211
@@ -1466,25 +1466,25 @@
               "Subnets": [
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1a"
+                    "Name": "ap-south-1a"
                   },
                   "SubnetIdentifier": "subnet-1a2b3c4d"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1c"
+                    "Name": "ap-south-1c"
                   },
                   "SubnetIdentifier": "subnet-a1b2c3d4"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1e"
+                    "Name": "ap-south-1e"
                   },
                   "SubnetIdentifier": "subnet-abcd1234"
                 },
                 {
                   "SubnetAvailabilityZone": {
-                    "Name": "us-east-1b"
+                    "Name": "ap-south-1b"
                   },
                   "SubnetIdentifier": "subnet-1234abcd"
                 }
@@ -2132,7 +2132,7 @@
           "Events": [
             {
               "Date": "2016-12-22T16:27:56.088Z",
-              "Message": "Added cache node 0001 in availability zone us-east-1e",
+              "Message": "Added cache node 0001 in availability zone ap-south-1e",
               "SourceIdentifier": "redis-cluster",
               "SourceType": "cache-cluster"
             },
@@ -2144,13 +2144,13 @@
             },
             {
               "Date": "2016-12-22T16:05:17.326Z",
-              "Message": "Added cache node 0002 in availability zone us-east-1c",
+              "Message": "Added cache node 0002 in availability zone ap-south-1c",
               "SourceIdentifier": "my-memcached2",
               "SourceType": "cache-cluster"
             },
             {
               "Date": "2016-12-22T16:05:17.323Z",
-              "Message": "Added cache node 0001 in availability zone us-east-1e",
+              "Message": "Added cache node 0001 in availability zone ap-south-1e",
               "SourceIdentifier": "my-memcached2",
               "SourceType": "cache-cluster"
             },
@@ -2187,7 +2187,7 @@
             },
             {
               "Date": "2016-12-22T16:27:56.088Z",
-              "Message": "Added cache node 0001 in availability zone us-east-1e",
+              "Message": "Added cache node 0001 in availability zone ap-south-1e",
               "SourceIdentifier": "redis-cluster",
               "SourceType": "cache-cluster"
             },
@@ -2199,13 +2199,13 @@
             },
             {
               "Date": "2016-12-22T16:05:17.326Z",
-              "Message": "Added cache node 0002 in availability zone us-east-1c",
+              "Message": "Added cache node 0002 in availability zone ap-south-1c",
               "SourceIdentifier": "my-memcached2",
               "SourceType": "cache-cluster"
             },
             {
               "Date": "2016-12-22T16:05:17.323Z",
-              "Message": "Added cache node 0001 in availability zone us-east-1e",
+              "Message": "Added cache node 0001 in availability zone ap-south-1e",
               "SourceIdentifier": "my-memcached2",
               "SourceType": "cache-cluster"
             },
@@ -2252,12 +2252,12 @@
                     {
                       "CacheClusterId": "clustered-redis-0001-001",
                       "CacheNodeId": "0001",
-                      "PreferredAvailabilityZone": "us-east-1e"
+                      "PreferredAvailabilityZone": "ap-south-1e"
                     },
                     {
                       "CacheClusterId": "clustered-redis-0001-002",
                       "CacheNodeId": "0001",
-                      "PreferredAvailabilityZone": "us-east-1c"
+                      "PreferredAvailabilityZone": "ap-south-1c"
                     }
                   ],
                   "Status": "available"
@@ -2268,12 +2268,12 @@
                     {
                       "CacheClusterId": "clustered-redis-0002-001",
                       "CacheNodeId": "0001",
-                      "PreferredAvailabilityZone": "us-east-1c"
+                      "PreferredAvailabilityZone": "ap-south-1c"
                     },
                     {
                       "CacheClusterId": "clustered-redis-0002-002",
                       "CacheNodeId": "0001",
-                      "PreferredAvailabilityZone": "us-east-1b"
+                      "PreferredAvailabilityZone": "ap-south-1b"
                     }
                   ],
                   "Status": "available"
@@ -2684,7 +2684,7 @@
               ],
               "NumCacheNodes": 1,
               "Port": 6379,
-              "PreferredAvailabilityZone": "us-east-1c",
+              "PreferredAvailabilityZone": "ap-south-1c",
               "PreferredMaintenanceWindow": "fri:05:30-fri:06:30",
               "SnapshotName": "snapshot-20161212",
               "SnapshotRetentionLimit": 7,
@@ -2812,7 +2812,7 @@
             "NumCacheNodes": 1,
             "PendingModifiedValues": {
             },
-            "PreferredAvailabilityZone": "us-east-1e",
+            "PreferredAvailabilityZone": "ap-south-1e",
             "PreferredMaintenanceWindow": "fri:09:00-fri:10:00",
             "SnapshotRetentionLimit": 14,
             "SnapshotWindow": "07:00-08:00"
@@ -2873,31 +2873,31 @@
             "Subnets": [
               {
                 "SubnetAvailabilityZone": {
-                  "Name": "us-east-1c"
+                  "Name": "ap-south-1c"
                 },
                 "SubnetIdentifier": "subnet-a1b2c3d4"
               },
               {
                 "SubnetAvailabilityZone": {
-                  "Name": "us-east-1e"
+                  "Name": "ap-south-1e"
                 },
                 "SubnetIdentifier": "subnet-1a2b3c4d"
               },
               {
                 "SubnetAvailabilityZone": {
-                  "Name": "us-east-1e"
+                  "Name": "ap-south-1e"
                 },
                 "SubnetIdentifier": "subnet-bcde2345"
               },
               {
                 "SubnetAvailabilityZone": {
-                  "Name": "us-east-1c"
+                  "Name": "ap-south-1c"
                 },
                 "SubnetIdentifier": "subnet-1234abcd"
               },
               {
                 "SubnetAvailabilityZone": {
-                  "Name": "us-east-1b"
+                  "Name": "ap-south-1b"
                 },
                 "SubnetIdentifier": "subnet-abcd1234"
               }
@@ -2942,7 +2942,7 @@
                     "CacheClusterId": "my-redis-rg-001",
                     "CacheNodeId": "0001",
                     "CurrentRole": "primary",
-                    "PreferredAvailabilityZone": "us-east-1b",
+                    "PreferredAvailabilityZone": "ap-south-1b",
                     "ReadEndpoint": {
                       "Address": "my-redis-rg-001.abcdef.0001.use1.cache.amazonaws.com",
                       "Port": 6379
@@ -2952,7 +2952,7 @@
                     "CacheClusterId": "my-redis-rg-002",
                     "CacheNodeId": "0001",
                     "CurrentRole": "replica",
-                    "PreferredAvailabilityZone": "us-east-1a",
+                    "PreferredAvailabilityZone": "ap-south-1a",
                     "ReadEndpoint": {
                       "Address": "my-redis-rg-002.abcdef.0001.use1.cache.amazonaws.com",
                       "Port": 6379
@@ -2962,7 +2962,7 @@
                     "CacheClusterId": "my-redis-rg-003",
                     "CacheNodeId": "0001",
                     "CurrentRole": "replica",
-                    "PreferredAvailabilityZone": "us-east-1c",
+                    "PreferredAvailabilityZone": "ap-south-1c",
                     "ReadEndpoint": {
                       "Address": "my-redis-rg-003.abcdef.0001.use1.cache.amazonaws.com",
                       "Port": 6379
@@ -3065,7 +3065,7 @@
     "RemoveTagsFromResource": [
       {
         "input": {
-          "ResourceName": "arn:aws:elasticache:us-east-1:1234567890:cluster:my-mem-cluster",
+          "ResourceName": "arn:aws:elasticache:ap-south-1:1234567890:cluster:my-mem-cluster",
           "TagKeys": [
             "A",
             "C",

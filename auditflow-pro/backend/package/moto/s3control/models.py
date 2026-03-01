@@ -30,7 +30,7 @@ class AccessPoint(BaseModel):
         self.alias = f"{name}-{mock_random.get_random_hex(34)}-s3alias"
         self.bucket = bucket
         self.created = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")
-        self.arn = f"arn:{get_partition(region_name)}:s3:us-east-1:{account_id}:accesspoint/{name}"
+        self.arn = f"arn:{get_partition(region_name)}:s3:ap-south-1:{account_id}:accesspoint/{name}"
         self.policy: Optional[str] = None
         self.network_origin = "VPC" if vpc_configuration else "Internet"
         self.vpc_id = (vpc_configuration or {}).get("VpcId")

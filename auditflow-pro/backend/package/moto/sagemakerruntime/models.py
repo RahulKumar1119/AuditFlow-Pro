@@ -31,7 +31,7 @@ class SageMakerRuntimeBackend(BaseBackend):
 
             expected_results = {
                 "account_id": "123456789012",  # This is the default - can be omitted
-                "region": "us-east-1",  # This is the default - can be omitted
+                "region": "ap-south-1",  # This is the default - can be omitted
                 "results": [
                     {
                          "Body": "first body",
@@ -47,7 +47,7 @@ class SageMakerRuntimeBackend(BaseBackend):
                 json=expected_results,
             )
 
-            client = boto3.client("sagemaker-runtime", region_name="us-east-1")
+            client = boto3.client("sagemaker-runtime", region_name="ap-south-1")
             details = client.invoke_endpoint(EndpointName="asdf", Body="qwer")
 
         """
@@ -84,7 +84,7 @@ class SageMakerRuntimeBackend(BaseBackend):
 
             expected_results = {
                 "account_id": "123456789012",  # This is the default - can be omitted
-                "region": "us-east-1",  # This is the default - can be omitted
+                "region": "ap-south-1",  # This is the default - can be omitted
                 "results": [
                     {
                         "data": json.dumps({"first": "output"}),
@@ -101,7 +101,7 @@ class SageMakerRuntimeBackend(BaseBackend):
                 json=expected_results,
             )
 
-            client = boto3.client("sagemaker-runtime", region_name="us-east-1")
+            client = boto3.client("sagemaker-runtime", region_name="ap-south-1")
             details = client.invoke_endpoint_async(EndpointName="asdf", InputLocation="qwer")
 
         """

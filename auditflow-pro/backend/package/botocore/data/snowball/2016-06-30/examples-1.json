@@ -55,7 +55,7 @@
           "AddressId": "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b",
           "Description": "MyCluster",
           "JobType": "LOCAL_USE",
-          "KmsKeyARN": "arn:aws:kms:us-east-1:123456789012:key/abcd1234-12ab-34cd-56ef-123456123456",
+          "KmsKeyARN": "arn:aws:kms:ap-south-1:123456789012:key/abcd1234-12ab-34cd-56ef-123456123456",
           "Notification": {
             "JobStatesToNotify": [
 
@@ -91,7 +91,7 @@
           "AddressId": "ADID1234ab12-3eec-4eb3-9be6-9374c10eb51b",
           "Description": "My Job",
           "JobType": "IMPORT",
-          "KmsKeyARN": "arn:aws:kms:us-east-1:123456789012:key/abcd1234-12ab-34cd-56ef-123456123456",
+          "KmsKeyARN": "arn:aws:kms:ap-south-1:123456789012:key/abcd1234-12ab-34cd-56ef-123456123456",
           "Notification": {
             "JobStatesToNotify": [
 
@@ -186,7 +186,7 @@
             "CreationDate": "1480475517.0",
             "Description": "MyCluster",
             "JobType": "LOCAL_USE",
-            "KmsKeyARN": "arn:aws:kms:us-east-1:123456789012:key/abcd1234-12ab-34cd-56ef-123456123456",
+            "KmsKeyARN": "arn:aws:kms:ap-south-1:123456789012:key/abcd1234-12ab-34cd-56ef-123456123456",
             "Notification": {
               "JobStatesToNotify": [
 
@@ -226,7 +226,7 @@
             "JobId": "JID123e4567-e89b-12d3-a456-426655440000",
             "JobState": "New",
             "JobType": "IMPORT",
-            "KmsKeyARN": "arn:aws:kms:us-east-1:123456789012:key/abcd1234-12ab-34cd-56ef-123456123456",
+            "KmsKeyARN": "arn:aws:kms:ap-south-1:123456789012:key/abcd1234-12ab-34cd-56ef-123456123456",
             "Notification": {
               "JobStatesToNotify": [
 

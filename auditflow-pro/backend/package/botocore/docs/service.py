@@ -29,7 +29,7 @@ class ServiceDocumenter:
 
         self._client = self._session.create_client(
             service_name,
-            region_name='us-east-1',
+            region_name='ap-south-1',
             aws_access_key_id='foo',
             aws_secret_access_key='bar',
         )

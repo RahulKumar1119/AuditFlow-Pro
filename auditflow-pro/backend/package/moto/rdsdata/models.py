@@ -50,7 +50,7 @@ class RDSDataServiceBackend(BaseBackend):
 
             expected_results = {
                 "account_id": "123456789012",  # This is the default - can be omitted
-                "region": "us-east-1",  # This is the default - can be omitted
+                "region": "ap-south-1",  # This is the default - can be omitted
                 "results": [
                     {
                         "records": [...],
@@ -68,7 +68,7 @@ class RDSDataServiceBackend(BaseBackend):
             )
             assert resp.status_code == 201
 
-            rdsdata = boto3.client("rds-data", region_name="us-east-1")
+            rdsdata = boto3.client("rds-data", region_name="ap-south-1")
             resp = rdsdata.execute_statement(resourceArn="not applicable", secretArn="not applicable", sql="SELECT some FROM thing")
 
         """

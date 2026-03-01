@@ -68,8 +68,8 @@ class BotocoreStubber:
                 backend_dict = backends.get_backend(service)  # type: ignore[call-overload]
 
                 if isinstance(backend_dict, BackendDict):
-                    if "us-east-1" in backend_dict[DEFAULT_ACCOUNT_ID]:
-                        backend = backend_dict[DEFAULT_ACCOUNT_ID]["us-east-1"]
+                    if "ap-south-1" in backend_dict[DEFAULT_ACCOUNT_ID]:
+                        backend = backend_dict[DEFAULT_ACCOUNT_ID]["ap-south-1"]
                     else:
                         backend = backend_dict[DEFAULT_ACCOUNT_ID]["aws"]
                 else:

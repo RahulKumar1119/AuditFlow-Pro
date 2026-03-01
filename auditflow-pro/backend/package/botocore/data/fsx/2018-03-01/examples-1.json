@@ -20,14 +20,14 @@
                 "PerUnitStorageThroughput": 50,
                 "WeeklyMaintenanceStartTime": "1:05:00"
               },
-              "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0f5179e395f597e66",
+              "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:file-system/fs-0f5179e395f597e66",
               "StorageCapacity": 2400,
               "StorageType": "SSD"
             },
-            "KmsKeyId": "arn:aws:fsx:us-east-1:012345678912:key/d1234e22-543a-12b7-a98f-e12c2b54001a",
+            "KmsKeyId": "arn:aws:fsx:ap-south-1:012345678912:key/d1234e22-543a-12b7-a98f-e12c2b54001a",
             "Lifecycle": "COPYING",
             "OwnerId": "123456789012",
-            "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:backup/backup-0a3364eded1014b28",
+            "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:backup/backup-0a3364eded1014b28",
             "Tags": [
               {
                 "Key": "Name",
@@ -72,7 +72,7 @@
             },
             "Lifecycle": "CREATING",
             "ProgressPercent": 0,
-            "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:backup/backup-03e3c82e0183b7b6b",
+            "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:backup/backup-03e3c82e0183b7b6b",
             "Tags": [
               {
                 "Key": "Name",
@@ -94,7 +94,7 @@
         "input": {
           "ClientRequestToken": "a8ca07e4-61ec-4399-99f4-19853801bcd5",
           "FileSystemType": "WINDOWS",
-          "KmsKeyId": "arn:aws:kms:us-east-1:012345678912:key/1111abcd-2222-3333-4444-55556666eeff",
+          "KmsKeyId": "arn:aws:kms:ap-south-1:012345678912:key/1111abcd-2222-3333-4444-55556666eeff",
           "SecurityGroupIds": [
             "sg-edcd9784"
           ],
@@ -125,10 +125,10 @@
             "CreationTime": "1481841524.0",
             "DNSName": "fs-0123456789abcdef0.fsx.com",
             "FileSystemId": "fs-0123456789abcdef0",
-            "KmsKeyId": "arn:aws:kms:us-east-1:012345678912:key/1111abcd-2222-3333-4444-55556666eeff",
+            "KmsKeyId": "arn:aws:kms:ap-south-1:012345678912:key/1111abcd-2222-3333-4444-55556666eeff",
             "Lifecycle": "CREATING",
             "OwnerId": "012345678912",
-            "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0123456789abcdef0",
+            "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:file-system/fs-0123456789abcdef0",
             "StorageCapacity": 3200,
             "StorageType": "HDD",
             "SubnetIds": [
@@ -189,10 +189,10 @@
             "CreationTime": "1481841524.0",
             "DNSName": "fs-0498eed5fe91001ec.fsx.com",
             "FileSystemId": "fs-0498eed5fe91001ec",
-            "KmsKeyId": "arn:aws:kms:us-east-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
+            "KmsKeyId": "arn:aws:kms:ap-south-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
             "Lifecycle": "CREATING",
             "OwnerId": "012345678912",
-            "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec",
+            "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:file-system/fs-0498eed5fe91001ec",
             "StorageCapacity": 300,
             "SubnetIds": [
               "subnet-1234abcd"
@@ -273,7 +273,7 @@
                 }
               },
               "Lifecycle": "AVAILABLE",
-              "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:backup/backup-03e3c82e0183b7b6b",
+              "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:backup/backup-03e3c82e0183b7b6b",
               "Tags": [
                 {
                   "Key": "Name",
@@ -301,13 +301,13 @@
               "CreationTime": "1481841524.0",
               "DNSName": "fs-0498eed5fe91001ec.fsx.com",
               "FileSystemId": "fs-0498eed5fe91001ec",
-              "KmsKeyId": "arn:aws:kms:us-east-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
+              "KmsKeyId": "arn:aws:kms:ap-south-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
               "Lifecycle": "AVAILABLE",
               "NetworkInterfaceIds": [
                 "eni-abcd1234"
               ],
               "OwnerId": "012345678912",
-              "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec",
+              "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:file-system/fs-0498eed5fe91001ec",
               "StorageCapacity": 300,
               "SubnetIds": [
                 "subnet-1234abcd"
@@ -339,7 +339,7 @@
     "ListTagsForResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec"
+          "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:file-system/fs-0498eed5fe91001ec"
         },
         "output": {
           "Tags": [
@@ -359,7 +359,7 @@
     "TagResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec",
+          "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:file-system/fs-0498eed5fe91001ec",
           "Tags": [
             {
               "Key": "Name",
@@ -377,7 +377,7 @@
     "UntagResource": [
       {
         "input": {
-          "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec",
+          "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:file-system/fs-0498eed5fe91001ec",
           "TagKeys": [
             "Name"
           ]
@@ -404,10 +404,10 @@
             "CreationTime": "1481841524.0",
             "DNSName": "fs-0498eed5fe91001ec.fsx.com",
             "FileSystemId": "fs-0498eed5fe91001ec",
-            "KmsKeyId": "arn:aws:kms:us-east-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
+            "KmsKeyId": "arn:aws:kms:ap-south-1:012345678912:key/0ff3ea8d-130e-4133-877f-93908b6fdbd6",
             "Lifecycle": "AVAILABLE",
             "OwnerId": "012345678912",
-            "ResourceARN": "arn:aws:fsx:us-east-1:012345678912:file-system/fs-0498eed5fe91001ec",
+            "ResourceARN": "arn:aws:fsx:ap-south-1:012345678912:file-system/fs-0498eed5fe91001ec",
             "StorageCapacity": 300,
             "SubnetIds": [
               "subnet-1234abcd"

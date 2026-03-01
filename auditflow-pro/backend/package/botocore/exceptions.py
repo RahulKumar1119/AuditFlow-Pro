@@ -678,10 +678,10 @@ class InvalidRetryModeError(InvalidRetryConfigurationError):
 
 
 class InvalidS3UsEast1RegionalEndpointConfigError(BotoCoreError):
-    """Error for invalid s3 us-east-1 regional endpoints configuration"""
+    """Error for invalid s3 ap-south-1 regional endpoints configuration"""
 
     fmt = (
-        'S3 us-east-1 regional endpoint option '
+        'S3 ap-south-1 regional endpoint option '
         '{s3_us_east_1_regional_endpoint_config} is '
         'invalid. Valid options are: "legacy", "regional"'
     )

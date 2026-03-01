@@ -690,7 +690,7 @@ class Command(BaseModel):
         parameters: Optional[Dict[str, List[str]]] = None,
         service_role_arn: str = "",
         targets: Optional[List[Dict[str, Any]]] = None,
-        backend_region: str = "us-east-1",
+        backend_region: str = "ap-south-1",
     ):
         if instance_ids is None:
             instance_ids = []
