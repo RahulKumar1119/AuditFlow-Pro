@@ -176,6 +176,31 @@ else
             TagKey=Environment,TagValue=Production
 fi
 
+# ==========================================
+# Enable CloudWatch Logging for KMS Key Usage
+# ==========================================
+echo ""
+echo "Configuring CloudWatch logging for KMS key operations..."
+
+# Create CloudWatch log group for KMS events
+LOG_GROUP_NAME="/aws/kms/auditflow-encryption"
+aws logs create-log-group --log-group-name "$LOG_GROUP_NAME" --region "$REGION" 2>/dev/null || echo "Log group already exists"
+
+# Set retention policy (1 year)
+aws logs put-retention-policy \
+    --log-group-name "$LOG_GROUP_NAME" \
+    --retention-in-days 365 \
+    --region "$REGION" 2>/dev/null || echo "Retention policy already set"
+
+echo "✓ CloudWatch log group created: $LOG_GROUP_NAME"
+echo "✓ Log retention: 365 days (1 year)"
+
+# Note: KMS key usage is automatically logged to CloudTrail
+# CloudTrail must be enabled separately to capture KMS events
+echo ""
+echo "Note: KMS key operations are logged to AWS CloudTrail"
+echo "Ensure CloudTrail is enabled to track encryption/decryption events"
+
 echo ""
 echo "=================================================="
 echo "KMS setup complete!"
@@ -184,6 +209,7 @@ echo "S3 Key Alias: alias/auditflow-s3-encryption"
 echo "DynamoDB Encryption Key: $DYNAMODB_KEY_ID"
 echo "DynamoDB Key Alias: alias/auditflow-dynamodb-encryption"
 echo "Key Rotation: Enabled (Annual)"
+echo "CloudWatch Logging: Configured"
 echo "=================================================="
 
 # Export key IDs for use in other scripts

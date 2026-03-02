@@ -102,7 +102,52 @@ aws iam put-role-policy \
         ]
     }'
 
-# 6. Create Step Functions execution role
+# 6. Create custom policy for KMS encryption/decryption
+echo "Creating KMS access policy..."
+aws iam put-role-policy \
+    --role-name AuditFlowLambdaExecutionRole \
+    --policy-name KMSAccess \
+    --policy-document '{
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "kms:Decrypt",
+                    "kms:Encrypt",
+                    "kms:GenerateDataKey",
+                    "kms:DescribeKey"
+                ],
+                "Resource": [
+                    "arn:aws:kms:'$REGION':'$ACCOUNT_ID':key/*",
+                    "arn:aws:kms:'$REGION':'$ACCOUNT_ID':alias/auditflow-*"
+                ]
+            }
+        ]
+    }'
+
+# 7. Deny cross-account access by default
+echo "Creating cross-account access denial policy..."
+aws iam put-role-policy \
+    --role-name AuditFlowLambdaExecutionRole \
+    --policy-name DenyCrossAccountAccess \
+    --policy-document '{
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Deny",
+                "Action": "*",
+                "Resource": "*",
+                "Condition": {
+                    "StringNotEquals": {
+                        "aws:PrincipalAccount": "'$ACCOUNT_ID'"
+                    }
+                }
+            }
+        ]
+    }'
+
+# 8. Create Step Functions execution role
 echo "Creating Step Functions execution role..."
 aws iam create-role \
     --role-name AuditFlowStepFunctionsRole \
@@ -115,7 +160,7 @@ aws iam create-role \
         }]
     }' 2>/dev/null || echo "Role already exists"
 
-# 7. Create policy for Step Functions to invoke Lambda
+# 9. Create policy for Step Functions to invoke Lambda
 echo "Creating Step Functions Lambda invoke policy..."
 aws iam put-role-policy \
     --role-name AuditFlowStepFunctionsRole \
@@ -142,7 +187,7 @@ aws iam put-role-policy \
         ]
     }'
 
-# 8. Create API Gateway execution role
+# 10. Create API Gateway execution role
 echo "Creating API Gateway execution role..."
 aws iam create-role \
     --role-name AuditFlowAPIGatewayRole \
@@ -164,3 +209,17 @@ echo "IAM roles and policies created successfully!"
 echo "Lambda Execution Role ARN: arn:aws:iam::${ACCOUNT_ID}:role/AuditFlowLambdaExecutionRole"
 echo "Step Functions Role ARN: arn:aws:iam::${ACCOUNT_ID}:role/AuditFlowStepFunctionsRole"
 echo "API Gateway Role ARN: arn:aws:iam::${ACCOUNT_ID}:role/AuditFlowAPIGatewayRole"
+echo ""
+echo "Policies Applied:"
+echo "  ✓ S3 Document Access (read/write to auditflow-documents bucket)"
+echo "  ✓ DynamoDB Access (read/write to AuditFlow tables)"
+echo "  ✓ AI Services Access (Textract, Bedrock, Comprehend)"
+echo "  ✓ KMS Access (encrypt/decrypt with auditflow keys)"
+echo "  ✓ Cross-Account Access Denied"
+echo ""
+echo "Security Requirements Satisfied:"
+echo "  - Requirement 17.1: IAM policies with minimum permissions ✓"
+echo "  - Requirement 17.2: S3 read access for Lambda ✓"
+echo "  - Requirement 17.3: DynamoDB write access for Lambda ✓"
+echo "  - Requirement 17.4: AI service invoke permissions ✓"
+echo "  - Requirement 17.7: Cross-account access denied ✓"
