@@ -48,6 +48,11 @@ def mock_infrastructure(aws_credentials):
         topic = sns.create_topic(Name='AuditFlow-Alerts-Test')
         os.environ['ALERTS_TOPIC_ARN'] = topic['TopicArn']
         
+        # 3. Reinitialize the global clients in the reporter module to use mocked resources
+        import functions.reporter.app as reporter_app
+        reporter_app.dynamodb = dynamodb
+        reporter_app.sns = sns
+        
         yield dynamodb, sns
 
 @pytest.fixture

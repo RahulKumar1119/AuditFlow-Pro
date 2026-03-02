@@ -12,10 +12,17 @@ from botocore.exceptions import ClientError
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# Initialize AWS clients
-aws_region = os.environ.get('AWS_REGION', 'ap-south-1')
-dynamodb = boto3.resource('dynamodb', region_name=aws_region)
-sns = boto3.client('sns', region_name=aws_region)
+# Initialize AWS clients (will be reinitialized in tests with mocked resources)
+def get_aws_clients():
+    """Get AWS clients - allows for easier mocking in tests."""
+    aws_region = os.environ.get('AWS_REGION', 'ap-south-1')
+    return (
+        boto3.resource('dynamodb', region_name=aws_region),
+        boto3.client('sns', region_name=aws_region)
+    )
+
+# Default clients
+dynamodb, sns = get_aws_clients()
 
 AUDIT_TABLE_NAME = os.environ.get('AUDIT_RECORDS_TABLE', 'AuditFlow-AuditRecords')
 DOCS_TABLE_NAME = os.environ.get('DOCUMENTS_TABLE', 'AuditFlow-Documents')
@@ -23,7 +30,9 @@ ALERTS_TOPIC_ARN = os.environ.get('ALERTS_TOPIC_ARN', '')
 
 def save_audit_record(record_data: dict):
     """Task 10.2: Store audit record in DynamoDB."""
-    table = dynamodb.Table(AUDIT_TABLE_NAME)
+    global dynamodb
+    table_name = os.environ.get('AUDIT_RECORDS_TABLE', 'AuditFlow-AuditRecords')
+    table = dynamodb.Table(table_name)
     try:
         table.put_item(Item=record_data)
         logger.info(f"Successfully saved audit record {record_data['audit_record_id']} to DynamoDB.")
@@ -33,7 +42,9 @@ def save_audit_record(record_data: dict):
 
 def update_document_statuses(documents: list, status: str):
     """Task 10.2: Update document processing status in DynamoDB."""
-    table = dynamodb.Table(DOCS_TABLE_NAME)
+    global dynamodb
+    table_name = os.environ.get('DOCUMENTS_TABLE', 'AuditFlow-Documents')
+    table = dynamodb.Table(table_name)
     for doc in documents:
         doc_id = doc.get('document_id')
         try:
@@ -50,7 +61,10 @@ def update_document_statuses(documents: list, status: str):
 
 def trigger_alerts(record_data: dict) -> list:
     """Task 10.3: Implement alert triggering via SNS."""
-    if not ALERTS_TOPIC_ARN:
+    global sns
+    alerts_topic_arn = os.environ.get('ALERTS_TOPIC_ARN', '')
+    
+    if not alerts_topic_arn:
         logger.warning("ALERTS_TOPIC_ARN not configured. Skipping SNS alerts.")
         return []
 
@@ -70,7 +84,7 @@ def trigger_alerts(record_data: dict) -> list:
 
     try:
         response = sns.publish(
-            TopicArn=ALERTS_TOPIC_ARN,
+            TopicArn=alerts_topic_arn,
             Subject=f"AuditFlow Alert: {alert_type} Risk Detected",
             Message=message,
             MessageAttributes={

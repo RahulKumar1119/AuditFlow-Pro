@@ -240,14 +240,14 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Test Bedrock integration with mocked responses
     - _Requirements: 20.1, 20.5_
 
-- [ ] 9. Implement Risk Score Calculator Lambda function
-  - [ ] 9.1 Create Lambda handler and scoring orchestration
+- [x] 9. Implement Risk Score Calculator Lambda function
+  - [x] 9.1 Create Lambda handler and scoring orchestration
     - Implement Lambda handler accepting inconsistencies and documents
     - Initialize risk score calculation
     - Track contributing factors
     - _Requirements: 8.1_
 
-  - [ ] 9.2 Implement inconsistency-based scoring
+  - [x] 9.2 Implement inconsistency-based scoring
     - Add 15 points for each name inconsistency
     - Add 20 points for each address mismatch
     - Add 25 points for income discrepancies > 10%
@@ -255,92 +255,92 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Add 30 points for identification number mismatches
     - _Requirements: 8.2, 8.3, 8.4, 8.5_
 
-  - [ ] 9.3 Implement extraction quality scoring
+  - [x] 9.3 Implement extraction quality scoring
     - Add 10 points per field with confidence < 80%
     - Add 5 points per illegible or low-quality page
     - _Requirements: 8.6, 8.7_
 
-  - [ ] 9.4 Implement risk level determination
+  - [x] 9.4 Implement risk level determination
     - Cap risk score at 100
     - Assign risk levels: LOW (0-24), MEDIUM (25-49), HIGH (50-79), CRITICAL (80-100)
     - Flag applications as high-risk when score > 50
     - _Requirements: 8.8, 8.9_
 
-  - [ ] 9.5 Store risk factors with descriptions
+  - [x] 9.5 Store risk factors with descriptions
     - Record each contributing factor with point value
     - Add human-readable descriptions for each factor
     - _Requirements: 8.9_
 
-  - [ ]* 9.6 Write property test for risk score calculation
+  - [x]* 9.6 Write property test for risk score calculation
     - **Property 3: Risk score is monotonically increasing with inconsistencies**
     - **Validates: Requirements 8.1, 8.2, 8.3, 8.4, 8.5**
 
-  - [ ]* 9.7 Write unit tests for risk scoring
+  - [x]* 9.7 Write unit tests for risk scoring
     - Test scoring algorithm with various inconsistency combinations
     - Test risk level assignment
     - Test score capping at 100
     - _Requirements: 20.1_
 
-- [ ] 10. Implement Report Generator Lambda function
-  - [ ] 10.1 Create Lambda handler and report compilation
+- [x] 10. Implement Report Generator Lambda function
+  - [x] 10.1 Create Lambda handler and report compilation
     - Implement Lambda handler accepting all audit data
     - Compile complete audit record
     - Categorize inconsistencies by severity
     - Generate document page references
     - _Requirements: 9.1, 9.2, 9.3, 9.7_
 
-  - [ ] 10.2 Implement DynamoDB storage
+  - [x] 10.2 Implement DynamoDB storage
     - Store audit record in AuditRecords table
     - Update document processing status
     - Apply encryption at rest
     - _Requirements: 12.1, 12.2, 12.6_
 
-  - [ ] 10.3 Implement alert triggering
+  - [x] 10.3 Implement alert triggering
     - Check if risk score > 80 for critical alerts
     - Check if risk score > 50 for high-risk alerts
     - Send SNS notifications to administrators
     - Record alert events in audit record
     - _Requirements: 22.1, 22.2, 22.6_
 
-  - [ ] 10.4 Add CloudWatch logging
+  - [x] 10.4 Add CloudWatch logging
     - Log audit completion events
     - Log alert triggers
     - Include audit record ID and risk score in logs
     - _Requirements: 18.1, 18.2, 18.4_
 
-  - [ ]* 10.5 Write unit tests for Report Generator
+  - [x]* 10.5 Write unit tests for Report Generator
     - Test audit record compilation
     - Test DynamoDB storage operations
     - Test alert triggering logic
     - _Requirements: 20.1_
 
-- [ ] 11. Implement Step Functions workflow orchestration
-  - [ ] 11.1 Create Step Functions state machine definition
+- [x] 11. Implement Step Functions workflow orchestration
+  - [x] 11.1 Create Step Functions state machine definition
     - Define workflow states: ClassifyDocument, ExtractData, CheckAllDocumentsProcessed, ValidateDocuments, CalculateRiskScore, GenerateReport
     - Configure state transitions and data flow
     - Add error handling state
     - _Requirements: 11.1, 11.2, 11.6_
 
-  - [ ] 11.2 Configure retry policies and error handling
+  - [x] 11.2 Configure retry policies and error handling
     - Set retry policy: 3 attempts with exponential backoff (5s, 15s, 45s)
     - Configure catch blocks for Lambda errors
     - Implement state resumption after interruption
     - Add CloudWatch logging for state transitions
     - _Requirements: 11.3, 11.4, 11.5, 11.7, 11.8_
 
-  - [ ] 11.3 Implement document aggregation logic
+  - [x] 11.3 Implement document aggregation logic
     - Create CheckAllDocumentsProcessed state to wait for all documents
     - Aggregate extracted data from all documents in loan application
     - Pass aggregated data to validation step
     - _Requirements: 6.1_
 
-  - [ ] 11.4 Configure IAM roles and permissions
+  - [x] 11.4 Configure IAM roles and permissions
     - Create execution role for Step Functions
     - Grant permissions to invoke Lambda functions
     - Grant permissions to write CloudWatch logs
     - _Requirements: 17.5_
 
-  - [ ]* 11.5 Write integration tests for Step Functions workflow
+  - [x]* 11.5 Write integration tests for Step Functions workflow
     - Test complete workflow execution from upload to report
     - Test error handling and retry logic
     - Test state resumption after failures
