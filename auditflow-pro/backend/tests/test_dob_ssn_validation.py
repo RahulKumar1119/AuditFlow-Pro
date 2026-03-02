@@ -134,7 +134,7 @@ class TestDOBValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'VALIDATION_COMPLETE_WITH_GOLDEN_RECORD'
             assert len(response['inconsistencies']) == 1
             assert response['inconsistencies_found'] == 1
             
@@ -204,7 +204,7 @@ class TestDOBValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'VALIDATION_COMPLETE_WITH_GOLDEN_RECORD'
             assert len(response['inconsistencies']) == 0
             assert response['inconsistencies_found'] == 0
 
@@ -327,7 +327,7 @@ class TestSSNValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'VALIDATION_COMPLETE_WITH_GOLDEN_RECORD'
             assert len(response['inconsistencies']) == 1
             assert response['inconsistencies_found'] == 1
             
@@ -397,7 +397,7 @@ class TestSSNValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'VALIDATION_COMPLETE_WITH_GOLDEN_RECORD'
             assert len(response['inconsistencies']) == 0
             assert response['inconsistencies_found'] == 0
 

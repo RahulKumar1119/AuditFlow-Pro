@@ -170,7 +170,7 @@ class TestIncomeValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'VALIDATION_COMPLETE_WITH_GOLDEN_RECORD'
             assert len(response['inconsistencies']) == 1
             assert response['inconsistencies_found'] == 1
             
@@ -240,7 +240,7 @@ class TestIncomeValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'VALIDATION_COMPLETE_WITH_GOLDEN_RECORD'
             assert len(response['inconsistencies']) == 0
             assert response['inconsistencies_found'] == 0
     
@@ -322,7 +322,7 @@ class TestIncomeValidation:
             
             # Assert
             assert response['statusCode'] == 200
-            assert response['validation_status'] == 'NAME_ADDRESS_INCOME_DOB_SSN_VALIDATION_COMPLETE'
+            assert response['validation_status'] == 'VALIDATION_COMPLETE_WITH_GOLDEN_RECORD'
             # Should sum 50000 + 25000 = 75000, which matches AGI of 75000
             assert len(response['inconsistencies']) == 0
             assert response['inconsistencies_found'] == 0
