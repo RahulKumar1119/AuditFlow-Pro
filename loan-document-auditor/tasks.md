@@ -349,100 +349,100 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
 - [x] 12. Checkpoint - Ensure backend workflow tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 13. Implement S3 event triggers and Lambda integration
-  - [ ] 13.1 Configure S3 event notifications
+- [x] 13. Implement S3 event triggers and Lambda integration
+  - [x] 13.1 Configure S3 event notifications
     - Set up S3 bucket to trigger on object creation
     - Configure event filter for supported file formats (PDF, JPEG, PNG, TIFF)
     - Route events to Step Functions via Lambda
     - _Requirements: 10.1, 10.2, 1.3_
 
-  - [ ] 13.2 Create event handler Lambda function
+  - [x] 13.2 Create event handler Lambda function
     - Parse S3 event notifications
     - Extract document metadata (bucket, key, size)
     - Validate file size (reject > 50MB)
     - Initiate Step Functions workflow execution
     - _Requirements: 1.4, 10.2, 10.3_
 
-  - [ ] 13.3 Implement concurrent execution limits
+  - [x] 13.3 Implement concurrent execution limits
     - Configure Lambda concurrency limits (max 10 concurrent)
     - Implement queuing for excess requests
     - Process documents in upload order
     - _Requirements: 10.5, 19.6_
 
-  - [ ]* 13.4 Write integration tests for event triggers
+  - [x]* 13.4 Write integration tests for event triggers
     - Test S3 event processing
     - Test workflow initiation
     - Test concurrent execution limits
     - _Requirements: 20.2_
 
-- [ ] 14. Implement AWS Cognito authentication
-  - [ ] 14.1 Create Cognito User Pool and configuration
+- [x] 14. Implement AWS Cognito authentication
+  - [x] 14.1 Create Cognito User Pool and configuration
     - Set up User Pool with email/password authentication
     - Configure password policies and MFA requirements
     - Create Loan Officer and Administrator user groups
     - Set session timeout to 30 minutes
     - _Requirements: 2.1, 2.3, 2.6_
 
-  - [ ] 14.2 Configure account lockout and security policies
+  - [x] 14.2 Configure account lockout and security policies
     - Implement account lockout after 3 failed attempts for 15 minutes
     - Configure password complexity requirements
     - Enable MFA for Administrator role
     - _Requirements: 2.7, 17.8_
 
-  - [ ] 14.3 Create Cognito Identity Pool for AWS access
+  - [x] 14.3 Create Cognito Identity Pool for AWS access
     - Set up Identity Pool for temporary AWS credentials
     - Configure IAM roles for authenticated users
     - Grant Loan Officer role access to S3 and DynamoDB
     - Grant Administrator role full system access
     - _Requirements: 2.4, 2.5, 17.6_
 
-  - [ ] 14.4 Implement authentication logging
+  - [x] 14.4 Implement authentication logging
     - Log all authentication events to CloudWatch
     - Log authorization decisions
     - Ensure PII is redacted from logs
     - _Requirements: 18.3, 7.3_
 
-  - [ ]* 14.5 Write integration tests for authentication
+  - [x]* 14.5 Write integration tests for authentication
     - Test user login and session management
     - Test account lockout after failed attempts
     - Test role-based access control
     - _Requirements: 20.9_
 
-- [ ] 15. Implement API Gateway for frontend integration
-  - [ ] 15.1 Create REST API with authentication
+- [x] 15. Implement API Gateway for frontend integration
+  - [x] 15.1 Create REST API with authentication
     - Set up API Gateway with Cognito authorizer
     - Define endpoints for document upload, audit retrieval, and status queries
     - Configure CORS for frontend domain
     - Enable TLS 1.2+ for all endpoints
     - _Requirements: 2.2, 2.8, 16.2_
 
-  - [ ] 15.2 Implement document upload endpoint
+  - [x] 15.2 Implement document upload endpoint
     - Create POST /documents endpoint
     - Validate file format and size
     - Generate pre-signed S3 upload URL
     - Return upload URL and document ID
     - _Requirements: 1.1, 1.3, 1.4, 1.8_
 
-  - [ ] 15.3 Implement audit query endpoints
+  - [x] 15.3 Implement audit query endpoints
     - Create GET /audits endpoint with filtering and sorting
     - Create GET /audits/{id} endpoint for detailed audit records
     - Implement pagination for large result sets
     - Apply PII masking based on user role
     - _Requirements: 12.4, 13.3, 13.4, 7.5, 7.6_
 
-  - [ ] 15.4 Implement document viewer endpoint
+  - [x] 15.4 Implement document viewer endpoint
     - Create GET /documents/{id}/view endpoint
     - Generate pre-signed S3 URLs for document viewing
     - Apply access control based on user permissions
     - _Requirements: 14.1, 14.2_
 
-  - [ ] 15.5 Add API logging and monitoring
+  - [x] 15.5 Add API logging and monitoring
     - Log all API requests with user ID and timestamp
     - Log response status codes and errors
     - Track API usage metrics in CloudWatch
     - _Requirements: 18.4, 18.5_
 
-  - [ ]* 15.6 Write integration tests for API endpoints
+  - [x]* 15.6 Write integration tests for API endpoints
     - Test authentication and authorization
     - Test document upload flow
     - Test audit query operations
