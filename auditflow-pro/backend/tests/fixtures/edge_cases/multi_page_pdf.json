@@ -1,0 +1,56 @@
+{
+  "document_id": "edge-multipage-001",
+  "description": "Multi-page PDF document (simulated 100 pages)",
+  "use_case": "Testing multi-page PDF processing limits",
+  "metadata": {
+    "page_count": 100,
+    "file_size_mb": 45,
+    "processing_notes": "Should be split into batches if processing exceeds 5 minute timeout"
+  },
+  "extracted_data": {
+    "document_type": "BANK_STATEMENT",
+    "bank_name": {
+      "value": "Mega Bank Corporation",
+      "confidence": 0.97
+    },
+    "account_holder_name": {
+      "value": "Alexander Thompson",
+      "confidence": 0.96
+    },
+    "account_number": {
+      "value": "****9999",
+      "confidence": 0.98
+    },
+    "statement_period_start": {
+      "value": "2023-01-01",
+      "confidence": 0.98
+    },
+    "statement_period_end": {
+      "value": "2023-12-31",
+      "confidence": 0.98
+    },
+    "beginning_balance": {
+      "value": 100000.00,
+      "confidence": 0.97
+    },
+    "ending_balance": {
+      "value": 125000.00,
+      "confidence": 0.97
+    },
+    "total_deposits": {
+      "value": 250000.00,
+      "confidence": 0.96
+    },
+    "total_withdrawals": {
+      "value": 225000.00,
+      "confidence": 0.96
+    },
+    "account_holder_address": {
+      "value": "999 Business Plaza, New York, NY 10001",
+      "confidence": 0.94
+    },
+    "pages_processed": 100,
+    "pages_with_transactions": 95,
+    "transaction_count": 1250
+  }
+}

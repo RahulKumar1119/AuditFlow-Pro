@@ -1,0 +1,62 @@
+{
+  "document_type": "TAX_FORM",
+  "document_id": "tax-003",
+  "metadata": {
+    "description": "1040 tax form with married filing jointly status",
+    "use_case": "Married filer scenario"
+  },
+  "extracted_data": {
+    "form_type": {
+      "value": "1040",
+      "confidence": 0.98
+    },
+    "tax_year": {
+      "value": "2023",
+      "confidence": 0.99
+    },
+    "taxpayer_name": {
+      "value": "Robert James Williams",
+      "confidence": 0.96
+    },
+    "taxpayer_ssn": {
+      "value": "***-**-9012",
+      "confidence": 0.98
+    },
+    "spouse_name": {
+      "value": "Jennifer Marie Williams",
+      "confidence": 0.95
+    },
+    "filing_status": {
+      "value": "Married Filing Jointly",
+      "confidence": 0.96
+    },
+    "address": {
+      "value": "789 Elm Street, Seattle, WA 98101",
+      "confidence": 0.92
+    },
+    "wages_salaries": {
+      "value": 95000.00,
+      "confidence": 0.96
+    },
+    "adjusted_gross_income": {
+      "value": 95000.00,
+      "confidence": 0.96
+    },
+    "taxable_income": {
+      "value": 75000.00,
+      "confidence": 0.95
+    },
+    "total_tax": {
+      "value": 11000.00,
+      "confidence": 0.96
+    },
+    "federal_tax_withheld": {
+      "value": 14000.00,
+      "confidence": 0.96
+    },
+    "refund_amount": {
+      "value": 3000.00,
+      "confidence": 0.96
+    }
+  }
+}

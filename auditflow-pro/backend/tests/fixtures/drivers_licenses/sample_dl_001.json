@@ -1,0 +1,50 @@
+{
+  "document_type": "DRIVERS_LICENSE",
+  "document_id": "dl-001",
+  "metadata": {
+    "description": "Illinois driver's license",
+    "use_case": "Happy path testing"
+  },
+  "extracted_data": {
+    "state": {
+      "value": "IL",
+      "confidence": 0.99
+    },
+    "license_number": {
+      "value": "D123-4567-8901",
+      "confidence": 0.98
+    },
+    "full_name": {
+      "value": "John Michael Doe",
+      "confidence": 0.98
+    },
+    "date_of_birth": {
+      "value": "1985-06-15",
+      "confidence": 0.99
+    },
+    "address": {
+      "value": "123 Main Street, Springfield, IL 62701",
+      "confidence": 0.95
+    },
+    "issue_date": {
+      "value": "2020-06-15",
+      "confidence": 0.97
+    },
+    "expiration_date": {
+      "value": "2025-06-15",
+      "confidence": 0.97
+    },
+    "sex": {
+      "value": "M",
+      "confidence": 0.99
+    },
+    "height": {
+      "value": "5'10\"",
+      "confidence": 0.95
+    },
+    "eye_color": {
+      "value": "BRN",
+      "confidence": 0.96
+    }
+  }
+}

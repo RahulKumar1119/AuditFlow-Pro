@@ -861,8 +861,8 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Test teardown and cleanup
     - _Requirements: 20.1_
 
-- [ ] 29. Create test fixtures and sample data
-  - [ ] 29.1 Create sample documents for each document type
+- [x] 29. Create test fixtures and sample data
+  - [x] 29.1 Create sample documents for each document type
     - Generate sample W2 forms with realistic data
     - Generate sample bank statements
     - Generate sample tax forms (1040)
@@ -870,21 +870,21 @@ The implementation uses Python for backend Lambda functions and TypeScript/React
     - Generate sample ID documents
     - _Requirements: 20.4_
 
-  - [ ] 29.2 Create test data with known inconsistencies
+  - [x] 29.2 Create test data with known inconsistencies
     - Create document sets with name variations
     - Create document sets with address mismatches
     - Create document sets with income discrepancies
     - Create document sets with identification mismatches
     - _Requirements: 20.4_
 
-  - [ ] 29.3 Create test data for edge cases
+  - [x] 29.3 Create test data for edge cases
     - Create multi-page PDFs (up to 100 pages)
     - Create low-quality/illegible documents
     - Create documents with various formats and layouts
     - Create documents with PII requiring masking
     - _Requirements: 20.4_
 
-  - [ ]* 29.4 Write property-based test generators
+  - [x]* 29.4 Write property-based test generators
     - Generate random valid document data
     - Generate random inconsistencies
     - Use for property-based testing

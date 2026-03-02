@@ -1,0 +1,58 @@
+{
+  "document_type": "W2",
+  "document_id": "w2-002",
+  "metadata": {
+    "description": "W2 form with higher income and multiple state taxes",
+    "use_case": "High earner scenario"
+  },
+  "extracted_data": {
+    "tax_year": {
+      "value": "2023",
+      "confidence": 0.99
+    },
+    "employer_name": {
+      "value": "TechStart Industries LLC",
+      "confidence": 0.96
+    },
+    "employer_ein": {
+      "value": "98-7654321",
+      "confidence": 0.97
+    },
+    "employee_name": {
+      "value": "Sarah Elizabeth Johnson",
+      "confidence": 0.97
+    },
+    "employee_ssn": {
+      "value": "***-**-5678",
+      "confidence": 0.99
+    },
+    "employee_address": {
+      "value": "456 Oak Avenue, Austin, TX 78701",
+      "confidence": 0.94
+    },
+    "wages": {
+      "value": 125000.00,
+      "confidence": 0.98
+    },
+    "federal_tax_withheld": {
+      "value": 28000.00,
+      "confidence": 0.97
+    },
+    "social_security_wages": {
+      "value": 125000.00,
+      "confidence": 0.98
+    },
+    "medicare_wages": {
+      "value": 125000.00,
+      "confidence": 0.98
+    },
+    "state": {
+      "value": "TX",
+      "confidence": 0.99
+    },
+    "state_tax_withheld": {
+      "value": 0.00,
+      "confidence": 0.99
+    }
+  }
+}

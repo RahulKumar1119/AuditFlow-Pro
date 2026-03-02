@@ -1,0 +1,62 @@
+{
+  "document_type": "TAX_FORM",
+  "document_id": "tax-001",
+  "metadata": {
+    "description": "Standard 1040 tax form for single filer",
+    "use_case": "Happy path testing"
+  },
+  "extracted_data": {
+    "form_type": {
+      "value": "1040",
+      "confidence": 0.99
+    },
+    "tax_year": {
+      "value": "2023",
+      "confidence": 0.99
+    },
+    "taxpayer_name": {
+      "value": "John Michael Doe",
+      "confidence": 0.98
+    },
+    "taxpayer_ssn": {
+      "value": "***-**-1234",
+      "confidence": 0.99
+    },
+    "spouse_name": {
+      "value": null,
+      "confidence": null
+    },
+    "filing_status": {
+      "value": "Single",
+      "confidence": 0.98
+    },
+    "address": {
+      "value": "123 Main Street, Springfield, IL 62701",
+      "confidence": 0.95
+    },
+    "wages_salaries": {
+      "value": 75000.00,
+      "confidence": 0.98
+    },
+    "adjusted_gross_income": {
+      "value": 75000.00,
+      "confidence": 0.98
+    },
+    "taxable_income": {
+      "value": 62000.00,
+      "confidence": 0.97
+    },
+    "total_tax": {
+      "value": 9500.00,
+      "confidence": 0.98
+    },
+    "federal_tax_withheld": {
+      "value": 12000.00,
+      "confidence": 0.98
+    },
+    "refund_amount": {
+      "value": 2500.00,
+      "confidence": 0.98
+    }
+  }
+}

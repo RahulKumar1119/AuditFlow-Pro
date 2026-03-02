@@ -1,0 +1,93 @@
+{
+  "document_id": "edge-formats-001",
+  "description": "Documents with various formats and layouts",
+  "use_case": "Testing format variation handling",
+  "documents": [
+    {
+      "format": "PDF",
+      "layout": "standard_irs_w2",
+      "document_type": "W2",
+      "notes": "Standard IRS W2 format, easy to parse"
+    },
+    {
+      "format": "JPEG",
+      "layout": "photographed_document",
+      "document_type": "DRIVERS_LICENSE",
+      "notes": "Photo of driver's license, may have perspective distortion"
+    },
+    {
+      "format": "PNG",
+      "layout": "scanned_bank_statement",
+      "document_type": "BANK_STATEMENT",
+      "notes": "High resolution scan, clean extraction expected"
+    },
+    {
+      "format": "TIFF",
+      "layout": "multi_page_tax_form",
+      "document_type": "TAX_FORM",
+      "notes": "Multi-page TIFF with 1040 and schedules"
+    },
+    {
+      "format": "PDF",
+      "layout": "non_standard_w2",
+      "document_type": "W2",
+      "notes": "W2 with custom employer branding, non-standard layout"
+    }
+  ],
+  "sample_document": {
+    "document_type": "W2",
+    "format": "PDF",
+    "layout": "non_standard_custom_branded",
+    "extracted_data": {
+      "tax_year": {
+        "value": "2023",
+        "confidence": 0.96
+      },
+      "employer_name": {
+        "value": "Creative Design Studio LLC",
+        "confidence": 0.89
+      },
+      "employer_ein": {
+        "value": "77-8899001",
+        "confidence": 0.92
+      },
+      "employee_name": {
+        "value": "Christopher Lee",
+        "confidence": 0.94
+      },
+      "employee_ssn": {
+        "value": "***-**-8888",
+        "confidence": 0.97
+      },
+      "employee_address": {
+        "value": "888 Design Avenue, San Francisco, CA 94102",
+        "confidence": 0.87
+      },
+      "wages": {
+        "value": 92000.00,
+        "confidence": 0.95
+      },
+      "federal_tax_withheld": {
+        "value": 18000.00,
+        "confidence": 0.94
+      },
+      "social_security_wages": {
+        "value": 92000.00,
+        "confidence": 0.95
+      },
+      "medicare_wages": {
+        "value": 92000.00,
+        "confidence": 0.95
+      },
+      "state": {
+        "value": "CA",
+        "confidence": 0.98
+      },
+      "state_tax_withheld": {
+        "value": 5500.00,
+        "confidence": 0.93
+      }
+    },
+    "layout_notes": "Custom branded W2 with company logo and non-standard field positioning"
+  }
+}

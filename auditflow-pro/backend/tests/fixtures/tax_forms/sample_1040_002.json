@@ -1,0 +1,62 @@
+{
+  "document_type": "TAX_FORM",
+  "document_id": "tax-002",
+  "metadata": {
+    "description": "1040 tax form for higher income single filer",
+    "use_case": "High income scenario"
+  },
+  "extracted_data": {
+    "form_type": {
+      "value": "1040",
+      "confidence": 0.99
+    },
+    "tax_year": {
+      "value": "2023",
+      "confidence": 0.99
+    },
+    "taxpayer_name": {
+      "value": "Sarah Elizabeth Johnson",
+      "confidence": 0.97
+    },
+    "taxpayer_ssn": {
+      "value": "***-**-5678",
+      "confidence": 0.99
+    },
+    "spouse_name": {
+      "value": null,
+      "confidence": null
+    },
+    "filing_status": {
+      "value": "Single",
+      "confidence": 0.97
+    },
+    "address": {
+      "value": "456 Oak Avenue, Austin, TX 78701",
+      "confidence": 0.94
+    },
+    "wages_salaries": {
+      "value": 125000.00,
+      "confidence": 0.97
+    },
+    "adjusted_gross_income": {
+      "value": 125000.00,
+      "confidence": 0.97
+    },
+    "taxable_income": {
+      "value": 110000.00,
+      "confidence": 0.96
+    },
+    "total_tax": {
+      "value": 22000.00,
+      "confidence": 0.97
+    },
+    "federal_tax_withheld": {
+      "value": 28000.00,
+      "confidence": 0.97
+    },
+    "refund_amount": {
+      "value": 6000.00,
+      "confidence": 0.97
+    }
+  }
+}

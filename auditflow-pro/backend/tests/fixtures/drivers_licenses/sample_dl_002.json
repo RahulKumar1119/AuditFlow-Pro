@@ -1,0 +1,50 @@
+{
+  "document_type": "DRIVERS_LICENSE",
+  "document_id": "dl-002",
+  "metadata": {
+    "description": "Texas driver's license",
+    "use_case": "Different state format"
+  },
+  "extracted_data": {
+    "state": {
+      "value": "TX",
+      "confidence": 0.99
+    },
+    "license_number": {
+      "value": "12345678",
+      "confidence": 0.97
+    },
+    "full_name": {
+      "value": "Sarah Elizabeth Johnson",
+      "confidence": 0.97
+    },
+    "date_of_birth": {
+      "value": "1990-03-22",
+      "confidence": 0.98
+    },
+    "address": {
+      "value": "456 Oak Avenue, Austin, TX 78701",
+      "confidence": 0.94
+    },
+    "issue_date": {
+      "value": "2019-03-22",
+      "confidence": 0.96
+    },
+    "expiration_date": {
+      "value": "2025-03-22",
+      "confidence": 0.96
+    },
+    "sex": {
+      "value": "F",
+      "confidence": 0.99
+    },
+    "height": {
+      "value": "5'6\"",
+      "confidence": 0.94
+    },
+    "eye_color": {
+      "value": "BLU",
+      "confidence": 0.95
+    }
+  }
+}

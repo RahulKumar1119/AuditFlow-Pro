@@ -1,0 +1,66 @@
+{
+  "document_id": "edge-lowquality-001",
+  "description": "Low quality/illegible document with poor scan quality",
+  "use_case": "Testing handling of low confidence extractions",
+  "metadata": {
+    "scan_quality": "poor",
+    "dpi": 150,
+    "issues": ["faded text", "skewed scan", "coffee stain", "partial blur"]
+  },
+  "extracted_data": {
+    "document_type": "W2",
+    "tax_year": {
+      "value": "2023",
+      "confidence": 0.85
+    },
+    "employer_name": {
+      "value": "Unclear Industries",
+      "confidence": 0.62
+    },
+    "employer_ein": {
+      "value": "11-2233445",
+      "confidence": 0.68
+    },
+    "employee_name": {
+      "value": "Patricia Martinez",
+      "confidence": 0.71
+    },
+    "employee_ssn": {
+      "value": "***-**-7777",
+      "confidence": 0.88
+    },
+    "employee_address": {
+      "value": "777 Blurry Road, Phoenix, AZ 85001",
+      "confidence": 0.58
+    },
+    "wages": {
+      "value": 55000.00,
+      "confidence": 0.74
+    },
+    "federal_tax_withheld": {
+      "value": 8500.00,
+      "confidence": 0.69
+    },
+    "social_security_wages": {
+      "value": 55000.00,
+      "confidence": 0.73
+    },
+    "medicare_wages": {
+      "value": 55000.00,
+      "confidence": 0.73
+    },
+    "state": {
+      "value": "AZ",
+      "confidence": 0.91
+    },
+    "state_tax_withheld": {
+      "value": 2200.00,
+      "confidence": 0.67
+    }
+  },
+  "quality_issues": {
+    "low_confidence_fields": ["employer_name", "employer_ein", "employee_address", "wages", "federal_tax_withheld", "state_tax_withheld"],
+    "requires_manual_review": true,
+    "illegible_sections": ["box 12 codes", "employer contact info"]
+  }
+}

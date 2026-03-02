@@ -1,0 +1,79 @@
+{
+  "set_id": "name-variation-001",
+  "description": "Document set with name spelling variations",
+  "expected_inconsistencies": [
+    {
+      "field": "name",
+      "severity": "CRITICAL",
+      "description": "Name spelling variation exceeds 2 characters"
+    }
+  ],
+  "documents": [
+    {
+      "document_type": "W2",
+      "document_id": "w2-name-var-001",
+      "extracted_data": {
+        "employee_name": {
+          "value": "Jon Doe",
+          "confidence": 0.97
+        },
+        "employee_ssn": {
+          "value": "***-**-1111",
+          "confidence": 0.99
+        },
+        "employee_address": {
+          "value": "100 Test Street, Chicago, IL 60601",
+          "confidence": 0.95
+        },
+        "wages": {
+          "value": 50000.00,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "document_type": "TAX_FORM",
+      "document_id": "tax-name-var-001",
+      "extracted_data": {
+        "taxpayer_name": {
+          "value": "John Doe",
+          "confidence": 0.98
+        },
+        "taxpayer_ssn": {
+          "value": "***-**-1111",
+          "confidence": 0.99
+        },
+        "address": {
+          "value": "100 Test Street, Chicago, IL 60601",
+          "confidence": 0.95
+        },
+        "wages_salaries": {
+          "value": 50000.00,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "document_type": "DRIVERS_LICENSE",
+      "document_id": "dl-name-var-001",
+      "extracted_data": {
+        "full_name": {
+          "value": "John Doe",
+          "confidence": 0.98
+        },
+        "date_of_birth": {
+          "value": "1980-05-10",
+          "confidence": 0.99
+        },
+        "address": {
+          "value": "100 Test Street, Chicago, IL 60601",
+          "confidence": 0.95
+        },
+        "license_number": {
+          "value": "D111-1111-1111",
+          "confidence": 0.98
+        }
+      }
+    }
+  ]
+}

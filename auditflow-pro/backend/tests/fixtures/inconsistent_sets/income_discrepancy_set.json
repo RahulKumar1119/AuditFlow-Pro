@@ -1,0 +1,83 @@
+{
+  "set_id": "income-discrepancy-001",
+  "description": "Document set with income discrepancies exceeding 10%",
+  "expected_inconsistencies": [
+    {
+      "field": "income",
+      "severity": "HIGH",
+      "description": "Income discrepancy exceeds 10% between W2 and tax form"
+    }
+  ],
+  "documents": [
+    {
+      "document_type": "W2",
+      "document_id": "w2-income-disc-001",
+      "extracted_data": {
+        "employee_name": {
+          "value": "Michael Brown",
+          "confidence": 0.97
+        },
+        "employee_ssn": {
+          "value": "***-**-3333",
+          "confidence": 0.99
+        },
+        "employee_address": {
+          "value": "300 Pine Avenue, Denver, CO 80201",
+          "confidence": 0.95
+        },
+        "wages": {
+          "value": 80000.00,
+          "confidence": 0.98
+        }
+      }
+    },
+    {
+      "document_type": "TAX_FORM",
+      "document_id": "tax-income-disc-001",
+      "extracted_data": {
+        "taxpayer_name": {
+          "value": "Michael Brown",
+          "confidence": 0.98
+        },
+        "taxpayer_ssn": {
+          "value": "***-**-3333",
+          "confidence": 0.99
+        },
+        "address": {
+          "value": "300 Pine Avenue, Denver, CO 80201",
+          "confidence": 0.95
+        },
+        "wages_salaries": {
+          "value": 70000.00,
+          "confidence": 0.97
+        },
+        "adjusted_gross_income": {
+          "value": 70000.00,
+          "confidence": 0.97
+        }
+      }
+    },
+    {
+      "document_type": "BANK_STATEMENT",
+      "document_id": "bank-income-disc-001",
+      "extracted_data": {
+        "account_holder_name": {
+          "value": "Michael Brown",
+          "confidence": 0.97
+        },
+        "account_holder_address": {
+          "value": "300 Pine Avenue, Denver, CO 80201",
+          "confidence": 0.94
+        },
+        "account_number": {
+          "value": "****3333",
+          "confidence": 0.98
+        },
+        "ending_balance": {
+          "value": 12000.00,
+          "confidence": 0.97
+        }
+      }
+    }
+  ]
+}

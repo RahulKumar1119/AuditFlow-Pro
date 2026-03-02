@@ -1,0 +1,58 @@
+{
+  "document_type": "W2",
+  "document_id": "w2-003",
+  "metadata": {
+    "description": "W2 form with lower confidence scores on some fields",
+    "use_case": "Testing low confidence field handling"
+  },
+  "extracted_data": {
+    "tax_year": {
+      "value": "2023",
+      "confidence": 0.98
+    },
+    "employer_name": {
+      "value": "Global Manufacturing Co",
+      "confidence": 0.75
+    },
+    "employer_ein": {
+      "value": "45-6789012",
+      "confidence": 0.96
+    },
+    "employee_name": {
+      "value": "Robert James Williams",
+      "confidence": 0.96
+    },
+    "employee_ssn": {
+      "value": "***-**-9012",
+      "confidence": 0.98
+    },
+    "employee_address": {
+      "value": "789 Elm Street, Seattle, WA 98101",
+      "confidence": 0.72
+    },
+    "wages": {
+      "value": 62000.00,
+      "confidence": 0.97
+    },
+    "federal_tax_withheld": {
+      "value": 9500.00,
+      "confidence": 0.96
+    },
+    "social_security_wages": {
+      "value": 62000.00,
+      "confidence": 0.97
+    },
+    "medicare_wages": {
+      "value": 62000.00,
+      "confidence": 0.97
+    },
+    "state": {
+      "value": "WA",
+      "confidence": 0.98
+    },
+    "state_tax_withheld": {
+      "value": 0.00,
+      "confidence": 0.99
+    }
+  }
+}

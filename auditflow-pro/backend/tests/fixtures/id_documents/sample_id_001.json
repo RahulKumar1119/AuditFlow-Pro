@@ -1,0 +1,42 @@
+{
+  "document_type": "ID_DOCUMENT",
+  "document_id": "id-001",
+  "metadata": {
+    "description": "US Passport",
+    "use_case": "Happy path testing"
+  },
+  "extracted_data": {
+    "id_type": {
+      "value": "PASSPORT",
+      "confidence": 0.98
+    },
+    "document_number": {
+      "value": "123456789",
+      "confidence": 0.98
+    },
+    "full_name": {
+      "value": "John Michael Doe",
+      "confidence": 0.98
+    },
+    "date_of_birth": {
+      "value": "1985-06-15",
+      "confidence": 0.99
+    },
+    "issuing_authority": {
+      "value": "U.S. Department of State",
+      "confidence": 0.97
+    },
+    "issue_date": {
+      "value": "2019-01-15",
+      "confidence": 0.97
+    },
+    "expiration_date": {
+      "value": "2029-01-15",
+      "confidence": 0.97
+    },
+    "nationality": {
+      "value": "USA",
+      "confidence": 0.98
+    }
+  }
+}

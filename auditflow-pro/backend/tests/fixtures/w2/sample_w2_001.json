@@ -1,0 +1,58 @@
+{
+  "document_type": "W2",
+  "document_id": "w2-001",
+  "metadata": {
+    "description": "Standard W2 form with typical employee data",
+    "use_case": "Happy path testing"
+  },
+  "extracted_data": {
+    "tax_year": {
+      "value": "2023",
+      "confidence": 0.99
+    },
+    "employer_name": {
+      "value": "Acme Corporation",
+      "confidence": 0.97
+    },
+    "employer_ein": {
+      "value": "12-3456789",
+      "confidence": 0.98
+    },
+    "employee_name": {
+      "value": "John Michael Doe",
+      "confidence": 0.98
+    },
+    "employee_ssn": {
+      "value": "***-**-1234",
+      "confidence": 0.99
+    },
+    "employee_address": {
+      "value": "123 Main Street, Springfield, IL 62701",
+      "confidence": 0.95
+    },
+    "wages": {
+      "value": 75000.00,
+      "confidence": 0.99
+    },
+    "federal_tax_withheld": {
+      "value": 12000.00,
+      "confidence": 0.98
+    },
+    "social_security_wages": {
+      "value": 75000.00,
+      "confidence": 0.99
+    },
+    "medicare_wages": {
+      "value": 75000.00,
+      "confidence": 0.99
+    },
+    "state": {
+      "value": "IL",
+      "confidence": 0.99
+    },
+    "state_tax_withheld": {
+      "value": 3000.00,
+      "confidence": 0.98
+    }
+  }
+}

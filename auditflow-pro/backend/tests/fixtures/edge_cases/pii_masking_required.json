@@ -1,0 +1,118 @@
+{
+  "document_id": "edge-pii-001",
+  "description": "Documents with extensive PII requiring masking",
+  "use_case": "Testing PII detection and masking functionality",
+  "metadata": {
+    "pii_fields_count": 12,
+    "masking_required": true,
+    "compliance_notes": "All PII must be masked for Loan Officer role, encrypted in storage"
+  },
+  "extracted_data": {
+    "document_type": "TAX_FORM",
+    "form_type": {
+      "value": "1040",
+      "confidence": 0.98
+    },
+    "tax_year": {
+      "value": "2023",
+      "confidence": 0.99
+    },
+    "taxpayer_name": {
+      "value": "Jennifer Anne Rodriguez",
+      "confidence": 0.97,
+      "pii": true,
+      "masked_value": "Jennifer Anne Rodriguez"
+    },
+    "taxpayer_ssn": {
+      "value": "123-45-6789",
+      "confidence": 0.99,
+      "pii": true,
+      "masked_value": "***-**-6789"
+    },
+    "spouse_name": {
+      "value": "Carlos Miguel Rodriguez",
+      "confidence": 0.96,
+      "pii": true,
+      "masked_value": "Carlos Miguel Rodriguez"
+    },
+    "spouse_ssn": {
+      "value": "987-65-4321",
+      "confidence": 0.98,
+      "pii": true,
+      "masked_value": "***-**-4321"
+    },
+    "filing_status": {
+      "value": "Married Filing Jointly",
+      "confidence": 0.97
+    },
+    "address": {
+      "value": "1234 Privacy Lane, Los Angeles, CA 90001",
+      "confidence": 0.94,
+      "pii": true,
+      "masked_value": "1234 Privacy Lane, Los Angeles, CA 90001"
+    },
+    "date_of_birth_taxpayer": {
+      "value": "1985-03-15",
+      "confidence": 0.98,
+      "pii": true,
+      "masked_value": "1985-03-15"
+    },
+    "date_of_birth_spouse": {
+      "value": "1987-07-22",
+      "confidence": 0.97,
+      "pii": true,
+      "masked_value": "1987-07-22"
+    },
+    "bank_account_routing": {
+      "value": "123456789",
+      "confidence": 0.96,
+      "pii": true,
+      "masked_value": "****6789"
+    },
+    "bank_account_number": {
+      "value": "9876543210",
+      "confidence": 0.97,
+      "pii": true,
+      "masked_value": "******3210"
+    },
+    "phone_number": {
+      "value": "555-123-4567",
+      "confidence": 0.95,
+      "pii": true,
+      "masked_value": "***-***-4567"
+    },
+    "email": {
+      "value": "jennifer.rodriguez@email.com",
+      "confidence": 0.93,
+      "pii": true,
+      "masked_value": "j***@email.com"
+    },
+    "wages_salaries": {
+      "value": 105000.00,
+      "confidence": 0.97
+    },
+    "adjusted_gross_income": {
+      "value": 105000.00,
+      "confidence": 0.97
+    }
+  },
+  "pii_detected": [
+    "taxpayer_name",
+    "taxpayer_ssn",
+    "spouse_name",
+    "spouse_ssn",
+    "address",
+    "date_of_birth_taxpayer",
+    "date_of_birth_spouse",
+    "bank_account_routing",
+    "bank_account_number",
+    "phone_number",
+    "email"
+  ],
+  "masking_rules": {
+    "ssn": "mask first 5 digits",
+    "bank_account": "mask all but last 4 digits",
+    "phone": "mask area code and prefix",
+    "email": "mask username except first letter"
+  }
+}

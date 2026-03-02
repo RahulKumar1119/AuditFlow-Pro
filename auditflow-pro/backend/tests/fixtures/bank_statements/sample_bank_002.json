@@ -1,0 +1,50 @@
+{
+  "document_type": "BANK_STATEMENT",
+  "document_id": "bank-002",
+  "metadata": {
+    "description": "Savings account with higher balance",
+    "use_case": "High balance account"
+  },
+  "extracted_data": {
+    "bank_name": {
+      "value": "Community Credit Union",
+      "confidence": 0.97
+    },
+    "account_holder_name": {
+      "value": "Sarah Elizabeth Johnson",
+      "confidence": 0.96
+    },
+    "account_number": {
+      "value": "****5678",
+      "confidence": 0.98
+    },
+    "statement_period_start": {
+      "value": "2023-11-01",
+      "confidence": 0.98
+    },
+    "statement_period_end": {
+      "value": "2023-11-30",
+      "confidence": 0.98
+    },
+    "beginning_balance": {
+      "value": 45000.00,
+      "confidence": 0.97
+    },
+    "ending_balance": {
+      "value": 52000.00,
+      "confidence": 0.97
+    },
+    "total_deposits": {
+      "value": 10500.00,
+      "confidence": 0.96
+    },
+    "total_withdrawals": {
+      "value": 3500.00,
+      "confidence": 0.96
+    },
+    "account_holder_address": {
+      "value": "456 Oak Avenue, Austin, TX 78701",
+      "confidence": 0.93
+    }
+  }
+}

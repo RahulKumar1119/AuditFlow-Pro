@@ -1,0 +1,50 @@
+{
+  "document_type": "BANK_STATEMENT",
+  "document_id": "bank-001",
+  "metadata": {
+    "description": "Standard checking account statement",
+    "use_case": "Happy path testing"
+  },
+  "extracted_data": {
+    "bank_name": {
+      "value": "First National Bank",
+      "confidence": 0.98
+    },
+    "account_holder_name": {
+      "value": "John Michael Doe",
+      "confidence": 0.97
+    },
+    "account_number": {
+      "value": "****1234",
+      "confidence": 0.99
+    },
+    "statement_period_start": {
+      "value": "2023-12-01",
+      "confidence": 0.99
+    },
+    "statement_period_end": {
+      "value": "2023-12-31",
+      "confidence": 0.99
+    },
+    "beginning_balance": {
+      "value": 5000.00,
+      "confidence": 0.98
+    },
+    "ending_balance": {
+      "value": 6200.00,
+      "confidence": 0.98
+    },
+    "total_deposits": {
+      "value": 7500.00,
+      "confidence": 0.97
+    },
+    "total_withdrawals": {
+      "value": 6300.00,
+      "confidence": 0.97
+    },
+    "account_holder_address": {
+      "value": "123 Main Street, Springfield, IL 62701",
+      "confidence": 0.95
+    }
+  }
+}

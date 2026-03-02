@@ -1,0 +1,50 @@
+{
+  "document_type": "BANK_STATEMENT",
+  "document_id": "bank-003",
+  "metadata": {
+    "description": "Bank statement with low confidence on address",
+    "use_case": "Testing extraction quality issues"
+  },
+  "extracted_data": {
+    "bank_name": {
+      "value": "Pacific Trust Bank",
+      "confidence": 0.96
+    },
+    "account_holder_name": {
+      "value": "Robert James Williams",
+      "confidence": 0.95
+    },
+    "account_number": {
+      "value": "****9012",
+      "confidence": 0.97
+    },
+    "statement_period_start": {
+      "value": "2023-10-01",
+      "confidence": 0.97
+    },
+    "statement_period_end": {
+      "value": "2023-10-31",
+      "confidence": 0.97
+    },
+    "beginning_balance": {
+      "value": 8500.00,
+      "confidence": 0.96
+    },
+    "ending_balance": {
+      "value": 9200.00,
+      "confidence": 0.96
+    },
+    "total_deposits": {
+      "value": 5200.00,
+      "confidence": 0.95
+    },
+    "total_withdrawals": {
+      "value": 4500.00,
+      "confidence": 0.95
+    },
+    "account_holder_address": {
+      "value": "789 Elm Street, Seattle, WA 98101",
+      "confidence": 0.68
+    }
+  }
+}
