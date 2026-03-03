@@ -50,9 +50,6 @@ if [ -z "$CLIENT_ID" ]; then
         --client-name AuditFlowWebClient \
         --no-generate-secret \
         --explicit-auth-flows ALLOW_USER_PASSWORD_AUTH ALLOW_REFRESH_TOKEN_AUTH ALLOW_USER_SRP_AUTH \
-        --access-token-validity 30 \
-        --id-token-validity 30 \
-        --refresh-token-validity 30 \
         --region $REGION \
         --query 'UserPoolClient.ClientId' \
         --output text)
