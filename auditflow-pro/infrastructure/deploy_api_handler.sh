@@ -118,7 +118,12 @@ sleep 10
 
 # 3. Package Lambda function
 echo "Packaging Lambda function..."
-cd backend/functions/api_handler
+
+# Get the script directory and project root
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+
+cd "$PROJECT_ROOT/backend/functions/api_handler"
 
 # Create deployment package
 if [ -f "deployment.zip" ]; then
@@ -129,10 +134,13 @@ zip -q deployment.zip app.py
 
 echo "✓ Lambda function packaged"
 
+cd "$PROJECT_ROOT"
+
 # 4. Create or update Lambda function
 echo "Deploying Lambda function..."
 
 ROLE_ARN="arn:aws:iam::${ACCOUNT_ID}:role/${ROLE_NAME}"
+ZIP_FILE="$PROJECT_ROOT/backend/functions/api_handler/deployment.zip"
 
 # Try to create the function
 aws lambda create-function \
@@ -140,7 +148,7 @@ aws lambda create-function \
     --runtime python3.11 \
     --role $ROLE_ARN \
     --handler app.lambda_handler \
-    --zip-file fileb://deployment.zip \
+    --zip-file fileb://$ZIP_FILE \
     --timeout 30 \
     --memory-size 512 \
     --environment "Variables={
@@ -154,8 +162,10 @@ aws lambda create-function \
         echo "  Function exists, updating code..."
         aws lambda update-function-code \
             --function-name $FUNCTION_NAME \
-            --zip-file fileb://deployment.zip \
+            --zip-file fileb://$ZIP_FILE \
             --region $REGION > /dev/null
+        
+        aws lambda wait function-updated --function-name $FUNCTION_NAME --region $REGION
         
         echo "  Updating configuration..."
         aws lambda update-function-configuration \
@@ -174,9 +184,8 @@ aws lambda create-function \
     }
 
 # Clean up
-rm deployment.zip
+rm -f "$PROJECT_ROOT/backend/functions/api_handler/deployment.zip"
 
-cd ../../..
 
 # 5. Configure CloudWatch Logs retention
 echo "Configuring CloudWatch Logs retention..."
