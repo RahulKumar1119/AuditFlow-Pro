@@ -18,73 +18,81 @@ if aws kms describe-key --key-id alias/auditflow-s3-encryption 2>/dev/null; then
 else
     # Create KMS Key for S3 Encryption
     echo "Creating KMS key for S3 encryption..."
+    
+    # Create policy file
+    cat > /tmp/s3-kms-policy.json << EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Enable IAM User Permissions",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::${ACCOUNT_ID}:root"
+            },
+            "Action": "kms:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "Allow S3 to use the key",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "s3.amazonaws.com"
+            },
+            "Action": [
+                "kms:Decrypt",
+                "kms:GenerateDataKey",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "Allow Lambda to use the key",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::${ACCOUNT_ID}:role/AuditFlowLambdaExecutionRole"
+            },
+            "Action": [
+                "kms:Decrypt",
+                "kms:GenerateDataKey",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "Allow CloudWatch Logs",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "logs.${REGION}.amazonaws.com"
+            },
+            "Action": [
+                "kms:Encrypt",
+                "kms:Decrypt",
+                "kms:ReEncrypt*",
+                "kms:GenerateDataKey*",
+                "kms:CreateGrant",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "ArnLike": {
+                    "kms:EncryptionContext:aws:logs:arn": "arn:aws:logs:${REGION}:${ACCOUNT_ID}:*"
+                }
+            }
+        }
+    ]
+}
+EOF
+
     KMS_KEY_ID=$(aws kms create-key \
         --description "AuditFlow-Pro S3 Document Encryption Key - Created $(date +%Y-%m-%d)" \
         --key-usage ENCRYPT_DECRYPT \
         --origin AWS_KMS \
-        --key-policy '{
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Sid": "Enable IAM User Permissions",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "AWS": "arn:aws:iam::'$ACCOUNT_ID':root"
-                    },
-                    "Action": "kms:*",
-                    "Resource": "*"
-                },
-                {
-                    "Sid": "Allow S3 to use the key",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "Service": "s3.amazonaws.com"
-                    },
-                    "Action": [
-                        "kms:Decrypt",
-                        "kms:GenerateDataKey",
-                        "kms:DescribeKey"
-                    ],
-                    "Resource": "*"
-                },
-                {
-                    "Sid": "Allow Lambda to use the key",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "AWS": "arn:aws:iam::'$ACCOUNT_ID':role/AuditFlowLambdaExecutionRole"
-                    },
-                    "Action": [
-                        "kms:Decrypt",
-                        "kms:GenerateDataKey",
-                        "kms:DescribeKey"
-                    ],
-                    "Resource": "*"
-                },
-                {
-                    "Sid": "Allow CloudWatch Logs",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "Service": "logs.'$REGION'.amazonaws.com"
-                    },
-                    "Action": [
-                        "kms:Encrypt",
-                        "kms:Decrypt",
-                        "kms:ReEncrypt*",
-                        "kms:GenerateDataKey*",
-                        "kms:CreateGrant",
-                        "kms:DescribeKey"
-                    ],
-                    "Resource": "*",
-                    "Condition": {
-                        "ArnLike": {
-                            "kms:EncryptionContext:aws:logs:arn": "arn:aws:logs:'$REGION':'$ACCOUNT_ID':*"
-                        }
-                    }
-                }
-            ]
-        }' \
+        --policy file:///tmp/s3-kms-policy.json \
         --query 'KeyMetadata.KeyId' \
         --output text)
+    
+    rm -f /tmp/s3-kms-policy.json
 
     echo "✓ KMS Key created: $KMS_KEY_ID"
 
@@ -119,40 +127,48 @@ if aws kms describe-key --key-id alias/auditflow-dynamodb-encryption 2>/dev/null
     echo "Using existing DynamoDB KMS Key: $DYNAMODB_KEY_ID"
 else
     echo "Creating KMS key for DynamoDB encryption..."
+    
+    # Create policy file
+    cat > /tmp/dynamodb-kms-policy.json << EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Enable IAM User Permissions",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::${ACCOUNT_ID}:root"
+            },
+            "Action": "kms:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "Allow DynamoDB to use the key",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "dynamodb.amazonaws.com"
+            },
+            "Action": [
+                "kms:Decrypt",
+                "kms:GenerateDataKey",
+                "kms:CreateGrant",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+
     DYNAMODB_KEY_ID=$(aws kms create-key \
         --description "AuditFlow-Pro DynamoDB Encryption Key - Created $(date +%Y-%m-%d)" \
         --key-usage ENCRYPT_DECRYPT \
         --origin AWS_KMS \
-        --key-policy '{
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Sid": "Enable IAM User Permissions",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "AWS": "arn:aws:iam::'$ACCOUNT_ID':root"
-                    },
-                    "Action": "kms:*",
-                    "Resource": "*"
-                },
-                {
-                    "Sid": "Allow DynamoDB to use the key",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "Service": "dynamodb.amazonaws.com"
-                    },
-                    "Action": [
-                        "kms:Decrypt",
-                        "kms:GenerateDataKey",
-                        "kms:CreateGrant",
-                        "kms:DescribeKey"
-                    ],
-                    "Resource": "*"
-                }
-            ]
-        }' \
+        --policy file:///tmp/dynamodb-kms-policy.json \
         --query 'KeyMetadata.KeyId' \
         --output text)
+    
+    rm -f /tmp/dynamodb-kms-policy.json
 
     echo "✓ DynamoDB KMS Key created: $DYNAMODB_KEY_ID"
 
