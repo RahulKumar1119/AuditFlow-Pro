@@ -292,6 +292,9 @@ def lambda_handler(event, context):
             "document_type": doc_metadata.document_type,
             "confidence": doc_metadata.classification_confidence,
             "requires_manual_review": doc_metadata.requires_manual_review,
+            "s3_bucket": s3_bucket,
+            "s3_key": s3_key,
+            "loan_application_id": loan_application_id,
             "metadata": doc_metadata.to_dict()
         }
 
@@ -322,6 +325,9 @@ def lambda_handler(event, context):
                 "document_type": "ILLEGIBLE",
                 "confidence": 0.0,
                 "requires_manual_review": True,
+                "s3_bucket": s3_bucket,
+                "s3_key": s3_key,
+                "loan_application_id": loan_application_id,
                 "error": f"Document is illegible or invalid: {error_code}",
                 "metadata": doc_metadata.to_dict()
             }
