@@ -3,7 +3,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import type { ReactNode } from 'react';
 // V6 Import Syntax
-import { signIn, signOut, getCurrentUser } from 'aws-amplify/auth';
+import { signIn, signOut, getCurrentUser, confirmSignIn } from 'aws-amplify/auth';
 import type { AuthUser } from 'aws-amplify/auth';
 
 // Define types for authentication context
@@ -12,12 +12,14 @@ export interface AuthContextType {
   login: (email: string, password: string) => Promise<LoginResult>;
   logout: () => Promise<void>;
   checkUser: () => Promise<void>;
+  completeNewPassword: (newPassword: string) => Promise<LoginResult>;
 }
 
 interface LoginResult {
   success: boolean;
   error?: string;
   code?: string;
+  challengeName?: string;
 }
 
 interface AuthProviderProps {
@@ -47,7 +49,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string): Promise<LoginResult> => {
     try {
-      await signIn({ username: email, password });
+      const result = await signIn({ username: email, password });
+      
+      // Check if there's a challenge (like NEW_PASSWORD_REQUIRED)
+      if (result.isSignedIn === false && result.nextStep) {
+        return { 
+          success: false, 
+          challengeName: result.nextStep.signInStep,
+          error: 'Additional step required'
+        };
+      }
+      
       // After successful sign in, get the current user
       const currentUser = await getCurrentUser();
       setUser(currentUser);
@@ -61,6 +73,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         success: false, 
         error: errorMessage, 
         code: errorCode 
+      };
+    }
+  };
+
+  const completeNewPassword = async (newPassword: string): Promise<LoginResult> => {
+    try {
+      const result = await confirmSignIn({ challengeResponse: newPassword });
+      
+      if (result.isSignedIn) {
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
+        return { success: true };
+      }
+      
+      return {
+        success: false,
+        error: 'Failed to complete password change'
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Password change failed';
+      return {
+        success: false,
+        error: errorMessage
       };
     }
   };
@@ -83,7 +118,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, checkUser }}>
+    <AuthContext.Provider value={{ user, login, logout, checkUser, completeNewPassword }}>
       {children}
     </AuthContext.Provider>
   );
