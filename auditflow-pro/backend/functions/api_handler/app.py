@@ -161,12 +161,14 @@ def handle_post_documents(event):
             Key=s3_key,
             Fields={
                 "Content-Type": content_type,
-                "x-amz-server-side-encryption": "AES256"  # Use SSE-S3 instead of KMS
+                "x-amz-server-side-encryption": "AES256",  # Use SSE-S3 instead of KMS
+                "acl": "private"
             },
             Conditions=[
                 {"Content-Type": content_type},
                 ["content-length-range", 1, MAX_FILE_SIZE],  # Enforce size limit
-                {"x-amz-server-side-encryption": "AES256"}  # Require encryption
+                {"x-amz-server-side-encryption": "AES256"},  # Require encryption
+                {"acl": "private"}
             ],
             ExpiresIn=900  # 15 minutes
         )
