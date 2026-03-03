@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { fetchAudits } from '../services/api';
 import type { AuditRecord } from '../services/api';
-import { AlertTriangle, CheckCircle, Clock, Search, Filter } from 'lucide-react';
+import { CheckCircle, Clock, Search, Filter } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AuditRecords = () => {
