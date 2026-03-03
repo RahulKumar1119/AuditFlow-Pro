@@ -63,7 +63,7 @@ const MainLayout: React.FC = () => {
             <UploadIcon size={20} />
             <span>Upload Documents</span>
           </Link>
-          <Link to="/dashboard" className={navLinkClass('/dashboard')}>
+          <Link to="/audits" className={navLinkClass('/audits')}>
             <FileText size={20} />
             <span>Audit Records</span>
           </Link>
@@ -121,7 +121,7 @@ const MainLayout: React.FC = () => {
                 <UploadIcon size={20} />
                 <span>Upload Documents</span>
               </Link>
-              <Link to="/dashboard" className={navLinkClass('/dashboard')}>
+              <Link to="/audits" className={navLinkClass('/audits')}>
                 <FileText size={20} />
                 <span>Audit Records</span>
               </Link>

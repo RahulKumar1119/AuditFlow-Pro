@@ -6,6 +6,7 @@ import Login from './components/auth/Login';
 import MainLayout from './components/layout/MainLayout';
 import Dashboard from './components/dashboard/Dashboard';
 import Upload from './pages/Upload';
+import AuditRecords from './pages/AuditRecords';
 import AuditDetailView from './components/audit/AuditDetailView';
 
 // Initialize React Query client
@@ -25,6 +26,7 @@ function App() {
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="upload" element={<Upload />} />
+            <Route path="audits" element={<AuditRecords />} />
             <Route path="audits/:id" element={<AuditDetailView />} />
           </Route>
 
