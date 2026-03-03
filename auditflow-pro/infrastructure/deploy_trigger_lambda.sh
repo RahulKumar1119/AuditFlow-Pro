@@ -170,7 +170,12 @@ sleep 10
 
 # Step 3: Package Lambda function
 echo "Step 3: Packaging Lambda function..."
-cd backend/functions/trigger
+
+# Get the script directory and project root
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+
+cd "$PROJECT_ROOT/backend/functions/trigger"
 
 # Create deployment package
 if [ -f "deployment_package.zip" ]; then
@@ -180,7 +185,7 @@ fi
 zip -q deployment_package.zip app.py
 echo "✓ Lambda function packaged"
 
-cd ../../..
+cd "$PROJECT_ROOT"
 echo ""
 
 # Step 4: Deploy Lambda function
@@ -192,6 +197,9 @@ if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
         --function-name $FUNCTION_NAME \
         --zip-file fileb://backend/functions/trigger/deployment_package.zip
     
+    echo "Waiting for code update to complete..."
+    aws lambda wait function-updated --function-name $FUNCTION_NAME
+    
     echo "Updating function configuration..."
     aws lambda update-function-configuration \
         --function-name $FUNCTION_NAME \
@@ -200,7 +208,7 @@ if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
         --role $ROLE_ARN \
         --timeout 300 \
         --memory-size 256 \
-        --environment "Variables={STATE_MACHINE_ARN=$STATE_MACHINE_ARN,AWS_REGION=$REGION}"
+        --environment "Variables={STATE_MACHINE_ARN=$STATE_MACHINE_ARN}"
     
     echo "✓ Lambda function updated"
 else
@@ -213,7 +221,7 @@ else
         --zip-file fileb://backend/functions/trigger/deployment_package.zip \
         --timeout 300 \
         --memory-size 256 \
-        --environment "Variables={STATE_MACHINE_ARN=$STATE_MACHINE_ARN,AWS_REGION=$REGION}" \
+        --environment "Variables={STATE_MACHINE_ARN=$STATE_MACHINE_ARN}" \
         --description "S3 Event Trigger Handler for AuditFlow-Pro document processing"
     
     echo "✓ Lambda function created"
@@ -234,13 +242,13 @@ echo ""
 # Step 5: Configure concurrency limits
 echo "Step 5: Configuring concurrency limits..."
 if [ -f "infrastructure/lambda_concurrency_setup.sh" ]; then
-    bash infrastructure/lambda_concurrency_setup.sh
+    bash infrastructure/lambda_concurrency_setup.sh || echo "Warning: Could not set concurrency limit (account limit reached). Continuing..."
 else
     echo "Setting reserved concurrent executions to 10..."
     aws lambda put-function-concurrency \
         --function-name $FUNCTION_NAME \
-        --reserved-concurrent-executions 10
-    echo "✓ Concurrency limit set"
+        --reserved-concurrent-executions 10 2>/dev/null || echo "Warning: Could not set concurrency limit (account limit reached). Continuing..."
+    echo "✓ Concurrency limit set (or skipped if account limit reached)"
 fi
 
 echo ""
@@ -268,7 +276,6 @@ echo "  - Concurrency Limit: 10"
 echo ""
 echo "Environment Variables:"
 echo "  - STATE_MACHINE_ARN: $STATE_MACHINE_ARN"
-echo "  - AWS_REGION: $REGION"
 echo ""
 echo "Next Steps:"
 echo "  1. Verify S3 event notifications: bash infrastructure/s3_event_trigger_setup.sh"
