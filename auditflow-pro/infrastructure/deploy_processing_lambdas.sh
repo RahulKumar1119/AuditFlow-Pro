@@ -50,7 +50,7 @@ deploy_lambda() {
     if [ -d "$PROJECT_ROOT/backend/shared" ]; then
         echo "  Adding shared modules..."
         cd "$PROJECT_ROOT/backend"
-        zip -qr "$PROJECT_ROOT/$FUNCTION_DIR/deployment_package.zip" shared/*.py
+        zip -qr "$PROJECT_ROOT/$FUNCTION_DIR/deployment_package.zip" shared/
         cd "$PROJECT_ROOT/$FUNCTION_DIR"
     fi
     
