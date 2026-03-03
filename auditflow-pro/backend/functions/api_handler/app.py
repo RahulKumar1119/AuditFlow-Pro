@@ -156,20 +156,34 @@ def handle_post_documents(event):
         # Generate presigned POST URL with 15-minute expiration (Requirement 1.8)
         # Use SSE-S3 (AES256) instead of KMS for browser uploads
         # KMS requires the uploader to have KMS permissions, which browsers don't have
+        
+        # Extract checksum from request body if provided (for integrity verification)
+        checksum = body.get('checksum')
+        
+        # Build fields and conditions
+        fields = {
+            "Content-Type": content_type,
+            "x-amz-server-side-encryption": "AES256",  # Use SSE-S3 instead of KMS
+            "acl": "private"
+        }
+        
+        conditions = [
+            {"Content-Type": content_type},
+            ["content-length-range", 1, MAX_FILE_SIZE],  # Enforce size limit
+            {"x-amz-server-side-encryption": "AES256"},  # Require encryption
+            {"acl": "private"}
+        ]
+        
+        # If checksum is provided, add it to the policy to allow frontend to send it
+        if checksum:
+            fields["x-amz-checksum-sha256"] = checksum
+            conditions.append({"x-amz-checksum-sha256": checksum})
+        
         presigned_post = s3_client.generate_presigned_post(
             Bucket=BUCKET_NAME,
             Key=s3_key,
-            Fields={
-                "Content-Type": content_type,
-                "x-amz-server-side-encryption": "AES256",  # Use SSE-S3 instead of KMS
-                "acl": "private"
-            },
-            Conditions=[
-                {"Content-Type": content_type},
-                ["content-length-range", 1, MAX_FILE_SIZE],  # Enforce size limit
-                {"x-amz-server-side-encryption": "AES256"},  # Require encryption
-                {"acl": "private"}
-            ],
+            Fields=fields,
+            Conditions=conditions,
             ExpiresIn=900  # 15 minutes
         )
         
