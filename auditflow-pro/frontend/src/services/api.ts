@@ -39,11 +39,12 @@ export interface DocumentViewResponse {
 }
 
 export interface UploadUrlResponse {
-  upload_url_data: {
-    url: string;
-    fields: Record<string, string>;
-    document_id: string;
-  };
+  upload_url: string;
+  upload_fields: Record<string, string>;
+  document_id: string;
+  loan_application_id: string;
+  s3_key: string;
+  expires_in: number;
 } 
 
 export const getAuthToken = async (): Promise<string> => {

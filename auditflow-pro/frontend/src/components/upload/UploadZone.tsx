@@ -50,12 +50,10 @@ const UploadZone: React.FC<{ loanApplicationId?: string }> = ({ loanApplicationI
         loanApplicationId || '',
         checksum 
       );
-      
-      const { upload_url_data } = response;
 
       // Task 17.3: Prepare FormData for S3 Direct Post
       const formData = new FormData();
-      Object.entries(upload_url_data.fields).forEach(([key, value]) => {
+      Object.entries(response.upload_fields).forEach(([key, value]) => {
         formData.append(key, value);
       });
       
@@ -66,7 +64,7 @@ const UploadZone: React.FC<{ loanApplicationId?: string }> = ({ loanApplicationI
       // Task 17.3: Upload directly to S3 with Progress Tracking
       await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', upload_url_data.url, true);
+        xhr.open('POST', response.upload_url, true);
 
         xhr.upload.onprogress = (event) => {
           if (event.lengthComputable) {
