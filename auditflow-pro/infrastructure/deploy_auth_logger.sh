@@ -26,9 +26,14 @@ echo ""
 
 # Create deployment package
 echo "Creating deployment package..."
-cd backend/functions/auth_logger
+
+# Get the script directory and project root
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+
+cd "$PROJECT_ROOT/backend/functions/auth_logger"
 zip -q auth_logger.zip app.py
-cd ../../..
+cd "$PROJECT_ROOT"
 
 echo "✓ Deployment package created"
 echo ""
@@ -68,7 +73,7 @@ LAMBDA_ARN=$(aws lambda create-function \
     --runtime python3.11 \
     --role arn:aws:iam::${ACCOUNT_ID}:role/AuditFlowAuthLoggerRole \
     --handler app.lambda_handler \
-    --zip-file fileb://backend/functions/auth_logger/auth_logger.zip \
+    --zip-file fileb://$PROJECT_ROOT/backend/functions/auth_logger/auth_logger.zip \
     --timeout 30 \
     --memory-size 256 \
     --region $REGION \
@@ -76,7 +81,7 @@ LAMBDA_ARN=$(aws lambda create-function \
     --output text 2>/dev/null || \
     aws lambda update-function-code \
         --function-name AuditFlowAuthLogger \
-        --zip-file fileb://backend/functions/auth_logger/auth_logger.zip \
+        --zip-file fileb://$PROJECT_ROOT/backend/functions/auth_logger/auth_logger.zip \
         --region $REGION \
         --query 'FunctionArn' \
         --output text)
@@ -115,7 +120,7 @@ echo "✓ Cognito triggers configured"
 echo ""
 
 # Clean up
-rm -f backend/functions/auth_logger/auth_logger.zip
+rm -f $PROJECT_ROOT/backend/functions/auth_logger/auth_logger.zip
 
 echo "================================================"
 echo "✓ Authentication Logger deployment completed!"

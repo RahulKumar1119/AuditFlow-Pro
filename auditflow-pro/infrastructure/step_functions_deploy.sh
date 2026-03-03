@@ -4,6 +4,10 @@
 
 set -e
 
+# Get absolute paths
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
 REGION="ap-south-1"
 ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 STATE_MACHINE_NAME="AuditFlowDocumentProcessing"
@@ -47,31 +51,13 @@ echo "Creating Step Functions execution role..."
 ROLE_NAME="AuditFlowStepFunctionsRole"
 
 if aws iam get-role --role-name $ROLE_NAME 2>/dev/null; then
-    echo "Role $ROLE_NAME already exists"
+    echo "Role $ROLE_NAME already exists, updating policies..."
     ROLE_ARN=$(aws iam get-role --role-name $ROLE_NAME --query 'Role.Arn' --output text)
-else
-    # Create the role
-    ROLE_ARN=$(aws iam create-role \
-        --role-name $ROLE_NAME \
-        --assume-role-policy-document '{
-            "Version": "2012-10-17",
-            "Statement": [{
-                "Effect": "Allow",
-                "Principal": {
-                    "Service": "states.amazonaws.com"
-                },
-                "Action": "sts:AssumeRole"
-            }]
-        }' \
-        --query 'Role.Arn' \
-        --output text)
     
-    echo "✓ Role created: $ROLE_ARN"
-    
-    # Attach policy to invoke Lambda functions
+    # Update the policy even if role exists
     aws iam put-role-policy \
         --role-name $ROLE_NAME \
-        --policy-name StepFunctionsLambdaInvokePolicy \
+        --policy-name StepFunctionsExecutionPolicy \
         --policy-document '{
             "Version": "2012-10-17",
             "Statement": [
@@ -98,12 +84,74 @@ else
                         "logs:ListLogDeliveries",
                         "logs:PutResourcePolicy",
                         "logs:DescribeResourcePolicies",
-                        "logs:DescribeLogGroups"
+                        "logs:DescribeLogGroups",
+                        "logs:CreateLogStream",
+                        "logs:PutLogEvents"
                     ],
                     "Resource": "*"
                 }
             ]
         }'
+    
+    echo "✓ IAM policies updated"
+else
+    # Create the role
+    ROLE_ARN=$(aws iam create-role \
+        --role-name $ROLE_NAME \
+        --assume-role-policy-document '{
+            "Version": "2012-10-17",
+            "Statement": [{
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "states.amazonaws.com"
+                },
+                "Action": "sts:AssumeRole"
+            }]
+        }' \
+        --query 'Role.Arn' \
+        --output text)
+    
+    echo "✓ Role created: $ROLE_ARN"
+    
+    # Attach policy to invoke Lambda functions and write logs
+    aws iam put-role-policy \
+        --role-name $ROLE_NAME \
+        --policy-name StepFunctionsExecutionPolicy \
+        --policy-document '{
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "lambda:InvokeFunction"
+                    ],
+                    "Resource": [
+                        "'$CLASSIFIER_ARN'",
+                        "'$EXTRACTOR_ARN'",
+                        "'$VALIDATOR_ARN'",
+                        "'$RISK_SCORER_ARN'",
+                        "'$REPORTER_ARN'"
+                    ]
+                },
+                {
+                    "Effect": "Allow",
+                    "Action": [
+                        "logs:CreateLogDelivery",
+                        "logs:GetLogDelivery",
+                        "logs:UpdateLogDelivery",
+                        "logs:DeleteLogDelivery",
+                        "logs:ListLogDeliveries",
+                        "logs:PutResourcePolicy",
+                        "logs:DescribeResourcePolicies",
+                        "logs:DescribeLogGroups",
+                        "logs:CreateLogStream",
+                        "logs:PutLogEvents"
+                    ],
+                    "Resource": "*"
+                }
+            ]
+        }'
+
     
     echo "✓ IAM policies attached"
     
@@ -111,6 +159,10 @@ else
     echo "Waiting for IAM role to propagate..."
     sleep 10
 fi
+
+# Wait a bit for policy updates to propagate
+echo "Waiting for IAM policy updates to propagate..."
+sleep 5
 
 echo ""
 
@@ -131,11 +183,40 @@ else
     echo "✓ Log group created with 1-year retention"
 fi
 
+# Add resource policy to allow Step Functions to write to CloudWatch Logs
+echo "Configuring CloudWatch Logs resource policy..."
+POLICY_NAME="StepFunctionsLogDeliveryPolicy"
+
+# Check if policy already exists and delete it to update
+aws logs describe-resource-policies --query "resourcePolicies[?policyName=='$POLICY_NAME']" --output text > /dev/null 2>&1 && \
+    aws logs delete-resource-policy --policy-name "$POLICY_NAME" 2>/dev/null || true
+
+# Create the resource policy
+aws logs put-resource-policy \
+    --policy-name "$POLICY_NAME" \
+    --policy-document '{
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "delivery.logs.amazonaws.com"
+                },
+                "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                ],
+                "Resource": "arn:aws:logs:'$REGION':'$ACCOUNT_ID':log-group:'$LOG_GROUP_NAME':*"
+            }
+        ]
+    }' > /dev/null
+
+echo "✓ CloudWatch Logs resource policy configured"
 echo ""
 
 # Substitute Lambda ARNs in state machine definition
 echo "Preparing state machine definition..."
-STATE_MACHINE_FILE="backend/step_functions/state_machine.asl.json"
+STATE_MACHINE_FILE="$PROJECT_ROOT/backend/step_functions/state_machine.asl.json"
 
 if [ ! -f "$STATE_MACHINE_FILE" ]; then
     echo "Error: State machine definition not found at $STATE_MACHINE_FILE"
