@@ -6,17 +6,13 @@ and orchestrates the validation process to detect inconsistencies across documen
 """
 
 import os
-import sys
 import json
 import logging
 from typing import List, Dict, Any
 import uuid
 
-# Add shared modules to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../shared'))
-
-import repositories
-import models
+from shared import repositories, models
+from shared.models import DocumentMetadata, ExtractedField
 import rules
 
 logger = logging.getLogger()

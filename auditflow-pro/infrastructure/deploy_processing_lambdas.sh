@@ -46,6 +46,14 @@ deploy_lambda() {
     # Package function code
     zip -q deployment_package.zip *.py 2>/dev/null || true
     
+    # Add shared modules to the package
+    if [ -d "$PROJECT_ROOT/backend/shared" ]; then
+        echo "  Adding shared modules..."
+        cd "$PROJECT_ROOT/backend"
+        zip -qr "$PROJECT_ROOT/$FUNCTION_DIR/deployment_package.zip" shared/*.py
+        cd "$PROJECT_ROOT/$FUNCTION_DIR"
+    fi
+    
     # Check if function exists
     if aws lambda get-function --function-name $FUNCTION_NAME 2>/dev/null; then
         echo "  Updating existing function..."
