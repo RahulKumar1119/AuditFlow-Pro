@@ -25,7 +25,8 @@ describe('Login Component', () => {
       login: mockLogin,
       user: null,
       logout: vi.fn(),
-      checkUser: vi.fn()
+      checkUser: vi.fn(),
+      completeNewPassword: vi.fn()
     });
   });
 
