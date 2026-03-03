@@ -30,7 +30,7 @@ echo "Configuring Lifecycle Policy (Glacier after 90 days, Delete after 7 years)
 aws s3api put-bucket-lifecycle-configuration --bucket $BUCKET_NAME --lifecycle-configuration '{
   "Rules": [
     {
-      "Id": "ArchiveToGlacierAfter90Days",
+      "ID": "ArchiveToGlacierAfter90Days",
       "Status": "Enabled",
       "Filter": {
         "Prefix": ""
@@ -46,7 +46,7 @@ aws s3api put-bucket-lifecycle-configuration --bucket $BUCKET_NAME --lifecycle-c
       }
     },
     {
-      "Id": "DeleteOldVersionsAfter30Days",
+      "ID": "DeleteOldVersionsAfter30Days",
       "Status": "Enabled",
       "Filter": {
         "Prefix": ""
