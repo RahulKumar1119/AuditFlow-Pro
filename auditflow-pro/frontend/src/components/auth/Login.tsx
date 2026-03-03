@@ -39,7 +39,7 @@ const Login: React.FC = () => {
     
     if (result.success) {
       navigate('/dashboard');
-    } else if (result.challengeName === 'NEW_PASSWORD_REQUIRED') {
+    } else if (result.challengeName === 'CONFIRM_SIGN_IN_WITH_NEW_PASSWORD_REQUIRED') {
       // Show new password form
       setShowNewPasswordForm(true);
       setError('');
