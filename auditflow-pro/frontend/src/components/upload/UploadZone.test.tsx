@@ -53,7 +53,12 @@ describe('UploadZone Component', () => {
   it('attempts upload for valid files', async () => {
     // Mock successful API response
     vi.spyOn(api, 'requestUploadUrl').mockResolvedValueOnce({
-      upload_url_data: { url: 'http://mock-s3.com', fields: {}, document_id: 'mock-doc-id' }
+      upload_url: 'http://mock-s3.com',
+      upload_fields: {},
+      document_id: 'mock-doc-id',
+      loan_application_id: 'loan-123',
+      s3_key: 'uploads/loan-123/mock-doc-id_w2_form.pdf',
+      expires_in: 900
     });
 
     render(<UploadZone />);
