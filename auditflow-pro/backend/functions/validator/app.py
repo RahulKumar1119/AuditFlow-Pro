@@ -13,6 +13,7 @@ import uuid
 
 from shared import repositories
 from shared.models import DocumentMetadata, ExtractedField
+from shared import models
 import rules
 
 logger = logging.getLogger()
