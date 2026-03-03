@@ -11,7 +11,7 @@ import logging
 from typing import List, Dict, Any
 import uuid
 
-from shared import repositories, models
+from shared import repositories
 from shared.models import DocumentMetadata, ExtractedField
 import rules
 
