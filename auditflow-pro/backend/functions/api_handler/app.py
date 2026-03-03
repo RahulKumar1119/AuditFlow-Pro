@@ -154,17 +154,19 @@ def handle_post_documents(event):
 
     try:
         # Generate presigned POST URL with 15-minute expiration (Requirement 1.8)
+        # Use SSE-S3 (AES256) instead of KMS for browser uploads
+        # KMS requires the uploader to have KMS permissions, which browsers don't have
         presigned_post = s3_client.generate_presigned_post(
             Bucket=BUCKET_NAME,
             Key=s3_key,
             Fields={
                 "Content-Type": content_type,
-                "x-amz-server-side-encryption": "aws:kms"
+                "x-amz-server-side-encryption": "AES256"  # Use SSE-S3 instead of KMS
             },
             Conditions=[
                 {"Content-Type": content_type},
                 ["content-length-range", 1, MAX_FILE_SIZE],  # Enforce size limit
-                {"x-amz-server-side-encryption": "aws:kms"}  # Require encryption
+                {"x-amz-server-side-encryption": "AES256"}  # Require encryption
             ],
             ExpiresIn=900  # 15 minutes
         )

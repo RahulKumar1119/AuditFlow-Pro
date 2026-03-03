@@ -43,11 +43,14 @@ const UploadZone: React.FC<{ loanApplicationId?: string }> = ({ loanApplicationI
       // Task 17.3: Calculate the file checksum before sending
       const checksum = await calculateChecksum(uploadRecord.file);
 
+      // Generate loan application ID if not provided
+      const effectiveLoanAppId = loanApplicationId || `loan-${crypto.randomUUID().substring(0, 8)}`;
+
       // Task 17.3: Get Pre-signed URL from API Gateway, passing the checksum
       const response: UploadUrlResponse = await requestUploadUrl(
         uploadRecord.file.name, 
         uploadRecord.file.type, 
-        loanApplicationId || '',
+        effectiveLoanAppId,
         checksum 
       );
 
