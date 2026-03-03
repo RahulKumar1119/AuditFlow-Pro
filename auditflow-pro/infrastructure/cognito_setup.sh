@@ -15,31 +15,33 @@ echo ""
 
 # 1. Create Cognito User Pool with comprehensive security policies
 echo "Creating Cognito User Pool..."
-USER_POOL_ID=$(aws cognito-idp create-user-pool \
-    --pool-name AuditFlowUserPool \
-    --policies '{
-        "PasswordPolicy": {
-            "MinimumLength": 12,
-            "RequireUppercase": true,
-            "RequireLowercase": true,
-            "RequireNumbers": true,
-            "RequireSymbols": true,
-            "TemporaryPasswordValidityDays": 7
-        }
-    }' \
-    --auto-verified-attributes email \
-    --mfa-configuration OPTIONAL \
-    --user-attribute-update-settings '{"AttributesRequireVerificationBeforeUpdate": ["email"]}' \
-    --account-recovery-setting '{
-        "RecoveryMechanisms": [
-            {"Priority": 1, "Name": "verified_email"}
-        ]
-    }' \
-    --user-pool-add-ons '{"AdvancedSecurityMode": "ENFORCED"}' \
-    --device-configuration '{"ChallengeRequiredOnNewDevice": true, "DeviceOnlyRememberedOnUserPrompt": true}' \
-    --region $REGION \
-    --query 'UserPool.Id' \
-    --output text 2>/dev/null || aws cognito-idp list-user-pools --max-results 10 --region $REGION --query "UserPools[?Name=='AuditFlowUserPool'].Id" --output text)
+
+# Check if User Pool already exists
+EXISTING_POOL=$(aws cognito-idp list-user-pools --max-results 60 --region $REGION --query "UserPools[?Name=='AuditFlowUserPool'].Id" --output text 2>/dev/null)
+
+if [ -n "$EXISTING_POOL" ]; then
+    echo "  User Pool already exists"
+    USER_POOL_ID="$EXISTING_POOL"
+else
+    USER_POOL_ID=$(aws cognito-idp create-user-pool \
+        --pool-name AuditFlowUserPool \
+        --policies '{"PasswordPolicy":{"MinimumLength":12,"RequireUppercase":true,"RequireLowercase":true,"RequireNumbers":true,"RequireSymbols":true,"TemporaryPasswordValidityDays":7}}' \
+        --auto-verified-attributes email \
+        --mfa-configuration OPTIONAL \
+        --user-attribute-update-settings '{"AttributesRequireVerificationBeforeUpdate":["email"]}' \
+        --account-recovery-setting '{"RecoveryMechanisms":[{"Priority":1,"Name":"verified_email"}]}' \
+        --user-pool-add-ons '{"AdvancedSecurityMode":"ENFORCED"}' \
+        --device-configuration '{"ChallengeRequiredOnNewDevice":true,"DeviceOnlyRememberedOnUserPrompt":true}' \
+        --region $REGION \
+        --query 'UserPool.Id' \
+        --output text 2>&1)
+    
+    # Check if creation failed
+    if [ $? -ne 0 ] || [ -z "$USER_POOL_ID" ]; then
+        echo "Error creating User Pool. Checking if it exists..."
+        USER_POOL_ID=$(aws cognito-idp list-user-pools --max-results 60 --region $REGION --query "UserPools[?Name=='AuditFlowUserPool'].Id" --output text 2>/dev/null)
+    fi
+fi
 
 
 if [ -z "$USER_POOL_ID" ]; then
@@ -51,23 +53,34 @@ echo "✓ User Pool ID: $USER_POOL_ID"
 
 # 2. Create User Pool Client with 30-minute session timeout
 echo "Creating User Pool Client with 30-minute session timeout..."
-CLIENT_ID=$(aws cognito-idp create-user-pool-client \
-    --user-pool-id $USER_POOL_ID \
-    --client-name AuditFlowWebClient \
-    --no-generate-secret \
-    --explicit-auth-flows ALLOW_USER_PASSWORD_AUTH ALLOW_REFRESH_TOKEN_AUTH ALLOW_USER_SRP_AUTH \
-    --token-validity-units '{
-        "AccessToken": "minutes",
-        "IdToken": "minutes",
-        "RefreshToken": "days"
-    }' \
-    --access-token-validity 30 \
-    --id-token-validity 30 \
-    --refresh-token-validity 30 \
-    --prevent-user-existence-errors ENABLED \
-    --region $REGION \
-    --query 'UserPoolClient.ClientId' \
-    --output text 2>/dev/null || aws cognito-idp list-user-pool-clients --user-pool-id $USER_POOL_ID --region $REGION --query "UserPoolClients[?ClientName=='AuditFlowWebClient'].ClientId" --output text)
+
+# Check if client already exists
+EXISTING_CLIENT=$(aws cognito-idp list-user-pool-clients --user-pool-id $USER_POOL_ID --region $REGION --query "UserPoolClients[?ClientName=='AuditFlowWebClient'].ClientId" --output text 2>/dev/null)
+
+if [ -n "$EXISTING_CLIENT" ]; then
+    echo "  User Pool Client already exists"
+    CLIENT_ID="$EXISTING_CLIENT"
+else
+    CLIENT_ID=$(aws cognito-idp create-user-pool-client \
+        --user-pool-id $USER_POOL_ID \
+        --client-name AuditFlowWebClient \
+        --no-generate-secret \
+        --explicit-auth-flows ALLOW_USER_PASSWORD_AUTH ALLOW_REFRESH_TOKEN_AUTH ALLOW_USER_SRP_AUTH \
+        --token-validity-units '{"AccessToken":"minutes","IdToken":"minutes","RefreshToken":"days"}' \
+        --access-token-validity 30 \
+        --id-token-validity 30 \
+        --refresh-token-validity 30 \
+        --prevent-user-existence-errors ENABLED \
+        --region $REGION \
+        --query 'UserPoolClient.ClientId' \
+        --output text 2>&1)
+    
+    # Check if creation failed
+    if [ $? -ne 0 ] || [ -z "$CLIENT_ID" ]; then
+        echo "Error creating User Pool Client. Checking if it exists..."
+        CLIENT_ID=$(aws cognito-idp list-user-pool-clients --user-pool-id $USER_POOL_ID --region $REGION --query "UserPoolClients[?ClientName=='AuditFlowWebClient'].ClientId" --output text 2>/dev/null)
+    fi
+fi
 
 if [ -z "$CLIENT_ID" ]; then
     echo "Error: Failed to create or retrieve User Pool Client ID"
@@ -97,13 +110,28 @@ echo "✓ Administrators group created (MFA will be enforced via application log
 
 # 4. Create Identity Pool for AWS resource access
 echo "Creating Cognito Identity Pool..."
-IDENTITY_POOL_ID=$(aws cognito-identity create-identity-pool \
-    --identity-pool-name AuditFlowIdentityPool \
-    --allow-unauthenticated-identities false \
-    --cognito-identity-providers "ProviderName=cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID},ClientId=${CLIENT_ID},ServerSideTokenCheck=true" \
-    --region $REGION \
-    --query 'IdentityPoolId' \
-    --output text 2>/dev/null || aws cognito-identity list-identity-pools --max-results 10 --region $REGION --query "IdentityPools[?IdentityPoolName=='AuditFlowIdentityPool'].IdentityPoolId" --output text)
+
+# Check if Identity Pool already exists
+EXISTING_IDENTITY_POOL=$(aws cognito-identity list-identity-pools --max-results 60 --region $REGION --query "IdentityPools[?IdentityPoolName=='AuditFlowIdentityPool'].IdentityPoolId" --output text 2>/dev/null)
+
+if [ -n "$EXISTING_IDENTITY_POOL" ]; then
+    echo "  Identity Pool already exists"
+    IDENTITY_POOL_ID="$EXISTING_IDENTITY_POOL"
+else
+    IDENTITY_POOL_ID=$(aws cognito-identity create-identity-pool \
+        --identity-pool-name AuditFlowIdentityPool \
+        --allow-unauthenticated-identities false \
+        --cognito-identity-providers "ProviderName=cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID},ClientId=${CLIENT_ID},ServerSideTokenCheck=true" \
+        --region $REGION \
+        --query 'IdentityPoolId' \
+        --output text 2>&1)
+    
+    # Check if creation failed
+    if [ $? -ne 0 ] || [ -z "$IDENTITY_POOL_ID" ]; then
+        echo "Error creating Identity Pool. Checking if it exists..."
+        IDENTITY_POOL_ID=$(aws cognito-identity list-identity-pools --max-results 60 --region $REGION --query "IdentityPools[?IdentityPoolName=='AuditFlowIdentityPool'].IdentityPoolId" --output text 2>/dev/null)
+    fi
+fi
 
 if [ -z "$IDENTITY_POOL_ID" ]; then
     echo "Error: Failed to create or retrieve Identity Pool ID"
@@ -114,161 +142,175 @@ echo "✓ Identity Pool ID: $IDENTITY_POOL_ID"
 
 # 5. Create IAM roles for authenticated users with role-based permissions
 echo "Creating IAM role for Loan Officers..."
+
+# Create assume role policy file
+cat > /tmp/cognito-assume-role-policy.json << EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [{
+        "Effect": "Allow",
+        "Principal": {
+            "Federated": "cognito-identity.amazonaws.com"
+        },
+        "Action": "sts:AssumeRoleWithWebIdentity",
+        "Condition": {
+            "StringEquals": {
+                "cognito-identity.amazonaws.com:aud": "${IDENTITY_POOL_ID}"
+            },
+            "ForAnyValue:StringLike": {
+                "cognito-identity.amazonaws.com:amr": "authenticated"
+            }
+        }
+    }]
+}
+EOF
+
 aws iam create-role \
     --role-name AuditFlowLoanOfficerRole \
-    --assume-role-policy-document "{
-        \"Version\": \"2012-10-17\",
-        \"Statement\": [{
-            \"Effect\": \"Allow\",
-            \"Principal\": {
-                \"Federated\": \"cognito-identity.amazonaws.com\"
-            },
-            \"Action\": \"sts:AssumeRoleWithWebIdentity\",
-            \"Condition\": {
-                \"StringEquals\": {
-                    \"cognito-identity.amazonaws.com:aud\": \"${IDENTITY_POOL_ID}\"
-                },
-                \"ForAnyValue:StringLike\": {
-                    \"cognito-identity.amazonaws.com:amr\": \"authenticated\"
-                }
-            }
-        }]
-    }" 2>/dev/null || echo "  (Role already exists)"
+    --assume-role-policy-document file:///tmp/cognito-assume-role-policy.json 2>/dev/null || echo "  (Role already exists)"
 
 echo "Creating IAM role for Administrators..."
 aws iam create-role \
     --role-name AuditFlowAdministratorRole \
-    --assume-role-policy-document "{
-        \"Version\": \"2012-10-17\",
-        \"Statement\": [{
-            \"Effect\": \"Allow\",
-            \"Principal\": {
-                \"Federated\": \"cognito-identity.amazonaws.com\"
-            },
-            \"Action\": \"sts:AssumeRoleWithWebIdentity\",
-            \"Condition\": {
-                \"StringEquals\": {
-                    \"cognito-identity.amazonaws.com:aud\": \"${IDENTITY_POOL_ID}\"
-                },
-                \"ForAnyValue:StringLike\": {
-                    \"cognito-identity.amazonaws.com:amr\": \"authenticated\"
-                }
-            }
-        }]
-    }" 2>/dev/null || echo "  (Role already exists)"
+    --assume-role-policy-document file:///tmp/cognito-assume-role-policy.json 2>/dev/null || echo "  (Role already exists)"
+
+rm -f /tmp/cognito-assume-role-policy.json
 
 echo "✓ IAM roles created"
 
 # 6. Attach policies to Loan Officer role (read-only access to S3 and DynamoDB)
 echo "Attaching policies to Loan Officer role..."
+
+# Create Loan Officer policy file
+cat > /tmp/loan-officer-policy.json << EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::auditflow-documents-${REGION}-${ACCOUNT_ID}",
+                "arn:aws:s3:::auditflow-documents-${REGION}-${ACCOUNT_ID}/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:GetItem",
+                "dynamodb:Query",
+                "dynamodb:Scan"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-Documents",
+                "arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-Documents/index/*",
+                "arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-AuditRecords",
+                "arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-AuditRecords/index/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cognito-identity:GetCredentialsForIdentity"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+
 aws iam put-role-policy \
     --role-name AuditFlowLoanOfficerRole \
     --policy-name LoanOfficerAccessPolicy \
-    --policy-document "{
-        \"Version\": \"2012-10-17\",
-        \"Statement\": [
-            {
-                \"Effect\": \"Allow\",
-                \"Action\": [
-                    \"s3:GetObject\",
-                    \"s3:ListBucket\"
-                ],
-                \"Resource\": [
-                    \"arn:aws:s3:::auditflow-documents-${REGION}-${ACCOUNT_ID}\",
-                    \"arn:aws:s3:::auditflow-documents-${REGION}-${ACCOUNT_ID}/*\"
-                ]
-            },
-            {
-                \"Effect\": \"Allow\",
-                \"Action\": [
-                    \"dynamodb:GetItem\",
-                    \"dynamodb:Query\",
-                    \"dynamodb:Scan\"
-                ],
-                \"Resource\": [
-                    \"arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-Documents\",
-                    \"arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-Documents/index/*\",
-                    \"arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-AuditRecords\",
-                    \"arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-AuditRecords/index/*\"
-                ]
-            },
-            {
-                \"Effect\": \"Allow\",
-                \"Action\": [
-                    \"cognito-identity:GetCredentialsForIdentity\"
-                ],
-                \"Resource\": \"*\"
-            }
-        ]
-    }"
+    --policy-document file:///tmp/loan-officer-policy.json
+
+rm -f /tmp/loan-officer-policy.json
 
 echo "✓ Loan Officer policies attached (S3 read, DynamoDB read)"
 
 # 7. Attach policies to Administrator role (full system access)
 echo "Attaching policies to Administrator role..."
+
+# Create Administrator policy file
+cat > /tmp/administrator-policy.json << EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::auditflow-documents-${REGION}-${ACCOUNT_ID}",
+                "arn:aws:s3:::auditflow-documents-${REGION}-${ACCOUNT_ID}/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:*"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-Documents",
+                "arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-Documents/index/*",
+                "arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-AuditRecords",
+                "arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-AuditRecords/index/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cognito-idp:*",
+                "cognito-identity:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:*",
+                "cloudwatch:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+EOF
+
 aws iam put-role-policy \
     --role-name AuditFlowAdministratorRole \
     --policy-name AdministratorAccessPolicy \
-    --policy-document "{
-        \"Version\": \"2012-10-17\",
-        \"Statement\": [
-            {
-                \"Effect\": \"Allow\",
-                \"Action\": [
-                    \"s3:*\"
-                ],
-                \"Resource\": [
-                    \"arn:aws:s3:::auditflow-documents-${REGION}-${ACCOUNT_ID}\",
-                    \"arn:aws:s3:::auditflow-documents-${REGION}-${ACCOUNT_ID}/*\"
-                ]
-            },
-            {
-                \"Effect\": \"Allow\",
-                \"Action\": [
-                    \"dynamodb:*\"
-                ],
-                \"Resource\": [
-                    \"arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-Documents\",
-                    \"arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-Documents/index/*\",
-                    \"arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-AuditRecords\",
-                    \"arn:aws:dynamodb:${REGION}:${ACCOUNT_ID}:table/AuditFlow-AuditRecords/index/*\"
-                ]
-            },
-            {
-                \"Effect\": \"Allow\",
-                \"Action\": [
-                    \"cognito-idp:*\",
-                    \"cognito-identity:*\"
-                ],
-                \"Resource\": \"*\"
-            },
-            {
-                \"Effect\": \"Allow\",
-                \"Action\": [
-                    \"logs:*\",
-                    \"cloudwatch:*\"
-                ],
-                \"Resource\": \"*\"
-            }
-        ]
-    }"
+    --policy-document file:///tmp/administrator-policy.json
+
+rm -f /tmp/administrator-policy.json
 
 echo "✓ Administrator policies attached (full system access)"
 
 # 8. Set Identity Pool roles with role mapping
 echo "Setting Identity Pool roles with group-based role mapping..."
 
+# Create role mapping file
+cat > /tmp/role-mappings.json << EOF
+{
+    "cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID}:${CLIENT_ID}": {
+        "Type": "Token",
+        "AmbiguousRoleResolution": "AuthenticatedRole"
+    }
+}
+EOF
+
 # First, set the default authenticated role
 aws cognito-identity set-identity-pool-roles \
     --identity-pool-id $IDENTITY_POOL_ID \
     --roles authenticated=arn:aws:iam::${ACCOUNT_ID}:role/AuditFlowLoanOfficerRole \
-    --role-mappings "{
-        \"cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID}:${CLIENT_ID}\": {
-            \"Type\": \"Token\",
-            \"AmbiguousRoleResolution\": \"AuthenticatedRole\"
-        }
-    }" \
+    --role-mappings file:///tmp/role-mappings.json \
     --region $REGION
+
+rm -f /tmp/role-mappings.json
 
 echo "✓ Identity Pool roles configured"
 echo "  - Default role: LoanOfficer"
