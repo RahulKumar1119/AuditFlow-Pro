@@ -1,0 +1,16 @@
+Cognito Configuration
+=====================
+Generated: Tuesday 03 March 2026 11:56:47 AM IST
+
+User Pool ID: ap-south-1_lIhrnyezu
+User Pool Client ID: 7n2nt2p6l7dhifjihhk7eaqjjd
+Identity Pool ID: ap-south-1:dcd100e7-cfd0-4fff-8ff1-7eabd62c7757
+Region: ap-south-1
+
+Frontend .env updated: ✓
+Amplify Console update needed: Manual step required
+
+Next Steps:
+1. Update Amplify Console environment variables (see above)
+2. Redeploy frontend in Amplify Console
+3. Test login at your Amplify URL
