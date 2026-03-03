@@ -1,0 +1,109 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/Resources <<
+/Font <<
+/F1 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+/F2 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica-Bold
+>>
+>>
+>>
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+>>
+endobj
+
+4 0 obj
+<<
+/Length 829
+>>
+stream
+BT
+/F2 16 Tf
+50 750 Td
+(Form 1040) Tj
+0 -30 Td
+/F1 10 Tf
+(Form 1040 U.S. Individual Income Tax Return - 2023) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(TAXPAYER INFORMATION:) Tj
+0 -15 Td
+(Name: Jane Marie Doe) Tj
+0 -15 Td
+(Social Security Number: 987-65-4321) Tj
+0 -15 Td
+(Address: 456 Oak Avenue, Los Angeles, CA 90001) Tj
+0 -15 Td
+(Filing Status: Single) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(INCOME:) Tj
+0 -15 Td
+(Line 1 - Wages, salaries, tips: $92,000.00) Tj
+0 -15 Td
+(Line 11 - Adjusted Gross Income: $92,000.00) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(DEDUCTIONS:) Tj
+0 -15 Td
+(Line 12 - Standard Deduction: $13,850.00) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(TAX CALCULATION:) Tj
+0 -15 Td
+(Line 15 - Taxable Income: $78,150.00) Tj
+0 -15 Td
+(Line 24 - Total Tax: $17,193.00) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(This is a test document for AuditFlow testing only.) Tj
+0 -15 Td
+ET
+endstream
+endobj
+
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000317 00000 n 
+trailer
+<<
+/Size 5
+/Root 1 0 R
+>>
+startxref
+1229
+%%EOF

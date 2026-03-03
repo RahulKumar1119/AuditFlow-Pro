@@ -1,0 +1,105 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/Resources <<
+/Font <<
+/F1 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+/F2 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica-Bold
+>>
+>>
+>>
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+>>
+endobj
+
+4 0 obj
+<<
+/Length 681
+>>
+stream
+BT
+/F2 16 Tf
+50 750 Td
+(Bank Statement) Tj
+0 -30 Td
+/F1 10 Tf
+(FIRST NATIONAL BANK) Tj
+0 -15 Td
+(Monthly Statement - December 2023) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(ACCOUNT HOLDER:) Tj
+0 -15 Td
+(Jane Doe) Tj
+0 -15 Td
+(456 Oak Ave, Los Angeles, CA 90001) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(ACCOUNT INFORMATION:) Tj
+0 -15 Td
+(Account Number: ****5678) Tj
+0 -15 Td
+(Account Type: Checking) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(BALANCE SUMMARY:) Tj
+0 -15 Td
+(Beginning Balance: $8,000.00) Tj
+0 -15 Td
+(Total Deposits: $7,500.00) Tj
+0 -15 Td
+(Total Withdrawals: $500.00) Tj
+0 -15 Td
+(Ending Balance: $15,000.00) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(This is a test document for AuditFlow testing only.) Tj
+0 -15 Td
+ET
+endstream
+endobj
+
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000317 00000 n 
+trailer
+<<
+/Size 5
+/Root 1 0 R
+>>
+startxref
+1081
+%%EOF

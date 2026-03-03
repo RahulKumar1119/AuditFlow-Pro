@@ -1,0 +1,105 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/Resources <<
+/Font <<
+/F1 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+/F2 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica-Bold
+>>
+>>
+>>
+/MediaBox [0 0 612 792]
+/Contents 4 0 R
+>>
+endobj
+
+4 0 obj
+<<
+/Length 794
+>>
+stream
+BT
+/F2 16 Tf
+50 750 Td
+(W-2 Form) Tj
+0 -30 Td
+/F1 10 Tf
+(Form W-2 Wage and Tax Statement - 2023) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(EMPLOYER INFORMATION:) Tj
+0 -15 Td
+(Employer Name: Finance Partners Inc) Tj
+0 -15 Td
+(Employer EIN: 55-5123456) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(EMPLOYEE INFORMATION:) Tj
+0 -15 Td
+(Employee Name: Robert Johnson) Tj
+0 -15 Td
+(Employee SSN: 555-12-3456) Tj
+0 -15 Td
+(Address: 789 Park Place, Chicago, IL 60601) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(WAGE INFORMATION:) Tj
+0 -15 Td
+(Box 1 - Wages, tips, compensation: $150,000.00) Tj
+0 -15 Td
+(Box 2 - Federal tax withheld: $33,000.00) Tj
+0 -15 Td
+(Box 3 - Social security wages: $150,000.00) Tj
+0 -15 Td
+(Box 5 - Medicare wages: $150,000.00) Tj
+0 -15 Td
+() Tj
+0 -15 Td
+(This is a test document for AuditFlow testing only.) Tj
+0 -15 Td
+ET
+endstream
+endobj
+
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000317 00000 n 
+trailer
+<<
+/Size 5
+/Root 1 0 R
+>>
+startxref
+1194
+%%EOF
