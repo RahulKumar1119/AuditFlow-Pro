@@ -60,8 +60,8 @@ const UploadZone: React.FC<{ loanApplicationId?: string }> = ({ loanApplicationI
         formData.append(key, value);
       });
       
-      // Task 17.3: Append checksum to payload for AWS S3 to verify
-      formData.append('x-amz-checksum-sha256', checksum);
+      // Note: checksum is already included in upload_fields from backend
+      // No need to append it again here
       formData.append('file', uploadRecord.file);
 
       // Task 17.3: Upload directly to S3 with Progress Tracking
