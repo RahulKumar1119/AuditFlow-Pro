@@ -150,71 +150,71 @@ const Login: React.FC = () => {
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Header with Logo */}
-        <div className="pt-8 px-8">
-          <div className="flex items-center space-x-4">
+        <div className="pt-4 sm:pt-6 lg:pt-8 px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center space-x-3 lg:space-x-4">
             {/* Logo Icon */}
             <div className="relative">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/30 relative overflow-hidden">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl lg:rounded-2xl flex items-center justify-center shadow-xl shadow-blue-500/30 relative overflow-hidden">
                 <div className="absolute inset-0 bg-white/20 animate-shimmer"></div>
-                <svg className="w-9 h-9 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 sm:w-7 sm:h-7 lg:w-9 lg:h-9 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 {/* Dotted circle border */}
-                <div className="absolute inset-0 border-4 border-dashed border-blue-300/40 rounded-2xl animate-spin-very-slow"></div>
+                <div className="absolute inset-0 border-2 lg:border-4 border-dashed border-blue-300/40 rounded-xl lg:rounded-2xl animate-spin-very-slow"></div>
               </div>
             </div>
             
             {/* Logo Text */}
             <div>
-              <h1 className="text-3xl font-bold text-slate-800">AuditFlow-Pro</h1>
-              <p className="text-sm text-slate-600 font-medium">AI-Powered Loan Processing Automation</p>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-800">AuditFlow-Pro</h1>
+              <p className="text-xs sm:text-sm text-slate-600 font-medium">AI-Powered Loan Processing Automation</p>
             </div>
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex items-center justify-center px-8 py-12">
+        <div className="flex-1 flex items-center justify-center px-4 sm:px-8 py-6 sm:py-12">
           <div className="w-full max-w-6xl">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
               
               {/* Left Side - Illustration Area */}
-              <div className="hidden lg:block">
+              <div className="block">
                 <div className="relative">
                   {/* Central Platform Illustration */}
                   <div className="relative">
                     {/* Main Dashboard Preview */}
-                    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 p-8 transform hover:scale-105 transition-transform duration-500">
-                      <div className="space-y-4">
+                    <div className="bg-white/80 backdrop-blur-xl rounded-2xl lg:rounded-3xl shadow-2xl border border-white/50 p-4 sm:p-6 lg:p-8 transform hover:scale-105 transition-transform duration-500">
+                      <div className="space-y-3 lg:space-y-4">
                         {/* Dashboard Header */}
-                        <div className="flex items-center justify-between pb-4 border-b border-slate-200">
-                          <div className="flex items-center space-x-3">
-                            <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-                            <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                            <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                        <div className="flex items-center justify-between pb-3 lg:pb-4 border-b border-slate-200">
+                          <div className="flex items-center space-x-2 lg:space-x-3">
+                            <div className="w-2 h-2 lg:w-3 lg:h-3 bg-red-400 rounded-full"></div>
+                            <div className="w-2 h-2 lg:w-3 lg:h-3 bg-yellow-400 rounded-full"></div>
+                            <div className="w-2 h-2 lg:w-3 lg:h-3 bg-green-400 rounded-full"></div>
                           </div>
                           <div className="text-xs text-slate-500 font-mono">Dashboard</div>
                         </div>
                         
                         {/* Charts and Metrics */}
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-3 lg:gap-4">
                           {/* Pie Chart */}
-                          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4">
-                            <div className="w-20 h-20 mx-auto relative">
+                          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl lg:rounded-2xl p-3 lg:p-4">
+                            <div className="w-14 h-14 lg:w-20 lg:h-20 mx-auto relative">
                               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="16" fill="none" stroke="#e0e7ff" strokeWidth="3"/>
                                 <circle cx="18" cy="18" r="16" fill="none" stroke="#4f46e5" strokeWidth="3" strokeDasharray="75 25" strokeLinecap="round"/>
                                 <circle cx="18" cy="18" r="16" fill="none" stroke="#06b6d4" strokeWidth="3" strokeDasharray="25 75" strokeDashoffset="-75" strokeLinecap="round"/>
                               </svg>
                             </div>
-                            <p className="text-xs text-center mt-2 text-slate-600 font-medium">Loan Status</p>
+                            <p className="text-xs text-center mt-1 lg:mt-2 text-slate-600 font-medium">Loan Status</p>
                           </div>
                           
                           {/* Confidence Score */}
-                          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4">
+                          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl lg:rounded-2xl p-3 lg:p-4">
                             <div className="text-center">
-                              <div className="text-3xl font-bold text-green-600">92%</div>
+                              <div className="text-2xl lg:text-3xl font-bold text-green-600">92%</div>
                               <p className="text-xs text-slate-600 mt-1">Confidence</p>
-                              <div className="mt-2 h-2 bg-green-200 rounded-full overflow-hidden">
+                              <div className="mt-1 lg:mt-2 h-1.5 lg:h-2 bg-green-200 rounded-full overflow-hidden">
                                 <div className="h-full w-11/12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
                               </div>
                             </div>
@@ -222,30 +222,30 @@ const Login: React.FC = () => {
                         </div>
                         
                         {/* Report Preview */}
-                        <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-4">
+                        <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-xl lg:rounded-2xl p-3 lg:p-4">
                           <div className="flex items-center justify-between mb-2">
                             <p className="text-xs font-semibold text-slate-700">Mismatch Report</p>
                             <span className="text-xs px-2 py-1 bg-red-100 text-red-600 rounded-full font-medium">3 Issues</span>
                           </div>
                           <div className="space-y-1">
-                            <div className="h-2 bg-red-200 rounded-full w-3/4"></div>
-                            <div className="h-2 bg-red-200 rounded-full w-1/2"></div>
-                            <div className="h-2 bg-red-200 rounded-full w-2/3"></div>
+                            <div className="h-1.5 lg:h-2 bg-red-200 rounded-full w-3/4"></div>
+                            <div className="h-1.5 lg:h-2 bg-red-200 rounded-full w-1/2"></div>
+                            <div className="h-1.5 lg:h-2 bg-red-200 rounded-full w-2/3"></div>
                           </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Floating Feature Icons */}
-                    <div className="absolute -bottom-8 left-0 right-0 flex justify-center space-x-4">
+                    <div className="hidden sm:flex absolute -bottom-6 lg:-bottom-8 left-0 right-0 justify-center space-x-2 lg:space-x-4">
                       {features.map((feature, index) => (
                         <div
                           key={index}
                           className="group relative"
                           style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                          <div className={`w-16 h-16 bg-gradient-to-br ${feature.color} rounded-xl shadow-lg flex items-center justify-center transform hover:scale-110 hover:-translate-y-2 transition-all duration-300 cursor-pointer`}>
-                            <span className="text-2xl">{feature.icon}</span>
+                          <div className={`w-12 h-12 lg:w-16 lg:h-16 bg-gradient-to-br ${feature.color} rounded-lg lg:rounded-xl shadow-lg flex items-center justify-center transform hover:scale-110 hover:-translate-y-2 transition-all duration-300 cursor-pointer`}>
+                            <span className="text-xl lg:text-2xl">{feature.icon}</span>
                           </div>
                           <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                             <div className="bg-slate-800 text-white text-xs px-3 py-1 rounded-lg">
@@ -258,34 +258,34 @@ const Login: React.FC = () => {
                   </div>
 
                   {/* Tagline */}
-                  <div className="mt-20 text-center">
-                    <h2 className="text-2xl font-bold text-slate-800 mb-2">
+                  <div className="mt-12 sm:mt-16 lg:mt-20 text-center">
+                    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-slate-800 mb-2">
                       Streamlining Loan Processing for the Banking Sector
                     </h2>
-                    <p className="text-slate-600">Powered by Advanced AI Technology</p>
+                    <p className="text-sm lg:text-base text-slate-600">Powered by Advanced AI Technology</p>
                   </div>
                 </div>
               </div>
 
               {/* Right Side - Login Form */}
               <div className="w-full max-w-md mx-auto lg:mx-0">
-                <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 p-10">
-                  {/* Mobile Logo */}
-                  <div className="lg:hidden text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl mb-4 shadow-lg">
-                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-white/90 backdrop-blur-xl rounded-2xl lg:rounded-3xl shadow-2xl border border-white/50 p-6 sm:p-8 lg:p-10">
+                  {/* Mobile Logo - Only show on very small screens */}
+                  <div className="sm:hidden text-center mb-6">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl mb-3 shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <h1 className="text-2xl font-bold text-slate-800">AuditFlow-Pro</h1>
+                    <h1 className="text-xl font-bold text-slate-800">AuditFlow-Pro</h1>
                   </div>
 
                   {/* Form Header */}
-                  <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold text-slate-800 mb-2">
+                  <div className="text-center mb-6 lg:mb-8">
+                    <h2 className="text-2xl lg:text-3xl font-bold text-slate-800 mb-2">
                       {showNewPasswordForm ? 'Set New Password' : 'Welcome Back'}
                     </h2>
-                    <p className="text-slate-600">
+                    <p className="text-sm lg:text-base text-slate-600">
                       {showNewPasswordForm 
                         ? 'Please set a new password for your account' 
                         : 'Sign in to access your dashboard'}
