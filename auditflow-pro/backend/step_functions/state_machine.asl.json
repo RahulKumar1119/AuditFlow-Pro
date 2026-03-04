@@ -145,7 +145,7 @@
         "FunctionName": "${ValidatorFunctionArn}",
         "Payload": {
           "loan_application_id.$": "$.loan_application_id",
-          "documents.$": "$.processed_documents"
+          "document_ids.$": "$.processed_documents[*].document_id"
         }
       },
       "Retry": [
