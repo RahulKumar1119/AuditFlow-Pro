@@ -1,10 +1,17 @@
 // frontend/src/pages/Upload.tsx
 import React, { useState } from 'react';
 import UploadZone from '../components/upload/UploadZone';
+import DocumentValidationStatus from '../components/upload/DocumentValidationStatus';
 import { FileText } from 'lucide-react';
 
 const Upload: React.FC = () => {
   const [loanApplicationId, setLoanApplicationId] = useState('');
+  const [isDocumentsValid, setIsDocumentsValid] = useState(false);
+  const [hasUploaded, setHasUploaded] = useState(false);
+
+  const handleUploadComplete = () => {
+    setHasUploaded(true);
+  };
 
   return (
     <div className="space-y-6">
@@ -34,6 +41,17 @@ const Upload: React.FC = () => {
         <UploadZone loanApplicationId={loanApplicationId || undefined} />
       </div>
 
+      {/* Document Validation Status */}
+      {hasUploaded && loanApplicationId && (
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Document Validation Status</h2>
+          <DocumentValidationStatus 
+            loanApplicationId={loanApplicationId}
+            onStatusChange={setIsDocumentsValid}
+          />
+        </div>
+      )}
+
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h3 className="text-sm font-semibold text-blue-900 mb-2">Upload Guidelines</h3>
         <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
@@ -41,9 +59,29 @@ const Upload: React.FC = () => {
           <li>Maximum file size: 50MB per file</li>
           <li>Multiple files can be uploaded simultaneously</li>
           <li>Documents are automatically classified and processed</li>
+          <li>Classification confidence must be above 70% for valid documents</li>
           <li>You can view audit results in the Dashboard after processing completes</li>
         </ul>
       </div>
+
+      {/* Status Summary */}
+      {hasUploaded && (
+        <div className={`rounded-lg p-4 border ${
+          isDocumentsValid 
+            ? 'bg-green-50 border-green-200' 
+            : 'bg-yellow-50 border-yellow-200'
+        }`}>
+          <p className={`text-sm font-medium ${
+            isDocumentsValid 
+              ? 'text-green-800' 
+              : 'text-yellow-800'
+          }`}>
+            {isDocumentsValid 
+              ? '✓ All documents are valid and ready for audit processing' 
+              : '⏳ Documents are being validated. Please wait...'}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
