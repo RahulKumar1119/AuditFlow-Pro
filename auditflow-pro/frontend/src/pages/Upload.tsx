@@ -41,17 +41,6 @@ const Upload: React.FC = () => {
         <UploadZone loanApplicationId={loanApplicationId || undefined} />
       </div>
 
-      {/* Document Validation Status */}
-      {hasUploaded && loanApplicationId && (
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Document Validation Status</h2>
-          <DocumentValidationStatus 
-            loanApplicationId={loanApplicationId}
-            onStatusChange={setIsDocumentsValid}
-          />
-        </div>
-      )}
-
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h3 className="text-sm font-semibold text-blue-900 mb-2">Upload Guidelines</h3>
         <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
