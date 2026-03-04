@@ -5,7 +5,6 @@ import { FileText } from 'lucide-react';
 
 const Upload: React.FC = () => {
   const [loanApplicationId, setLoanApplicationId] = useState('');
-  const [hasUploaded, setHasUploaded] = useState(loanApplicationId.length > 0);
 
   return (
     <div className="space-y-6">
@@ -25,9 +24,6 @@ const Upload: React.FC = () => {
             value={loanApplicationId}
             onChange={(e) => {
               setLoanApplicationId(e.target.value);
-              if (e.target.value.length > 0) {
-                setHasUploaded(true);
-              }
             }}
             placeholder="Enter loan application ID to associate documents"
             className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
