@@ -18,21 +18,31 @@ interface DocumentStatus {
   validation_errors?: string[];
 }
 
+interface AuditRecord {
+  audit_record_id: string;
+  status: string;
+  risk_level: string;
+  risk_score: number;
+}
+
 const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({ 
   loanApplicationId, 
   onStatusChange 
 }) => {
   const [documents, setDocuments] = useState<DocumentStatus[]>([]);
+  const [auditRecord, setAuditRecord] = useState<AuditRecord | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [pipelineStatus, setPipelineStatus] = useState<'PROCESSING' | 'SUCCESS' | 'FAILED' | 'PENDING'>('PENDING');
 
   useEffect(() => {
-    const fetchDocumentStatus = async () => {
+    const fetchStatus = async () => {
       try {
         setLoading(true);
-        // Query DynamoDB for documents with this loan_application_id
-        const response = await fetch(
+        
+        // Fetch document status
+        const docsResponse = await fetch(
           `${import.meta.env.VITE_API_URL || ''}/documents?loan_application_id=${loanApplicationId}`,
           {
             method: 'GET',
@@ -42,41 +52,81 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
           }
         );
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch document status');
+        if (docsResponse.ok) {
+          const docsData = await docsResponse.json();
+          const docs = docsData.items || [];
+          setDocuments(docs);
         }
 
-        const data = await response.json();
-        const docs = data.items || [];
-        setDocuments(docs);
+        // Fetch audit record to check Step Function status
+        const auditResponse = await fetch(
+          `${import.meta.env.VITE_API_URL || ''}/audits?loan_application_id=${loanApplicationId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
 
-        // Check if all documents are valid
-        const allValid = docs.length > 0 && docs.every((doc: DocumentStatus) => 
+        if (auditResponse.ok) {
+          const auditData = await auditResponse.json();
+          const audits = auditData.items || [];
+          
+          if (audits.length > 0) {
+            const latestAudit = audits[0];
+            setAuditRecord(latestAudit);
+            
+            // Update pipeline status based on audit record
+            if (latestAudit.status === 'COMPLETED') {
+              setPipelineStatus('SUCCESS');
+              setAutoRefresh(false);
+            } else if (latestAudit.status === 'FAILED') {
+              setPipelineStatus('FAILED');
+              setAutoRefresh(false);
+            } else {
+              setPipelineStatus('PROCESSING');
+            }
+          } else {
+            // No audit record yet, check if documents are still processing
+            const docs = docsData.items || [];
+            if (docs.length > 0) {
+              const allProcessed = docs.every((doc: DocumentStatus) => 
+                doc.processing_status === 'COMPLETED' || doc.processing_status === 'FAILED'
+              );
+              
+              if (allProcessed) {
+                setPipelineStatus('PROCESSING'); // Documents done, waiting for Step Function
+              } else {
+                setPipelineStatus('PROCESSING');
+              }
+            }
+          }
+        }
+
+        // Determine overall validity
+        const docs = docsData?.items || [];
+        const allDocsValid = docs.length > 0 && docs.every((doc: DocumentStatus) => 
           doc.processing_status === 'COMPLETED' && 
           doc.classification_confidence > 0.7 &&
           !doc.validation_errors?.length
         );
         
-        onStatusChange?.(allValid);
+        const pipelineSuccess = auditRecord?.status === 'COMPLETED' && auditRecord?.risk_level !== 'CRITICAL';
+        onStatusChange?.(allDocsValid && pipelineSuccess);
 
-        // Stop auto-refresh if all documents are processed
-        if (docs.length > 0 && docs.every((doc: DocumentStatus) => 
-          doc.processing_status === 'COMPLETED' || doc.processing_status === 'FAILED'
-        )) {
-          setAutoRefresh(false);
-        }
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch document status';
+        const errorMessage = err instanceof Error ? err.message : 'Failed to fetch status';
         setError(errorMessage);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDocumentStatus();
+    fetchStatus();
 
     // Auto-refresh every 3 seconds if still processing
-    const interval = autoRefresh ? setInterval(fetchDocumentStatus, 3000) : undefined;
+    const interval = autoRefresh ? setInterval(fetchStatus, 3000) : undefined;
     return () => clearInterval(interval);
   }, [loanApplicationId, autoRefresh, onStatusChange]);
 
@@ -114,7 +164,7 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <div className="flex items-center space-x-2">
           <Clock className="h-5 w-5 text-blue-500 animate-spin" />
-          <p className="text-sm text-blue-800">Loading document validation status...</p>
+          <p className="text-sm text-blue-800">Loading validation status...</p>
         </div>
       </div>
     );
@@ -139,47 +189,37 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
     );
   }
 
-  const allValid = documents.every(doc => 
-    doc.processing_status === 'COMPLETED' && 
-    doc.classification_confidence > 0.7 &&
-    !doc.validation_errors?.length
-  );
-
-  const allProcessed = documents.every(doc => 
-    doc.processing_status === 'COMPLETED' || doc.processing_status === 'FAILED'
-  );
-
   return (
     <div className="space-y-4">
-      {/* Overall Status Summary */}
+      {/* Pipeline Status Summary */}
       <div className={`border rounded-lg p-4 ${
-        allValid ? 'bg-green-50 border-green-200' : 
-        allProcessed ? 'bg-yellow-50 border-yellow-200' : 
+        pipelineStatus === 'SUCCESS' ? 'bg-green-50 border-green-200' : 
+        pipelineStatus === 'FAILED' ? 'bg-red-50 border-red-200' :
         'bg-blue-50 border-blue-200'
       }`}>
         <div className="flex items-center space-x-3">
-          {allValid ? (
+          {pipelineStatus === 'SUCCESS' ? (
             <>
               <CheckCircle className="h-6 w-6 text-green-600" />
               <div>
-                <p className="font-semibold text-green-900">All Documents Valid</p>
-                <p className="text-sm text-green-800">{documents.length} document(s) successfully processed and validated</p>
+                <p className="font-semibold text-green-900">Pipeline Complete - Audit Successful</p>
+                <p className="text-sm text-green-800">Risk Score: {auditRecord?.risk_score}/100 ({auditRecord?.risk_level})</p>
               </div>
             </>
-          ) : allProcessed ? (
+          ) : pipelineStatus === 'FAILED' ? (
             <>
-              <AlertCircle className="h-6 w-6 text-yellow-600" />
+              <XCircle className="h-6 w-6 text-red-600" />
               <div>
-                <p className="font-semibold text-yellow-900">Processing Complete - Review Required</p>
-                <p className="text-sm text-yellow-800">Some documents need review or have low confidence scores</p>
+                <p className="font-semibold text-red-900">Pipeline Failed</p>
+                <p className="text-sm text-red-800">The Step Function encountered an error during processing</p>
               </div>
             </>
           ) : (
             <>
               <Clock className="h-6 w-6 text-blue-600 animate-spin" />
               <div>
-                <p className="font-semibold text-blue-900">Processing Documents</p>
-                <p className="text-sm text-blue-800">Classification and extraction in progress...</p>
+                <p className="font-semibold text-blue-900">Processing Pipeline</p>
+                <p className="text-sm text-blue-800">Documents are being validated and scored...</p>
               </div>
             </>
           )}
@@ -253,11 +293,19 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
         ))}
       </div>
 
-      {/* Action Buttons */}
-      {allValid && (
+      {/* Action Messages */}
+      {pipelineStatus === 'SUCCESS' && (
         <div className="bg-green-50 border border-green-200 rounded-lg p-4">
           <p className="text-sm text-green-800">
-            ✓ All documents are valid and ready for audit processing. You can now proceed to the dashboard to view audit results.
+            ✓ All documents validated and audit complete. You can now view the full audit report in the Audit Records section.
+          </p>
+        </div>
+      )}
+
+      {pipelineStatus === 'FAILED' && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p className="text-sm text-red-800">
+            ✗ The processing pipeline failed. Please check the documents and try uploading again.
           </p>
         </div>
       )}
