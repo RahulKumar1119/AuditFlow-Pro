@@ -13,7 +13,7 @@ import uuid
 
 from shared import repositories
 from shared.models import DocumentMetadata, ExtractedField, Inconsistency
-from shared import models as shared_models
+# from shared import models as shared_models
 import rules
 
 logger = logging.getLogger()
