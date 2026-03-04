@@ -80,10 +80,10 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
             setAuditRecord(latestAudit);
             
             // Update pipeline status based on audit record
-            if (latestAudit.status === 'COMPLETED') {
+            if (latestAudit && latestAudit.status === 'COMPLETED') {
               setPipelineStatus('SUCCESS');
               setAutoRefresh(false);
-            } else if (latestAudit.status === 'FAILED') {
+            } else if (latestAudit && latestAudit.status === 'FAILED') {
               setPipelineStatus('FAILED');
               setAutoRefresh(false);
             } else {
@@ -112,7 +112,7 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
           !doc.validation_errors?.length
         );
         
-        const pipelineSuccess = latestAudit?.status === 'COMPLETED' && latestAudit?.risk_level !== 'CRITICAL';
+        const pipelineSuccess = latestAudit !== null && latestAudit.status === 'COMPLETED' && latestAudit.risk_level !== 'CRITICAL';
         onStatusChange?.(allDocsValid && pipelineSuccess);
 
       } catch (err) {
