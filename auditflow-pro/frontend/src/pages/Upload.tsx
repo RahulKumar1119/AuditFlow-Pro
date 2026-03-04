@@ -5,7 +5,6 @@ import { FileText } from 'lucide-react';
 
 const Upload: React.FC = () => {
   const [loanApplicationId, setLoanApplicationId] = useState('');
-  const [isDocumentsValid, setIsDocumentsValid] = useState(false);
   const [hasUploaded, setHasUploaded] = useState(loanApplicationId.length > 0);
 
   return (
@@ -52,25 +51,6 @@ const Upload: React.FC = () => {
           <li>You can view audit results in the Dashboard after processing completes</li>
         </ul>
       </div>
-
-      {/* Status Summary */}
-      {hasUploaded && (
-        <div className={`rounded-lg p-4 border ${
-          isDocumentsValid 
-            ? 'bg-green-50 border-green-200' 
-            : 'bg-yellow-50 border-yellow-200'
-        }`}>
-          <p className={`text-sm font-medium ${
-            isDocumentsValid 
-              ? 'text-green-800' 
-              : 'text-yellow-800'
-          }`}>
-            {isDocumentsValid 
-              ? '✓ All documents are valid and ready for audit processing' 
-              : '⏳ Documents are being validated. Please wait...'}
-          </p>
-        </div>
-      )}
     </div>
   );
 };
