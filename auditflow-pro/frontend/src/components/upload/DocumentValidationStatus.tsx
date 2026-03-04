@@ -42,6 +42,7 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
         setLoading(true);
         
         // Fetch document status
+        let docs: DocumentStatus[] = [];
         const docsResponse = await fetch(
           `${import.meta.env.VITE_API_URL || ''}/documents?loan_application_id=${loanApplicationId}`,
           {
@@ -54,7 +55,7 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
 
         if (docsResponse.ok) {
           const docsData = await docsResponse.json();
-          const docs = docsData.items || [];
+          docs = docsData.items || [];
           setDocuments(docs);
         }
 
@@ -89,7 +90,6 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
             }
           } else {
             // No audit record yet, check if documents are still processing
-            const docs = docsData.items || [];
             if (docs.length > 0) {
               const allProcessed = docs.every((doc: DocumentStatus) => 
                 doc.processing_status === 'COMPLETED' || doc.processing_status === 'FAILED'
@@ -105,7 +105,6 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
         }
 
         // Determine overall validity
-        const docs = docsData?.items || [];
         const allDocsValid = docs.length > 0 && docs.every((doc: DocumentStatus) => 
           doc.processing_status === 'COMPLETED' && 
           doc.classification_confidence > 0.7 &&
