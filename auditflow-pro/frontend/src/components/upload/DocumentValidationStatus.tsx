@@ -70,12 +70,13 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
           }
         );
 
+        let latestAudit: AuditRecord | null = null;
         if (auditResponse.ok) {
           const auditData = await auditResponse.json();
           const audits = auditData.items || [];
           
           if (audits.length > 0) {
-            const latestAudit = audits[0];
+            latestAudit = audits[0];
             setAuditRecord(latestAudit);
             
             // Update pipeline status based on audit record
@@ -104,14 +105,14 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
           }
         }
 
-        // Determine overall validity
+        // Determine overall validity using fetched data
         const allDocsValid = docs.length > 0 && docs.every((doc: DocumentStatus) => 
           doc.processing_status === 'COMPLETED' && 
           doc.classification_confidence > 0.7 &&
           !doc.validation_errors?.length
         );
         
-        const pipelineSuccess = auditRecord?.status === 'COMPLETED' && auditRecord?.risk_level !== 'CRITICAL';
+        const pipelineSuccess = latestAudit?.status === 'COMPLETED' && latestAudit?.risk_level !== 'CRITICAL';
         onStatusChange?.(allDocsValid && pipelineSuccess);
 
       } catch (err) {
@@ -127,7 +128,7 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
     // Auto-refresh every 3 seconds if still processing
     const interval = autoRefresh ? setInterval(fetchStatus, 3000) : undefined;
     return () => clearInterval(interval);
-  }, [loanApplicationId, autoRefresh, onStatusChange]);
+  }, [loanApplicationId, autoRefresh]);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
