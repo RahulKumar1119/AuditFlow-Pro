@@ -1,7 +1,6 @@
 // frontend/src/pages/Upload.tsx
 import React, { useState } from 'react';
 import UploadZone from '../components/upload/UploadZone';
-import DocumentValidationStatus from '../components/upload/DocumentValidationStatus';
 import { FileText } from 'lucide-react';
 
 const Upload: React.FC = () => {
