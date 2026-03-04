@@ -12,8 +12,8 @@ from typing import List, Dict, Any
 import uuid
 
 from shared import repositories
-from shared.models import DocumentMetadata, ExtractedField
-from shared import models
+from shared.models import DocumentMetadata, ExtractedField, Inconsistency
+from shared import models as shared_models
 import rules
 
 logger = logging.getLogger()
@@ -181,11 +181,11 @@ def lambda_handler(event, context):
             logger.info(f"Insufficient addresses for validation (found {len(address_fields)})")
         
         # Convert all inconsistencies to Inconsistency objects
-        inconsistencies: List[models.Inconsistency] = []
+        inconsistencies: List[Inconsistency] = []
         
         # Add name inconsistencies
         for inc in name_inconsistencies:
-            inconsistency = models.Inconsistency(
+            inconsistency = Inconsistency(
                 inconsistency_id=str(uuid.uuid4()),
                 field=inc['field'],
                 severity=inc['severity'],
@@ -199,7 +199,7 @@ def lambda_handler(event, context):
         
         # Add address inconsistencies
         for inc in address_inconsistencies:
-            inconsistency = models.Inconsistency(
+            inconsistency = Inconsistency(
                 inconsistency_id=str(uuid.uuid4()),
                 field=inc['field'],
                 severity=inc['severity'],
@@ -287,7 +287,7 @@ def lambda_handler(event, context):
         
         # Add income inconsistencies
         for inc in income_inconsistencies:
-            inconsistency = models.Inconsistency(
+            inconsistency = Inconsistency(
                 inconsistency_id=str(uuid.uuid4()),
                 field=inc['field'],
                 severity=inc['severity'],
@@ -343,7 +343,7 @@ def lambda_handler(event, context):
         
         # Add DOB inconsistencies
         for inc in dob_inconsistencies:
-            inconsistency = models.Inconsistency(
+            inconsistency = Inconsistency(
                 inconsistency_id=str(uuid.uuid4()),
                 field=inc['field'],
                 severity=inc['severity'],
@@ -399,7 +399,7 @@ def lambda_handler(event, context):
         
         # Add SSN inconsistencies
         for inc in ssn_inconsistencies:
-            inconsistency = models.Inconsistency(
+            inconsistency = Inconsistency(
                 inconsistency_id=str(uuid.uuid4()),
                 field=inc['field'],
                 severity=inc['severity'],

@@ -71,7 +71,7 @@
           "FlagForManualReview": {
             "Type": "Pass",
             "Result": {
-              "extraction_status": "SKIPPED_NEEDS_REVIEW"
+              "processing_status": "SKIPPED_NEEDS_REVIEW"
             },
             "ResultPath": "$.extraction_result",
             "End": true
@@ -108,8 +108,11 @@
             "ResultSelector": {
               "document_id.$": "$.Payload.document_id",
               "document_type.$": "$.Payload.document_type",
-              "extraction_status.$": "$.Payload.extraction_status",
-              "metadata.$": "$.Payload.metadata"
+              "extracted_data.$": "$.Payload.extracted_data",
+              "processing_status.$": "$.Payload.processing_status",
+              "low_confidence_fields.$": "$.Payload.low_confidence_fields",
+              "pii_detected.$": "$.Payload.pii_detected",
+              "loan_application_id.$": "$.Payload.loan_application_id"
             },
             "End": true
           },
@@ -117,9 +120,9 @@
             "Type": "Pass",
             "Comment": "Catches individual document failures so the rest of the Map state can continue.",
             "Result": {
-              "extraction_status": "FAILED"
+              "processing_status": "FAILED"
             },
-            "ResultPath": "$.extraction_status",
+            "ResultPath": "$.processing_status",
             "End": true
           }
         }
