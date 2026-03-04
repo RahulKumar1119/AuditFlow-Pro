@@ -109,11 +109,82 @@
               "document_id.$": "$.Payload.document_id",
               "document_type.$": "$.Payload.document_type",
               "extracted_data.$": "$.Payload.extracted_data",
+              "extraction_timestamp.$": "$.Payload.extraction_timestamp",
               "processing_status.$": "$.Payload.processing_status",
               "low_confidence_fields.$": "$.Payload.low_confidence_fields",
               "pii_detected.$": "$.Payload.pii_detected",
-              "loan_application_id.$": "$.Payload.loan_application_id"
+              "loan_application_id.$": "$.Payload.loan_application_id",
+              "s3_bucket.$": "$.s3_bucket",
+              "s3_key.$": "$.s3_key",
+              "file_size_bytes.$": "$.file_size_bytes",
+              "upload_timestamp.$": "$.upload_timestamp"
             },
+            "Next": "SaveDocumentMetadata"
+          },
+          "SaveDocumentMetadata": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::dynamodb:putItem",
+            "Parameters": {
+              "TableName": "AuditFlow-Documents",
+              "Item": {
+                "document_id": {
+                  "S.$": "$.document_id"
+                },
+                "loan_application_id": {
+                  "S.$": "$.loan_application_id"
+                },
+                "document_type": {
+                  "S.$": "$.document_type"
+                },
+                "s3_bucket": {
+                  "S.$": "$.s3_bucket"
+                },
+                "s3_key": {
+                  "S.$": "$.s3_key"
+                },
+                "file_size_bytes": {
+                  "N.$": "$.file_size_bytes"
+                },
+                "upload_timestamp": {
+                  "S.$": "$.upload_timestamp"
+                },
+                "extraction_timestamp": {
+                  "S.$": "$.extraction_timestamp"
+                },
+                "processing_status": {
+                  "S.$": "$.processing_status"
+                },
+                "extracted_data": {
+                  "S.$": "States.JsonToString($.extracted_data)"
+                },
+                "low_confidence_fields": {
+                  "S.$": "States.JsonToString($.low_confidence_fields)"
+                },
+                "pii_detected": {
+                  "S.$": "States.JsonToString($.pii_detected)"
+                }
+              }
+            },
+            "Retry": [
+              {
+                "ErrorEquals": [
+                  "States.TaskFailed",
+                  "States.Timeout",
+                  "DynamoDB.ServiceException"
+                ],
+                "IntervalSeconds": 5,
+                "MaxAttempts": 3,
+                "BackoffRate": 3.0
+              }
+            ],
+            "Catch": [
+              {
+                "ErrorEquals": [
+                  "States.ALL"
+                ],
+                "Next": "HandleDocumentError"
+              }
+            ],
             "End": true
           },
           "HandleDocumentError": {
