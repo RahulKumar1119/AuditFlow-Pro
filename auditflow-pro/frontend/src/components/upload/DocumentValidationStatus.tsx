@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CheckCircle, AlertCircle, Clock, XCircle } from 'lucide-react';
+import { getAuthToken } from '../../services/api';
 
 interface DocumentValidationStatusProps {
   loanApplicationId: string;
@@ -40,6 +41,7 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
     const fetchStatus = async () => {
       try {
         setLoading(true);
+        const token = await getAuthToken();
         
         // Fetch document status
         let docs: DocumentStatus[] = [];
@@ -48,6 +50,7 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
           {
             method: 'GET',
             headers: {
+              'Authorization': token,
               'Content-Type': 'application/json'
             }
           }
@@ -65,6 +68,7 @@ const DocumentValidationStatus: React.FC<DocumentValidationStatusProps> = ({
           {
             method: 'GET',
             headers: {
+              'Authorization': token,
               'Content-Type': 'application/json'
             }
           }
