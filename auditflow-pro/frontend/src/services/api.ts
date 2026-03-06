@@ -16,6 +16,7 @@ export interface AuditRecord {
   golden_record?: {
     first_name?: { value: string };
     last_name?: { value: string };
+    name?: { value: string };
     ssn?: { value: string };
     annual_income?: { value: number };
   };
