@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, Navigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { LogOut, FileText, LayoutDashboard, Settings, Menu, X, Upload as UploadIcon, User, ChevronDown } from 'lucide-react';
+import logoSvg from '../../assets/auditflow-logo.svg';
 
 const MainLayout: React.FC = () => {
   const { user, logout } = useAuth();
@@ -67,8 +68,11 @@ const MainLayout: React.FC = () => {
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar Navigation - Desktop */}
       <aside className="w-64 bg-slate-800 text-white flex-col hidden md:flex">
-        <div className="p-4 text-2xl font-bold border-b border-slate-700">
-          AuditFlow-Pro
+        <div className="p-4 border-b border-slate-700">
+          <div className="flex flex-col items-center space-y-3">
+            <img src={logoSvg} alt="AuditFlow-Pro" className="w-12 h-12" />
+            <h1 className="text-2xl font-bold text-center">AuditFlow-Pro</h1>
+          </div>
         </div>
         <nav className="flex-1 p-4 space-y-2">
           <Link to="/dashboard" className={navLinkClass('/dashboard')}>
