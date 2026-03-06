@@ -49,20 +49,58 @@ def calculate_extraction_quality_score(golden_record: Dict[str, Any], documents:
     score = 0
     factors = []
     
+    # Handle golden_record as string (JSON) or dict
+    if isinstance(golden_record, str):
+        import json
+        try:
+            golden_record = json.loads(golden_record)
+        except:
+            logger.warning("Could not parse golden_record as JSON")
+            return score, factors
+    
     # 1. Add 10 points per field with confidence < 80%
     for field, data in golden_record.items():
-        if data.get("confidence", 100.0) < 80.0:
-            points = 10
-            score += points
-            factors.append({
-                "factor_type": "LOW_CONFIDENCE",
-                "field": field,
-                "points_added": points,
-                "description": f"{points} pts: Low extraction confidence ({data.get('confidence')}%) for {field}."
-            })
+        # Skip metadata fields
+        if field in ['loan_application_id', 'created_timestamp']:
+            continue
+            
+        # Handle data as dict or string
+        if isinstance(data, str):
+            try:
+                import json
+                data = json.loads(data)
+            except:
+                continue
+        
+        # Only process dict data with confidence field
+        if isinstance(data, dict):
+            confidence = data.get("confidence", 100.0)
+            if isinstance(confidence, str):
+                try:
+                    confidence = float(confidence)
+                except:
+                    confidence = 100.0
+            
+            if confidence < 80.0:
+                points = 10
+                score += points
+                factors.append({
+                    "factor_type": "LOW_CONFIDENCE",
+                    "field": field,
+                    "points_added": points,
+                    "description": f"{points} pts: Low extraction confidence ({confidence}%) for {field}."
+                })
             
     # 2. Add 5 points per illegible or low-quality page/document
     for doc in documents:
+        # Handle doc as dict or string
+        if isinstance(doc, str):
+            try:
+                import json
+                doc = json.loads(doc)
+            except:
+                continue
+        
         # Check if the document classifier or extractor flagged it for manual review
         if doc.get("status") == "LOW_QUALITY" or doc.get("requires_manual_review") is True:
             points = 5

@@ -5,12 +5,24 @@ import json
 import uuid
 import logging
 from datetime import datetime, timezone
+from decimal import Decimal
 import boto3
 from botocore.exceptions import ClientError
 
 # Configure CloudWatch logging (Task 10.4)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
+def convert_floats_to_decimals(obj):
+    """Convert all floats in a nested structure to Decimal for DynamoDB compatibility."""
+    if isinstance(obj, dict):
+        return {k: convert_floats_to_decimals(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_floats_to_decimals(item) for item in obj]
+    elif isinstance(obj, float):
+        return Decimal(str(obj))
+    else:
+        return obj
 
 # Initialize AWS clients (will be reinitialized in tests with mocked resources)
 def get_aws_clients():
@@ -34,6 +46,8 @@ def save_audit_record(record_data: dict):
     table_name = os.environ.get('AUDIT_RECORDS_TABLE', 'AuditFlow-AuditRecords')
     table = dynamodb.Table(table_name)
     try:
+        # Convert all floats to Decimals for DynamoDB compatibility
+        record_data = convert_floats_to_decimals(record_data)
         table.put_item(Item=record_data)
         logger.info(f"Successfully saved audit record {record_data['audit_record_id']} to DynamoDB.")
     except ClientError as e:

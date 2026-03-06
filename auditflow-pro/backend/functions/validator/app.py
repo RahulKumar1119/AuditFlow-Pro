@@ -37,48 +37,66 @@ def lambda_handler(event, context):
     try:
         # Extract input parameters
         loan_application_id = event.get('loan_application_id')
-        document_ids = event.get('document_ids', [])
+        documents = event.get('documents', [])
         
         # Input validation
         if not loan_application_id:
             logger.error("Missing required parameter: loan_application_id")
             raise ValueError("loan_application_id is required")
         
-        if not document_ids:
-            logger.error(f"No document_ids provided for loan application {loan_application_id}")
-            raise ValueError("document_ids list cannot be empty")
+        if not documents:
+            logger.error(f"No documents provided for loan application {loan_application_id}")
+            raise ValueError("documents list cannot be empty")
         
-        logger.info(f"Starting validation for loan application {loan_application_id} with {len(document_ids)} documents")
+        logger.info(f"Starting validation for loan application {loan_application_id} with {len(documents)} documents")
         
-        # Initialize DocumentRepository to load extracted data from DynamoDB
-        doc_repository = repositories.DocumentRepository()
-        
-        # Load extracted data for all documents in the loan application
+        # Use documents directly from Step Function (they already have extracted data)
+        # No need to load from DynamoDB since they're already processed
         loaded_documents = []
-        for doc_id in document_ids:
-            logger.info(f"Loading document {doc_id} from DynamoDB")
-            doc_metadata = doc_repository.get_document(doc_id)
-            
-            if not doc_metadata:
-                logger.warning(f"Document {doc_id} not found in DynamoDB")
+        
+        for doc in documents:
+            try:
+                # Handle both direct document objects and wrapped structures
+                if isinstance(doc, dict):
+                    doc_id = doc.get('document_id')
+                    doc_type = doc.get('document_type')
+                    extracted_data = doc.get('extracted_data', {})
+                    processing_status = doc.get('processing_status', 'COMPLETED')
+                    
+                    if not doc_id:
+                        logger.warning(f"Document missing document_id: {doc}")
+                        continue
+                    
+                    if processing_status != "COMPLETED":
+                        logger.warning(f"Document {doc_id} not completed: {processing_status}")
+                        continue
+                    
+                    if not extracted_data:
+                        logger.warning(f"Document {doc_id} has no extracted data")
+                        continue
+                    
+                    # Create a simple document object for validation
+                    class SimpleDoc:
+                        pass
+                    
+                    simple_doc = SimpleDoc()
+                    simple_doc.document_id = doc_id
+                    simple_doc.document_type = doc_type
+                    simple_doc.extracted_data = extracted_data
+                    simple_doc.loan_application_id = loan_application_id
+                    simple_doc.processing_status = processing_status
+                    simple_doc.file_name = doc.get('file_name', f"{doc_id}.pdf")
+                    simple_doc.classification_confidence = doc.get('classification_confidence', 0.95)
+                    
+                    loaded_documents.append(simple_doc)
+                    logger.info(f"Loaded document {doc_id} (type: {doc_type})")
+            except Exception as e:
+                logger.warning(f"Error processing document: {str(e)}")
                 continue
-            
-            # Verify document belongs to the correct loan application
-            if doc_metadata.loan_application_id != loan_application_id:
-                logger.warning(f"Document {doc_id} belongs to different loan application: {doc_metadata.loan_application_id}")
-                continue
-            
-            # Verify document has been processed and has extracted data
-            if doc_metadata.processing_status != "COMPLETED":
-                logger.warning(f"Document {doc_id} has not completed processing: {doc_metadata.processing_status}")
-                continue
-            
-            if not doc_metadata.extracted_data:
-                logger.warning(f"Document {doc_id} has no extracted data")
-                continue
-            
-            loaded_documents.append(doc_metadata)
-            logger.info(f"Successfully loaded document {doc_id} (type: {doc_metadata.document_type})")
+        
+        if not loaded_documents:
+            logger.error(f"No valid documents loaded for loan application {loan_application_id}")
+            raise ValueError("No valid documents available for validation")
         
         if not loaded_documents:
             logger.error(f"No valid documents loaded for loan application {loan_application_id}")
@@ -464,8 +482,12 @@ def lambda_handler(event, context):
         }
     except Exception as e:
         logger.error(f"Unexpected error during validation: {str(e)}", exc_info=True)
+        import traceback
+        error_trace = traceback.format_exc()
+        logger.error(f"Full traceback: {error_trace}")
         return {
             "statusCode": 500,
             "error": "InternalError",
-            "message": "An unexpected error occurred during validation"
+            "message": f"An unexpected error occurred during validation: {str(e)}",
+            "traceback": error_trace
         }

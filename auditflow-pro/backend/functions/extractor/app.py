@@ -1271,7 +1271,11 @@ def lambda_handler(event, context):
             "pii_detected": pii_detected,
             "page_count": page_count,
             "processing_status": "COMPLETED",
-            "loan_application_id": loan_application_id
+            "loan_application_id": loan_application_id,
+            "s3_bucket": s3_bucket,
+            "s3_key": s3_key,
+            "file_size_bytes": 0,
+            "upload_timestamp": extraction_timestamp
         }
         
     except ClientError as e:
@@ -1296,7 +1300,11 @@ def lambda_handler(event, context):
                 "page_count": page_count,
                 "processing_status": "FAILED",
                 "error": f"Document is illegible or corrupted: {error_code}",
-                "loan_application_id": loan_application_id
+                "loan_application_id": loan_application_id,
+                "s3_bucket": s3_bucket,
+                "s3_key": s3_key,
+                "file_size_bytes": 0,
+                "upload_timestamp": datetime.utcnow().isoformat() + 'Z'
             }
         else:
             logger.error(

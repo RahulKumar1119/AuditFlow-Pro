@@ -8,6 +8,10 @@
       "ItemsPath": "$.documents",
       "ResultPath": "$.processed_documents",
       "MaxConcurrency": 10,
+      "Parameters": {
+        "document.$": "$$.Map.Item.Value",
+        "loan_application_id.$": "$.loan_application_id"
+      },
       "Iterator": {
         "StartAt": "ClassifyDocument",
         "States": {
@@ -114,10 +118,11 @@
               "low_confidence_fields.$": "$.Payload.low_confidence_fields",
               "pii_detected.$": "$.Payload.pii_detected",
               "loan_application_id.$": "$.Payload.loan_application_id",
-              "s3_bucket.$": "$.s3_bucket",
-              "s3_key.$": "$.s3_key",
-              "file_size_bytes.$": "$.file_size_bytes",
-              "upload_timestamp.$": "$.upload_timestamp"
+              "page_count.$": "$.Payload.page_count",
+              "s3_bucket.$": "$.Payload.s3_bucket",
+              "s3_key.$": "$.Payload.s3_key",
+              "file_size_bytes.$": "$.Payload.file_size_bytes",
+              "upload_timestamp.$": "$.Payload.upload_timestamp"
             },
             "Next": "SaveDocumentMetadata"
           },
@@ -143,7 +148,7 @@
                   "S.$": "$.s3_key"
                 },
                 "file_size_bytes": {
-                  "N.$": "$.file_size_bytes"
+                  "N": "0"
                 },
                 "upload_timestamp": {
                   "S.$": "$.upload_timestamp"
@@ -162,6 +167,9 @@
                 },
                 "pii_detected": {
                   "S.$": "States.JsonToString($.pii_detected)"
+                },
+                "page_count": {
+                  "N.$": "States.JsonToString($.page_count)"
                 }
               }
             },
@@ -185,6 +193,11 @@
                 "Next": "HandleDocumentError"
               }
             ],
+            "ResultPath": null,
+            "Next": "ReturnProcessedDocument"
+          },
+          "ReturnProcessedDocument": {
+            "Type": "Pass",
             "End": true
           },
           "HandleDocumentError": {
@@ -216,7 +229,7 @@
         "FunctionName": "${ValidatorFunctionArn}",
         "Payload": {
           "loan_application_id.$": "$.loan_application_id",
-          "document_ids.$": "$.processed_documents[*].document_id"
+          "documents.$": "$.processed_documents"
         }
       },
       "Retry": [

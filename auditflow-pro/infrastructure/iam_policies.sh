@@ -160,11 +160,11 @@ aws iam create-role \
         }]
     }' 2>/dev/null || echo "Role already exists"
 
-# 9. Create policy for Step Functions to invoke Lambda
-echo "Creating Step Functions Lambda invoke policy..."
+# 9. Create policy for Step Functions to invoke Lambda and access DynamoDB
+echo "Creating Step Functions Lambda invoke and DynamoDB policy..."
 aws iam put-role-policy \
     --role-name AuditFlowStepFunctionsRole \
-    --policy-name LambdaInvokePolicy \
+    --policy-name LambdaInvokeDynamoDBPolicy \
     --policy-document '{
         "Version": "2012-10-17",
         "Statement": [
@@ -178,9 +178,33 @@ aws iam put-role-policy \
             {
                 "Effect": "Allow",
                 "Action": [
+                    "dynamodb:PutItem",
+                    "dynamodb:GetItem",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:Query",
+                    "dynamodb:Scan"
+                ],
+                "Resource": [
+                    "arn:aws:dynamodb:*:*:table/AuditFlow-Documents",
+                    "arn:aws:dynamodb:*:*:table/AuditFlow-Documents/index/*",
+                    "arn:aws:dynamodb:*:*:table/AuditFlow-AuditRecords",
+                    "arn:aws:dynamodb:*:*:table/AuditFlow-AuditRecords/index/*"
+                ]
+            },
+            {
+                "Effect": "Allow",
+                "Action": [
                     "logs:CreateLogGroup",
                     "logs:CreateLogStream",
-                    "logs:PutLogEvents"
+                    "logs:PutLogEvents",
+                    "logs:CreateLogDelivery",
+                    "logs:GetLogDelivery",
+                    "logs:UpdateLogDelivery",
+                    "logs:DeleteLogDelivery",
+                    "logs:ListLogDeliveries",
+                    "logs:PutResourcePolicy",
+                    "logs:DescribeResourcePolicies",
+                    "logs:DescribeLogGroups"
                 ],
                 "Resource": "*"
             }
