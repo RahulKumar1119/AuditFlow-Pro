@@ -4,6 +4,7 @@ import os
 import json
 import uuid
 import logging
+import re
 from datetime import datetime, timezone
 from decimal import Decimal
 import boto3
@@ -23,6 +24,25 @@ def convert_floats_to_decimals(obj):
         return Decimal(str(obj))
     else:
         return obj
+
+def clean_applicant_name(name):
+    """
+    Clean applicant name by removing address data.
+    Extracts just the name part (before street address).
+    """
+    if not name:
+        return "Unknown Applicant"
+    
+    # Pattern: Name followed by numbers (street address)
+    # Extract everything before the first digit that starts a street number
+    match = re.match(r'^([A-Za-z\s\.]+?)(?:\s+\d+\s+|$)', name)
+    if match:
+        cleaned = match.group(1).strip()
+        if cleaned:
+            return cleaned
+    
+    # If no pattern match, return original
+    return name.strip()
 
 # Initialize AWS clients (will be reinitialized in tests with mocked resources)
 def get_aws_clients():
@@ -130,9 +150,20 @@ def lambda_handler(event, context):
     
     # Extract applicant name from golden record if available
     golden_record = event.get('golden_record', {})
-    applicant_first = golden_record.get('first_name', {}).get('value', '')
-    applicant_last = golden_record.get('last_name', {}).get('value', '')
-    applicant_name = f"{applicant_first} {applicant_last}".strip() or "Unknown Applicant"
+    
+    # Try to get name from 'name' field first (full name), then fallback to first_name + last_name
+    if 'name' in golden_record and isinstance(golden_record['name'], dict):
+        applicant_name = golden_record['name'].get('value', '').strip()
+        # Clean the name to remove address data
+        applicant_name = clean_applicant_name(applicant_name)
+    else:
+        applicant_first = golden_record.get('first_name', {}).get('value', '') if isinstance(golden_record.get('first_name'), dict) else golden_record.get('first_name', '')
+        applicant_last = golden_record.get('last_name', {}).get('value', '') if isinstance(golden_record.get('last_name'), dict) else golden_record.get('last_name', '')
+        applicant_name = f"{applicant_first} {applicant_last}".strip()
+    
+    # Final fallback
+    if not applicant_name:
+        applicant_name = "Unknown Applicant"
     
     audit_record_id = f"audit-{uuid.uuid4()}"
     

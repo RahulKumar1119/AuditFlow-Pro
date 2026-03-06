@@ -5,6 +5,7 @@ import json
 import uuid
 import boto3
 import logging
+import re
 from botocore.exceptions import ClientError
 
 logger = logging.getLogger()
@@ -15,6 +16,25 @@ dynamodb = boto3.resource('dynamodb')
 
 BUCKET_NAME = os.environ.get('UPLOAD_BUCKET', 'auditflow-documents')
 AUDIT_TABLE = os.environ.get('AUDIT_TABLE', 'AuditFlow-AuditRecords')
+
+def clean_applicant_name(name):
+    """
+    Clean applicant name by removing address data.
+    Extracts just the name part (before street address).
+    """
+    if not name:
+        return "Unknown Applicant"
+    
+    # Pattern: Name followed by numbers (street address)
+    # Extract everything before the first digit that starts a street number
+    match = re.match(r'^([A-Za-z\s\.]+?)(?:\s+\d+\s+|$)', name)
+    if match:
+        cleaned = match.group(1).strip()
+        if cleaned:
+            return cleaned
+    
+    # If no pattern match, return original
+    return name.strip()
 
 def mask_pii(record: dict, user_groups: list) -> dict:
     """
@@ -241,6 +261,27 @@ def handle_get_audits(event, user_groups):
                     "body": json.dumps({"error": "Audit record not found"})
                 }
             
+            # Ensure applicant_name is present (fallback to "Unknown Applicant" if missing)
+            if 'applicant_name' not in item or not item['applicant_name']:
+                if 'golden_record' in item:
+                    golden = item['golden_record']
+                    # Try to get name from 'name' field first (full name)
+                    if 'name' in golden and isinstance(golden['name'], dict):
+                        applicant_name = golden['name'].get('value', '').strip()
+                        applicant_name = clean_applicant_name(applicant_name)
+                    else:
+                        # Fallback to first_name + last_name
+                        first_name = golden.get('first_name', {}).get('value', '') if isinstance(golden.get('first_name'), dict) else golden.get('first_name', '')
+                        last_name = golden.get('last_name', {}).get('value', '') if isinstance(golden.get('last_name'), dict) else golden.get('last_name', '')
+                        applicant_name = f"{first_name} {last_name}".strip()
+                    
+                    item['applicant_name'] = applicant_name or "Unknown Applicant"
+                else:
+                    item['applicant_name'] = "Unknown Applicant"
+            else:
+                # Clean existing name to remove address data
+                item['applicant_name'] = clean_applicant_name(item['applicant_name'])
+            
             # Apply PII masking based on user role
             item = mask_pii(item, user_groups)
             
@@ -332,6 +373,29 @@ def handle_get_audits(event, user_groups):
                     key=lambda x: x.get(sort_by, 0 if sort_by == 'risk_score' else ''),
                     reverse=reverse
                 )
+            
+            # Ensure applicant_name is present in all items (fallback to "Unknown Applicant" if missing)
+            for item in items:
+                if 'applicant_name' not in item or not item['applicant_name']:
+                    # Try to construct from golden_record if available
+                    if 'golden_record' in item:
+                        golden = item['golden_record']
+                        # Try to get name from 'name' field first (full name)
+                        if 'name' in golden and isinstance(golden['name'], dict):
+                            applicant_name = golden['name'].get('value', '').strip()
+                            applicant_name = clean_applicant_name(applicant_name)
+                        else:
+                            # Fallback to first_name + last_name
+                            first_name = golden.get('first_name', {}).get('value', '') if isinstance(golden.get('first_name'), dict) else golden.get('first_name', '')
+                            last_name = golden.get('last_name', {}).get('value', '') if isinstance(golden.get('last_name'), dict) else golden.get('last_name', '')
+                            applicant_name = f"{first_name} {last_name}".strip()
+                        
+                        item['applicant_name'] = applicant_name or "Unknown Applicant"
+                    else:
+                        item['applicant_name'] = "Unknown Applicant"
+                else:
+                    # Clean existing name to remove address data
+                    item['applicant_name'] = clean_applicant_name(item['applicant_name'])
             
             # Apply PII masking to all items
             items = [mask_pii(item, user_groups) for item in items]
