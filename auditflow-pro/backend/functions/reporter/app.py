@@ -105,13 +105,37 @@ def trigger_alerts(record_data: dict) -> list:
     risk_score = record_data.get('risk_score', 0)
     alerts_triggered = []
     
+    # Get dashboard URL from environment or use default
+    dashboard_url = os.environ.get('DASHBOARD_URL', 'https://auditflowpro.online')
+    audit_record_id = record_data.get('audit_record_id', '')
+    loan_application_id = record_data.get('loan_application_id', '')
+    
+    # Build audit detail link
+    audit_link = f"{dashboard_url}/audits/{audit_record_id}"
+    
     # Define thresholds based on requirements
     if risk_score > 80:
         alert_type = "CRITICAL"
-        message = f"CRITICAL ALERT: Loan Application {record_data['loan_application_id']} flagged with Risk Score {risk_score}. Immediate review required."
+        message = f"""CRITICAL ALERT: Loan Application {loan_application_id} flagged with Risk Score {risk_score}. Immediate review required.
+
+Applicant: {record_data.get('applicant_name', 'Unknown')}
+Risk Level: CRITICAL
+Audit Record ID: {audit_record_id}
+
+View Details: {audit_link}
+
+Please review this application immediately."""
     elif risk_score > 50:
         alert_type = "HIGH"
-        message = f"HIGH RISK ALERT: Loan Application {record_data['loan_application_id']} flagged with Risk Score {risk_score}. Review recommended."
+        message = f"""HIGH RISK ALERT: Loan Application {loan_application_id} flagged with Risk Score {risk_score}. Review recommended.
+
+Applicant: {record_data.get('applicant_name', 'Unknown')}
+Risk Level: HIGH
+Audit Record ID: {audit_record_id}
+
+View Details: {audit_link}
+
+Please review this application at your earliest convenience."""
     else:
         # No alert needed for low/medium risk
         return alerts_triggered
@@ -119,10 +143,12 @@ def trigger_alerts(record_data: dict) -> list:
     try:
         response = sns.publish(
             TopicArn=alerts_topic_arn,
-            Subject=f"AuditFlow Alert: {alert_type} Risk Detected",
+            Subject=f"AuditFlow Alert: {alert_type} Risk Detected - {loan_application_id}",
             Message=message,
             MessageAttributes={
-                'RiskLevel': {'DataType': 'String', 'StringValue': alert_type}
+                'RiskLevel': {'DataType': 'String', 'StringValue': alert_type},
+                'LoanApplicationId': {'DataType': 'String', 'StringValue': loan_application_id},
+                'AuditRecordId': {'DataType': 'String', 'StringValue': audit_record_id}
             }
         )
         logger.info(f"Triggered {alert_type} alert via SNS. MessageId: {response['MessageId']}")
@@ -131,7 +157,8 @@ def trigger_alerts(record_data: dict) -> list:
         alerts_triggered.append({
             "type": alert_type,
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "message_id": response['MessageId']
+            "message_id": response['MessageId'],
+            "audit_link": audit_link
         })
     except ClientError as e:
         logger.error(f"Failed to publish SNS alert: {e.response['Error']['Message']}")
