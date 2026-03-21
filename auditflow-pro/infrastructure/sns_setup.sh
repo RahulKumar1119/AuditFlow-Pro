@@ -158,8 +158,34 @@ aws sns set-topic-attributes \
 
 echo -e "${GREEN}✓ SNS topic policy configured${NC}"
 
-# 7. Save Configuration
-echo -e "${YELLOW}Step 7: Saving configuration...${NC}"
+# 7. Update Lambda Function Configuration (Optional)
+echo -e "${YELLOW}Step 7: Updating Lambda function configuration...${NC}"
+
+# Try to find the Reporter Lambda function
+LAMBDA_FUNCTION=$(aws lambda list-functions \
+    --region "$REGION" \
+    --query "Functions[?contains(FunctionName, 'Reporter')].FunctionName" \
+    --output text | head -1)
+
+if [ -n "$LAMBDA_FUNCTION" ]; then
+    echo "  Found Lambda function: $LAMBDA_FUNCTION"
+    aws lambda update-function-configuration \
+        --function-name "$LAMBDA_FUNCTION" \
+        --environment Variables={ALERTS_TOPIC_ARN=$ALERTS_TOPIC_ARN} \
+        --region "$REGION" 2>/dev/null && \
+        echo -e "${GREEN}✓ Lambda environment variable updated${NC}" || \
+        echo -e "${YELLOW}⚠ Could not update Lambda (may need manual update)${NC}"
+else
+    echo -e "${YELLOW}⚠ Reporter Lambda function not found${NC}"
+    echo "  You can manually update it later with:"
+    echo "  aws lambda update-function-configuration \\"
+    echo "    --function-name AuditFlow-Reporter \\"
+    echo "    --environment Variables={ALERTS_TOPIC_ARN=$ALERTS_TOPIC_ARN} \\"
+    echo "    --region $REGION"
+fi
+
+# 8. Save Configuration
+echo -e "${YELLOW}Step 8: Saving configuration...${NC}"
 
 CONFIG_FILE="sns_config_${ENVIRONMENT}.env"
 cat > "$CONFIG_FILE" << EOF
@@ -174,7 +200,7 @@ EOF
 
 echo -e "${GREEN}✓ Configuration saved to $CONFIG_FILE${NC}"
 
-# 8. Display Summary
+# 9. Display Summary
 echo ""
 echo -e "${GREEN}=== SNS Setup Complete ===${NC}"
 echo ""
@@ -189,9 +215,9 @@ echo "1. Add the following to your .env file:"
 echo "   ALERTS_TOPIC_ARN=$ALERTS_TOPIC_ARN"
 echo "   CRITICAL_ALERTS_TOPIC_ARN=$CRITICAL_TOPIC_ARN"
 echo ""
-echo "2. Update Lambda environment variables:"
+echo "2. Update Lambda environment variables (if not auto-updated):"
 echo "   aws lambda update-function-configuration \\"
-echo "     --function-name AuditFlow-Reporter-${ENVIRONMENT} \\"
+echo "     --function-name $LAMBDA_FUNCTION \\"
 echo "     --environment Variables={ALERTS_TOPIC_ARN=$ALERTS_TOPIC_ARN} \\"
 echo "     --region $REGION"
 echo ""
