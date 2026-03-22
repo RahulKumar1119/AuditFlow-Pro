@@ -90,12 +90,12 @@ try {
 }
 
 // Configure Amplify with validated configuration
+// Note: region is extracted from userPoolId (format: region_poolid)
 Amplify.configure({
   Auth: {
     Cognito: {
       userPoolId: amplifyConfig.userPoolId,
       userPoolClientId: amplifyConfig.clientId,
-      region: amplifyConfig.region,
       loginWith: {
         email: true,
       },
