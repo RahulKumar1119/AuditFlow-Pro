@@ -1,0 +1,323 @@
+/* Frontend Test Dashboard Styles */
+
+.frontend-test-dashboard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.dashboard-header {
+  background: white;
+  border-radius: 12px 12px 0 0;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.dashboard-header p {
+  font-size: 1.1em;
+  color: #666;
+  margin: 0;
+}
+
+/* Summary Grid */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  background: white;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.summary-card {
+  padding: 25px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+}
+
+.summary-card h3 {
+  font-size: 0.9em;
+  color: #666;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.summary-card .value {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+.summary-card.total {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.summary-card.passed {
+  background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+}
+
+.summary-card.failed {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.summary-card.skipped {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+/* Pass Rate Section */
+.pass-rate-section {
+  background: white;
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pass-rate-section h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 40px;
+  background: #e0e0e0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1em;
+  transition: width 0.5s ease;
+}
+
+.stats-info {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  font-size: 0.95em;
+  color: #666;
+}
+
+/* Modules Section */
+.modules-section {
+  background: white;
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.modules-section h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin: 0 0 20px 0;
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.module-card {
+  background: #f9f9f9;
+  border-left: 4px solid #667eea;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.module-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.module-card.failed {
+  border-left-color: #fa709a;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.module-header h3 {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.module-stats {
+  display: flex;
+  gap: 10px;
+  font-size: 0.9em;
+}
+
+.passed-count {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.pass-rate {
+  color: #999;
+}
+
+.module-tests {
+  display: grid;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.test-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: white;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.test-status {
+  font-weight: bold;
+  font-size: 1.1em;
+  min-width: 20px;
+}
+
+.test-name {
+  flex: 1;
+  color: #333;
+  word-break: break-word;
+}
+
+.test-duration {
+  color: #999;
+  font-size: 0.85em;
+  min-width: 60px;
+  text-align: right;
+}
+
+/* Footer */
+.dashboard-footer {
+  background: white;
+  border-radius: 0 0 12px 12px;
+  padding: 20px 40px;
+  text-align: center;
+  color: #666;
+  font-size: 0.9em;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-footer p {
+  margin: 5px 0;
+}
+
+.timestamp {
+  color: #999;
+  font-size: 0.85em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-header h1 {
+    font-size: 1.8em;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .pass-rate-section {
+    padding: 20px;
+  }
+
+  .modules-section {
+    padding: 20px;
+  }
+
+  .modules-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .module-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .module-stats {
+    margin-top: 10px;
+  }
+
+  .stats-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dashboard-footer {
+    padding: 20px;
+  }
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.module-tests {
+  animation: slideIn 0.3s ease;
+}
+
+/* Print Styles */
+@media print {
+  .frontend-test-dashboard {
+    background: white;
+    padding: 0;
+  }
+
+  .module-card {
+    page-break-inside: avoid;
+  }
+}
