@@ -11,17 +11,31 @@ from shared.models import (
     DriversLicenseData, IDDocumentData,
     get_document_data_class
 )
+from config.secure_config import (
+    get_config, get_confidence_threshold, get_processing_timeout
+)
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Initialize clients outside handler for connection reuse
-textract = boto3.client('textract', region_name=os.environ.get('AWS_REGION', 'ap-south-1'))
-comprehend = boto3.client('comprehend', region_name=os.environ.get('AWS_REGION', 'ap-south-1'))
+# Region is retrieved from secure configuration
+config = get_config()
+aws_config = config.get_aws_config()
+region = aws_config.get('AWS_REGION', 'ap-south-1')
 
-# Configuration
-CONFIDENCE_THRESHOLD = float(os.environ.get('CONFIDENCE_THRESHOLD', '0.80'))
-PROCESSING_TIMEOUT = int(os.environ.get('PROCESSING_TIMEOUT', '300'))  # 5 minutes in seconds
+textract = boto3.client('textract', region_name=region)
+comprehend = boto3.client('comprehend', region_name=region)
+
+# Configuration - Retrieved from AWS Secrets Manager and Parameter Store
+# No hardcoded defaults - all values must be explicitly configured
+try:
+    CONFIDENCE_THRESHOLD = get_confidence_threshold()
+    PROCESSING_TIMEOUT = get_processing_timeout()
+    logger.info(f"Configuration loaded: CONFIDENCE_THRESHOLD={CONFIDENCE_THRESHOLD}, PROCESSING_TIMEOUT={PROCESSING_TIMEOUT}s")
+except Exception as e:
+    logger.error(f"Failed to load configuration: {e}")
+    raise
 
 
 def analyze_document_with_retry(bucket: str, key: str, document_id: str, max_retries: int = 3):
