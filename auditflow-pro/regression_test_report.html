@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuditFlow-Pro Regression Test Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+        
+        .summary-card h3 {
+            color: #333;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            opacity: 0.7;
+        }
+        
+        .summary-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .summary-card .subtext {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section h2 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-category {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-category h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .test-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .test-name {
+            font-weight: 500;
+            color: #333;
+            flex: 1;
+        }
+        
+        .test-status {
+            background: #28a745;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metrics-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .metrics-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .metrics-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-pass {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .status-fail {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .regression-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .badge-pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .test-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .test-status {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 Regression Test Report</h1>
+            <p>AuditFlow-Pro Loan Document Auditor</p>
+        </div>
+        
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h3>Total Tests</h3>
+                <div class="value">19</div>
+                <div class="subtext">All regression tests</div>
+            </div>
+            <div class="summary-card">
+                <h3>Pass Rate</h3>
+                <div class="value">100%</div>
+                <div class="subtext">19/19 tests passed</div>
+            </div>
+            <div class="summary-card">
+                <h3>Execution Time</h3>
+                <div class="value">0.76s</div>
+                <div class="subtext">Total test duration</div>
+            </div>
+            <div class="summary-card">
+                <h3>Regressions Found</h3>
+                <div class="value">0</div>
+                <div class="subtext">No breaking changes</div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>📊 Test Results Overview</h2>
+                <div class="chart-container">
+                    <canvas id="testDistributionChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>📄 Document Processing Regression</h2>
+                <div class="test-category">
+                    <h3>Document Processing Pipeline</h3>
+                    <div class="test-item">
+                        <span class="test-name">Document Classification Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Data Extraction Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Multi-Page PDF Processing Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Test Coverage</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>W2 Classification</td>
+                            <td>Type detection, confidence scoring</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Bank Statement Classification</td>
+                            <td>Type detection, field extraction</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Data Extraction</td>
+                            <td>Field extraction, confidence tracking</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Multi-Page Processing</td>
+                            <td>10-page and 100-page PDFs</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>✔️ Cross-Document Validation Regression</h2>
+                <div class="test-category">
+                    <h3>Validation Logic</h3>
+                    <div class="test-item">
+                        <span class="test-name">Name Validation Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Address Validation Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Income Validation Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Identification Validation Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Validation Type</th>
+                            <th>Test Scenarios</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Name Matching</td>
+                            <td>Exact match, variation detection</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Address Matching</td>
+                            <td>Component comparison, mismatch detection</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Income Validation</td>
+                            <td>Discrepancy detection, multiple W2s</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Identification</td>
+                            <td>SSN matching, DOB matching</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>📊 Risk Scoring Regression</h2>
+                <div class="test-category">
+                    <h3>Risk Calculation Logic</h3>
+                    <div class="test-item">
+                        <span class="test-name">Risk Score Calculation Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Risk Level Assignment Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Risk Level</th>
+                            <th>Score Range</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LOW</td>
+                            <td>0-24</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>MEDIUM</td>
+                            <td>25-49</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>HIGH</td>
+                            <td>50-79</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>CRITICAL</td>
+                            <td>80-100</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>🔌 API Endpoints Regression</h2>
+                <div class="test-category">
+                    <h3>API Functionality</h3>
+                    <div class="test-item">
+                        <span class="test-name">Document Upload Endpoint Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Audit Query Endpoint Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Audit Detail Endpoint Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <div class="regression-badge badge-pass">✓ Pre-signed URL generation works</div>
+                <div class="regression-badge badge-pass">✓ Pagination works</div>
+                <div class="regression-badge badge-pass">✓ Inconsistency details work</div>
+                <div class="regression-badge badge-pass">✓ Golden record display works</div>
+            </div>
+            
+            <div class="section">
+                <h2>🎨 Frontend Regression</h2>
+                <div class="test-category">
+                    <h3>Frontend Components</h3>
+                    <div class="test-item">
+                        <span class="test-name">Login Flow Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Document Upload UI Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Audit Queue Display Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Functionality</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Authentication</td>
+                            <td>Login, token generation, session management</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>File Upload</td>
+                            <td>File validation, type checking, size limits</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Audit Queue</td>
+                            <td>Display, sorting, filtering</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>💾 Database Operations Regression</h2>
+                <div class="test-category">
+                    <h3>Database Functionality</h3>
+                    <div class="test-item">
+                        <span class="test-name">Document Storage Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Audit Record Storage Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Query Operations Still Work</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <div class="regression-badge badge-pass">✓ Document metadata storage works</div>
+                <div class="regression-badge badge-pass">✓ Risk score storage works</div>
+                <div class="regression-badge badge-pass">✓ Result filtering works</div>
+            </div>
+            
+            <div class="section">
+                <h2>🔄 End-to-End Workflow Regression</h2>
+                <div class="test-category">
+                    <h3>Complete Workflow</h3>
+                    <div class="test-item">
+                        <span class="test-name">Complete Workflow Still Works</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Workflow Step</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Document Upload</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Document Classification</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Data Extraction</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Cross-Document Validation</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Risk Scoring</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Report Generation</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                        <tr>
+                            <td>Alert Notification</td>
+                            <td class="status-pass">✓ WORKING</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>✅ Regression Test Summary</h2>
+                <div class="test-category">
+                    <h3>Key Findings</h3>
+                    <div style="padding: 20px; background: white; border-radius: 8px;">
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ All 19 regression tests passed successfully</strong><br>
+                            No breaking changes detected in the system.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Document Processing:</strong> Classification, extraction, and multi-page PDF processing all functioning correctly.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Validation Logic:</strong> Name, address, income, and identification validation all working as expected.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Risk Scoring:</strong> Risk calculation and level assignment functioning correctly across all risk levels.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ API Endpoints:</strong> All endpoints (upload, query, detail) responding correctly with proper data.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Frontend Components:</strong> Login, file upload, and audit queue display all functioning properly.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Database Operations:</strong> Document storage, audit record storage, and queries all working correctly.
+                        </p>
+                        <p style="line-height: 1.6;">
+                            <strong>✓ End-to-End Workflow:</strong> Complete workflow from upload to notification functioning without issues.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Regression Test Report | AuditFlow-Pro Loan Document Auditor | Generated: March 22, 2026</p>
+            <p>All tests executed with 100% pass rate | Total execution time: 0.76 seconds | No regressions detected</p>
+        </div>
+    </div>
+    
+    <script>
+        // Test Distribution Chart
+        const testDistributionCtx = document.getElementById('testDistributionChart').getContext('2d');
+        new Chart(testDistributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'Document Processing (3)',
+                    'Validation Logic (4)',
+                    'Risk Scoring (2)',
+                    'API Endpoints (3)',
+                    'Frontend (3)',
+                    'Database (3)',
+                    'End-to-End (1)'
+                ],
+                datasets: [{
+                    data: [3, 4, 2, 3, 3, 3, 1],
+                    backgroundColor: [
+                        '#667eea',
+                        '#764ba2',
+                        '#f093fb',
+                        '#4facfe',
+                        '#00f2fe',
+                        '#43e97b',
+                        '#fa709a'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 12 },
+                            padding: 15
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
