@@ -140,7 +140,7 @@ const AuditRecords = () => {
                       </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {audit.applicant_name || 'Unknown'}
+                      {audit.applicant_name || '-'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(audit.audit_timestamp || '').toLocaleDateString('en-US', {

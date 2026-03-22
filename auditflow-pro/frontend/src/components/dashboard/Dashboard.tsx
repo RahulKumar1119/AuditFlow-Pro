@@ -109,7 +109,7 @@ const Dashboard = () => {
                       </Link>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {audit.applicant_name || 'Unknown'}
+                      {audit.applicant_name || '-'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       ${Math.floor(Math.random() * 150000 + 50000).toLocaleString()}

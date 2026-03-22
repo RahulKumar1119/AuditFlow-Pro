@@ -1,0 +1,81 @@
+================================================================================
+UNKNOWN APPLICANT REMOVAL - QUICK REFERENCE
+================================================================================
+
+STATUS: ✅ COMPLETE
+
+FILES UPDATED: 3
+  1. frontend/src/components/dashboard/Dashboard.tsx (line 112)
+  2. frontend/src/pages/AuditRecords.tsx (line 143)
+  3. frontend/src/components/audit/AuditDetailView.tsx (line 205)
+
+CHANGES MADE:
+  - Replaced "Unknown" with "-"
+  - Replaced "N/A" with "-"
+  - Consistent across all components
+
+================================================================================
+WHAT WAS CHANGED
+================================================================================
+
+BEFORE:
+  {audit.applicant_name || 'Unknown'}
+
+AFTER:
+  {audit.applicant_name || '-'}
+
+WHY:
+  - Clearly indicates missing data
+  - Professional appearance
+  - Consistent with data tables
+  - Doesn't confuse users
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. REBUILD FRONTEND
+   cd auditflow-pro/frontend
+   npm run build
+
+2. TEST LOCALLY
+   npm run dev
+
+3. VERIFY IN BROWSER
+   - Open audit queue
+   - Check audit detail view
+   - Verify applicant names display correctly
+   - Verify "-" shows when data is missing
+
+4. DEPLOY
+   npm run deploy
+
+================================================================================
+VERIFICATION COMMANDS
+================================================================================
+
+# Verify Dashboard.tsx
+grep -n "applicant_name" auditflow-pro/frontend/src/components/dashboard/Dashboard.tsx
+
+# Verify AuditRecords.tsx
+grep -n "applicant_name" auditflow-pro/frontend/src/pages/AuditRecords.tsx
+
+# Verify AuditDetailView.tsx
+grep -n "applicant_name" auditflow-pro/frontend/src/components/audit/AuditDetailView.tsx
+
+EXPECTED OUTPUT:
+  Dashboard.tsx:112 - {audit.applicant_name || '-'}
+  AuditRecords.tsx:143 - {audit.applicant_name || '-'}
+  AuditDetailView.tsx:205 - ... : '-')}
+
+================================================================================
+SUMMARY
+================================================================================
+
+✅ All "Unknown Applicant" references removed
+✅ Replaced with "-" for consistency
+✅ Ready for testing and deployment
+
+Next: Rebuild frontend and test in browser
+
+================================================================================

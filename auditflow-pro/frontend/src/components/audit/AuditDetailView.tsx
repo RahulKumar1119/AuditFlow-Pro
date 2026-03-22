@@ -202,7 +202,7 @@ const AuditDetailView: React.FC = () => {
                       Applicant Name
                     </label>
                     <div className="text-sm font-semibold text-gray-900 truncate">
-                      {audit.applicant_name || (audit.golden_record?.name?.value) || (audit.golden_record?.first_name?.value && audit.golden_record?.last_name?.value ? `${audit.golden_record.first_name.value} ${audit.golden_record.last_name.value}` : 'N/A')}
+                      {audit.applicant_name || (audit.golden_record?.name?.value) || (audit.golden_record?.first_name?.value && audit.golden_record?.last_name?.value ? `${audit.golden_record.first_name.value} ${audit.golden_record.last_name.value}` : '-')}
                     </div>
                   </div>
                 </div>
