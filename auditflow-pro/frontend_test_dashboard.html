@@ -214,17 +214,19 @@
         .test-list {
             display: grid;
             gap: 10px;
+            margin-top: 15px;
         }
 
         .test-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 12px 15px;
             background: white;
             border-radius: 4px;
-            border-left: 3px solid #27ae60;
+            border-left: 4px solid #27ae60;
             font-size: 0.95em;
+            min-height: 45px;
         }
 
         .test-item.failed {
@@ -240,19 +242,26 @@
         .test-name {
             flex: 1;
             color: #333;
+            font-weight: 500;
+            word-break: break-word;
+            min-width: 0;
         }
 
         .test-duration {
             color: #999;
             font-size: 0.9em;
-            margin-right: 15px;
+            margin: 0 15px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .test-status {
             font-weight: bold;
-            padding: 4px 12px;
+            padding: 6px 12px;
             border-radius: 4px;
             font-size: 0.85em;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .test-status.passed {
@@ -304,6 +313,20 @@
 
             .module-stats {
                 margin-top: 10px;
+            }
+
+            .test-item {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .test-name {
+                flex-basis: 100%;
+                margin-bottom: 5px;
+            }
+
+            .test-duration {
+                margin: 0;
             }
         }
     </style>
