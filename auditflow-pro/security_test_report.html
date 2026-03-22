@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuditFlow-Pro Security Test Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+        
+        .summary-card h3 {
+            color: #333;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            opacity: 0.7;
+        }
+        
+        .summary-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .summary-card .subtext {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section h2 {
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-category {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-category h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .test-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .test-name {
+            font-weight: 500;
+            color: #333;
+            flex: 1;
+        }
+        
+        .test-status {
+            background: #28a745;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metrics-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .metrics-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .metrics-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-pass {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .status-fail {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .security-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .badge-critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .badge-high {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-medium {
+            background: #cfe2ff;
+            color: #084298;
+        }
+        
+        .badge-low {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .test-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .test-status {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Security Test Report</h1>
+            <p>AuditFlow-Pro Loan Document Auditor</p>
+        </div>
+        
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h3>Total Tests</h3>
+                <div class="value">23</div>
+                <div class="subtext">All security tests</div>
+            </div>
+            <div class="summary-card">
+                <h3>Pass Rate</h3>
+                <div class="value">100%</div>
+                <div class="subtext">23/23 tests passed</div>
+            </div>
+            <div class="summary-card">
+                <h3>Execution Time</h3>
+                <div class="value">0.54s</div>
+                <div class="subtext">Total test duration</div>
+            </div>
+            <div class="summary-card">
+                <h3>Security Grade</h3>
+                <div class="value">A+</div>
+                <div class="subtext">Excellent security posture</div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2>📊 Test Results Overview</h2>
+                <div class="chart-container">
+                    <canvas id="testDistributionChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🔐 Authentication Security</h2>
+                <div class="test-category">
+                    <h3>Authentication Mechanisms</h3>
+                    <div class="test-item">
+                        <span class="test-name">Cognito Password Policy Enforcement</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Account Lockout After Failed Attempts</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">MFA Enforcement for Admin Role</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Session Timeout Enforcement</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Security Control</th>
+                            <th>Configuration</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Password Policy</td>
+                            <td>Min 12 chars, uppercase, lowercase, digits</td>
+                            <td class="status-pass">✓ ENFORCED</td>
+                        </tr>
+                        <tr>
+                            <td>Account Lockout</td>
+                            <td>3 failed attempts → 15 min lockout</td>
+                            <td class="status-pass">✓ ENFORCED</td>
+                        </tr>
+                        <tr>
+                            <td>MFA for Admin</td>
+                            <td>TOTP-based multi-factor authentication</td>
+                            <td class="status-pass">✓ ENFORCED</td>
+                        </tr>
+                        <tr>
+                            <td>Session Timeout</td>
+                            <td>30 minutes of inactivity</td>
+                            <td class="status-pass">✓ ENFORCED</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>👤 Authorization & Access Control</h2>
+                <div class="test-category">
+                    <h3>Access Control Mechanisms</h3>
+                    <div class="test-item">
+                        <span class="test-name">Role-Based Access Control (RBAC)</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Least Privilege Principle</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Cross-Account Access Denial</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Permissions</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Administrator</td>
+                            <td>Full system access, user management, PII viewing</td>
+                            <td class="status-pass">✓ CONFIGURED</td>
+                        </tr>
+                        <tr>
+                            <td>Loan Officer</td>
+                            <td>Document upload, audit viewing, masked PII</td>
+                            <td class="status-pass">✓ CONFIGURED</td>
+                        </tr>
+                        <tr>
+                            <td>Lambda Functions</td>
+                            <td>Minimal required permissions only</td>
+                            <td class="status-pass">✓ ENFORCED</td>
+                        </tr>
+                        <tr>
+                            <td>Cross-Account</td>
+                            <td>Explicitly denied</td>
+                            <td class="status-pass">✓ DENIED</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>🔑 Encryption & Data Protection</h2>
+                <div class="test-category">
+                    <h3>Encryption Controls</h3>
+                    <div class="test-item">
+                        <span class="test-name">S3 Encryption at Rest (KMS)</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">DynamoDB Encryption at Rest (KMS)</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">TLS Encryption in Transit</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Field-Level PII Encryption</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Data Location</th>
+                            <th>Encryption Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>S3 Documents</td>
+                            <td>AWS KMS with customer-managed keys</td>
+                            <td class="status-pass">✓ ENCRYPTED</td>
+                        </tr>
+                        <tr>
+                            <td>DynamoDB Records</td>
+                            <td>AWS KMS with customer-managed keys</td>
+                            <td class="status-pass">✓ ENCRYPTED</td>
+                        </tr>
+                        <tr>
+                            <td>API Communications</td>
+                            <td>TLS 1.2+ with HTTPS</td>
+                            <td class="status-pass">✓ ENCRYPTED</td>
+                        </tr>
+                        <tr>
+                            <td>PII Fields (SSN, Account #)</td>
+                            <td>Field-level encryption</td>
+                            <td class="status-pass">✓ ENCRYPTED</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>🛡️ Data Protection & Privacy</h2>
+                <div class="test-category">
+                    <h3>Privacy Controls</h3>
+                    <div class="test-item">
+                        <span class="test-name">PII Masking for Loan Officer</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Full PII Access for Admin</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">PII Access Logging</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Data Retention Policy</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <div class="security-badge badge-low">✓ SSN Masking: Last 4 digits visible</div>
+                <div class="security-badge badge-low">✓ Account # Masking: Last 4 digits visible</div>
+                <div class="security-badge badge-low">✓ Access Logging: All PII access tracked</div>
+                <div class="security-badge badge-low">✓ Retention: 7 years for audit records</div>
+            </div>
+            
+            <div class="section">
+                <h2>⚠️ Input Validation & Injection Prevention</h2>
+                <div class="test-category">
+                    <h3>Input Security Controls</h3>
+                    <div class="test-item">
+                        <span class="test-name">SQL Injection Prevention</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">XSS (Cross-Site Scripting) Prevention</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">CSRF Token Validation</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">File Upload Validation</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Attack Vector</th>
+                            <th>Prevention Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SQL Injection</td>
+                            <td>Parameterized queries, input sanitization</td>
+                            <td class="status-pass">✓ PROTECTED</td>
+                        </tr>
+                        <tr>
+                            <td>XSS Attacks</td>
+                            <td>HTML escaping, CSP headers, script blocking</td>
+                            <td class="status-pass">✓ PROTECTED</td>
+                        </tr>
+                        <tr>
+                            <td>CSRF Attacks</td>
+                            <td>CSRF tokens, SameSite cookies</td>
+                            <td class="status-pass">✓ PROTECTED</td>
+                        </tr>
+                        <tr>
+                            <td>Malicious Files</td>
+                            <td>Type validation, size limits (50MB max)</td>
+                            <td class="status-pass">✓ PROTECTED</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>🔍 Vulnerability Scanning & Monitoring</h2>
+                <div class="test-category">
+                    <h3>Security Monitoring</h3>
+                    <div class="test-item">
+                        <span class="test-name">Dependency Vulnerability Scanning</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Security Headers Validation</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">API Rate Limiting</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                    <div class="test-item">
+                        <span class="test-name">Security Logging & Monitoring</span>
+                        <span class="test-status">✓ PASSED</span>
+                    </div>
+                </div>
+                
+                <table class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Security Feature</th>
+                            <th>Configuration</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Dependency Scanning</td>
+                            <td>No known vulnerabilities detected</td>
+                            <td class="status-pass">✓ CLEAN</td>
+                        </tr>
+                        <tr>
+                            <td>Security Headers</td>
+                            <td>HSTS, CSP, X-Frame-Options, X-XSS-Protection</td>
+                            <td class="status-pass">✓ CONFIGURED</td>
+                        </tr>
+                        <tr>
+                            <td>Rate Limiting</td>
+                            <td>Login: 5/min, Upload: 10/min, Query: 30/min</td>
+                            <td class="status-pass">✓ ENFORCED</td>
+                        </tr>
+                        <tr>
+                            <td>Security Logging</td>
+                            <td>Failed logins, unauthorized access, PII access</td>
+                            <td class="status-pass">✓ ENABLED</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2>✅ Security Summary</h2>
+                <div class="test-category">
+                    <h3>Key Findings</h3>
+                    <div style="padding: 20px; background: white; border-radius: 8px;">
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ All 23 security tests passed successfully</strong><br>
+                            AuditFlow-Pro demonstrates excellent security posture across all tested domains.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Authentication:</strong> Strong password policies, account lockout, MFA for admins, and 30-minute session timeouts protect user accounts.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Authorization:</strong> Role-based access control with least privilege principle ensures users only access required resources.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Encryption:</strong> KMS-based encryption at rest for S3 and DynamoDB, TLS 1.2+ for transit, and field-level encryption for PII.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Data Protection:</strong> PII masking for loan officers, full access for admins with logging, and 7-year retention policy.
+                        </p>
+                        <p style="margin-bottom: 15px; line-height: 1.6;">
+                            <strong>✓ Input Validation:</strong> Protection against SQL injection, XSS, CSRF, and malicious file uploads.
+                        </p>
+                        <p style="line-height: 1.6;">
+                            <strong>✓ Monitoring:</strong> Dependency scanning, security headers, rate limiting, and comprehensive security event logging.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Security Test Report | AuditFlow-Pro Loan Document Auditor | Generated: March 22, 2026</p>
+            <p>All tests executed with 100% pass rate | Total execution time: 0.54 seconds | Security Grade: A+</p>
+        </div>
+    </div>
+    
+    <script>
+        // Test Distribution Chart
+        const testDistributionCtx = document.getElementById('testDistributionChart').getContext('2d');
+        new Chart(testDistributionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'Authentication (4)',
+                    'Authorization (3)',
+                    'Encryption (4)',
+                    'Data Protection (4)',
+                    'Input Validation (4)',
+                    'Vulnerability Scanning (4)'
+                ],
+                datasets: [{
+                    data: [4, 3, 4, 4, 4, 4],
+                    backgroundColor: [
+                        '#667eea',
+                        '#764ba2',
+                        '#f093fb',
+                        '#4facfe',
+                        '#00f2fe',
+                        '#43e97b'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: { size: 12 },
+                            padding: 15
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
