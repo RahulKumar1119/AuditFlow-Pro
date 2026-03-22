@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/LLM Testing Report - AuditFlow-Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .badge-differentiator {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .summary-card.passed {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .summary-card h3 {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .progress-section {
+            margin-bottom: 40px;
+        }
+
+        .progress-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: width 0.5s ease;
+            width: 100%;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container h3 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .test-categories {
+            margin-top: 40px;
+        }
+
+        .test-categories h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .category-card {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .category-card.passed {
+            border-left-color: #27ae60;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .category-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .category-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 0.95em;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat.passed {
+            color: #27ae60;
+        }
+
+        .test-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 4px;
+            border-left: 4px solid #27ae60;
+            font-size: 0.95em;
+            min-height: 45px;
+        }
+
+        .test-name {
+            flex: 1;
+            color: #333;
+            font-weight: 500;
+            word-break: break-word;
+            min-width: 0;
+        }
+
+        .test-status {
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            white-space: nowrap;
+            flex-shrink: 0;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .capabilities-section {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .capabilities-section h2 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .capability-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #667eea;
+        }
+
+        .capability-label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .capability-value {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid #667eea;
+        }
+
+        .feature-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .feature-desc {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .timestamp {
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .category-stats {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 AI/LLM Testing Report</h1>
+            <p>AuditFlow-Pro Bedrock Integration Testing</p>
+            <div class="badge-differentiator">🚀 DIFFERENTIATOR: Claude Sonnet 4 Semantic Reasoning</div>
+        </div>
+
+        <div class="content">
+            <!-- Summary Cards -->
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Total Tests</h3>
+                    <div class="value">14</div>
+                </div>
+                <div class="summary-card passed">
+                    <h3>Passed</h3>
+                    <div class="value">14</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Model</h3>
+                    <div class="value">Claude 4</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Execution Time</h3>
+                    <div class="value">0.68s</div>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <h2>Pass Rate</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill">100.0%</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Test Results Distribution</h3>
+                    <canvas id="resultsChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Tests by Category</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Test Categories Section -->
+            <div class="test-categories">
+                <h2>LLM Test Results by Category</h2>
+                
+                <!-- Semantic Data Comparison -->
+                <div class="category-card passed">
+                    <div class="category-header">
+                        <div class="category-name">Semantic Data Comparison</div>
+                        <div class="category-stats">
+                            <div class="stat passed">✓ 3/3</div>
+                        </div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">
+                            <div class="test-name">Semantic name matching (John vs Jon)</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                        <div class="test-item">
+                            <div class="test-name">Address normalization and comparison</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                        <div class="test-item">
+                            <div class="test-name">Income discrepancy semantic analysis</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Classification Quality -->
+                <div class="category-card passed">
+                    <div class="category-header">
+                        <div class="category-name">Document Classification Quality</div>
+                        <div class="category-stats">
+                            <div class="stat passed">✓ 2/2</div>
+                        </div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">
+                            <div class="test-name">Document type confidence validation</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                        <div class="test-item">
+                            <div class="test-name">Low-confidence field analysis</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk Assessment Reasoning -->
+                <div class="category-card passed">
+                    <div class="category-header">
+                        <div class="category-name">Risk Assessment Reasoning</div>
+                        <div class="category-stats">
+                            <div class="stat passed">✓ 2/2</div>
+                        </div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">
+                            <div class="test-name">Inconsistency severity assessment</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                        <div class="test-item">
+                            <div class="test-name">Risk score justification</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Quality Validation -->
+                <div class="category-card passed">
+                    <div class="category-header">
+                        <div class="category-name">Data Quality Validation</div>
+                        <div class="category-stats">
+                            <div class="stat passed">✓ 2/2</div>
+                        </div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">
+                            <div class="test-name">Extracted data plausibility validation</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                        <div class="test-item">
+                            <div class="test-name">Anomaly detection in applicant data</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prompt Engineering -->
+                <div class="category-card passed">
+                    <div class="category-header">
+                        <div class="category-name">Prompt Engineering & Optimization</div>
+                        <div class="category-stats">
+                            <div class="stat passed">✓ 2/2</div>
+                        </div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">
+                            <div class="test-name">Few-shot learning for improved accuracy</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                        <div class="test-item">
+                            <div class="test-name">Chain-of-thought reasoning</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LLM Performance -->
+                <div class="category-card passed">
+                    <div class="category-header">
+                        <div class="category-name">LLM Performance & Reliability</div>
+                        <div class="category-stats">
+                            <div class="stat passed">✓ 2/2</div>
+                        </div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">
+                            <div class="test-name">Response consistency across multiple calls</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                        <div class="test-item">
+                            <div class="test-name">Token usage optimization</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LLM Integration -->
+                <div class="category-card passed">
+                    <div class="category-header">
+                        <div class="category-name">End-to-End LLM Integration</div>
+                        <div class="category-stats">
+                            <div class="stat passed">✓ 1/1</div>
+                        </div>
+                    </div>
+                    <div class="test-list">
+                        <div class="test-item">
+                            <div class="test-name">Complete LLM pipeline integration</div>
+                            <div class="test-status">PASSED</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Capabilities Section -->
+            <div class="capabilities-section">
+                <h2>🚀 AI/LLM Capabilities & Differentiators</h2>
+                
+                <div class="capability-item">
+                    <div class="capability-label">Model: Claude Sonnet 4 (Anthropic Bedrock)</div>
+                    <div class="capability-value">
+                        Advanced semantic reasoning, context understanding, and complex analysis capabilities
+                    </div>
+                </div>
+
+                <div class="capability-item">
+                    <div class="capability-label">Semantic Data Comparison</div>
+                    <div class="capability-value">
+                        ✓ Name matching with abbreviation/nickname recognition<br>
+                        ✓ Address normalization and standardization<br>
+                        ✓ Income discrepancy semantic analysis<br>
+                        ✓ Format variation handling
+                    </div>
+                </div>
+
+                <div class="capability-item">
+                    <div class="capability-label">Intelligent Document Classification</div>
+                    <div class="capability-value">
+                        ✓ Confidence score validation and adjustment<br>
+                        ✓ Low-confidence field analysis<br>
+                        ✓ Document type verification<br>
+                        ✓ Extraction quality assessment
+                    </div>
+                </div>
+
+                <div class="capability-item">
+                    <div class="capability-label">Advanced Risk Assessment</div>
+                    <div class="capability-value">
+                        ✓ Inconsistency severity evaluation<br>
+                        ✓ Fraud risk scoring<br>
+                        ✓ Risk factor justification<br>
+                        ✓ Contextual risk analysis
+                    </div>
+                </div>
+
+                <div class="capability-item">
+                    <div class="capability-label">Data Quality & Anomaly Detection</div>
+                    <div class="capability-value">
+                        ✓ Plausibility validation<br>
+                        ✓ Anomaly detection<br>
+                        ✓ Pattern recognition<br>
+                        ✓ Outlier identification
+                    </div>
+                </div>
+
+                <div class="capability-item">
+                    <div class="capability-label">Prompt Engineering Optimization</div>
+                    <div class="capability-value">
+                        ✓ Few-shot learning<br>
+                        ✓ Chain-of-thought reasoning<br>
+                        ✓ Token optimization<br>
+                        ✓ Response consistency
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: #333;">Key Differentiators</h3>
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <div class="feature-title">🧠 Semantic Understanding</div>
+                        <div class="feature-desc">Claude understands context and meaning beyond exact matches, enabling intelligent data comparison</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">🔍 Anomaly Detection</div>
+                        <div class="feature-desc">Identifies unusual patterns and potential fraud indicators that rule-based systems might miss</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">📊 Reasoning Justification</div>
+                        <div class="feature-desc">Provides explainable AI with clear reasoning for risk scores and decisions</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">⚡ Performance</div>
+                        <div class="feature-desc">Fast inference with consistent, reliable responses across multiple invocations</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">🎯 Accuracy</div>
+                        <div class="feature-desc">High accuracy in semantic matching, classification, and risk assessment tasks</div>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-title">💡 Flexibility</div>
+                        <div class="feature-desc">Adaptable to new document types and business rules without retraining</div>
+                    </div>
+                </div>
+
+                <div class="capability-item" style="margin-top: 20px;">
+                    <div class="capability-label">Test Coverage</div>
+                    <div class="capability-value">
+                        ✓ Semantic reasoning (3 tests)<br>
+                        ✓ Document classification (2 tests)<br>
+                        ✓ Risk assessment (2 tests)<br>
+                        ✓ Data quality (2 tests)<br>
+                        ✓ Prompt engineering (2 tests)<br>
+                        ✓ Performance & reliability (2 tests)<br>
+                        ✓ End-to-end integration (1 test)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>✓ All 14 AI/LLM tests passed - AuditFlow-Pro Bedrock integration ready for production</p>
+            <p class="timestamp">Generated: <span id="timestamp"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Set timestamp
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+
+        // Results Distribution Chart
+        const resultsCtx = document.getElementById('resultsChart').getContext('2d');
+        new Chart(resultsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed', 'Failed'],
+                datasets: [{
+                    data: [14, 0],
+                    backgroundColor: ['#84fab0', '#fa709a'],
+                    borderColor: ['#fff', '#fff'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(categoryCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    'Semantic\nComparison',
+                    'Classification',
+                    'Risk\nAssessment',
+                    'Data\nQuality',
+                    'Prompt\nEngineering',
+                    'Performance',
+                    'Integration'
+                ],
+                datasets: [{
+                    label: 'Passed',
+                    data: [3, 2, 2, 2, 2, 2, 1],
+                    backgroundColor: '#84fab0'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
