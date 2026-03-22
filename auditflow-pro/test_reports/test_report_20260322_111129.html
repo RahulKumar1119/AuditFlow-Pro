@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Test Report - AuditFlow-Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .summary-card.passed {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .summary-card.failed {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .summary-card.skipped {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .summary-card h3 {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .progress-section {
+            margin-bottom: 40px;
+        }
+
+        .progress-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: width 0.5s ease;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container h3 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modules-section {
+            margin-top: 40px;
+        }
+
+        .modules-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .module-card {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .module-card.failed {
+            border-left-color: #fa709a;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .module-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .module-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 0.95em;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stat.passed {
+            color: #27ae60;
+        }
+
+        .stat.failed {
+            color: #e74c3c;
+        }
+
+        .test-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #27ae60;
+            font-size: 0.95em;
+        }
+
+        .test-item.failed {
+            border-left-color: #e74c3c;
+            background: #ffe6e6;
+        }
+
+        .test-item.skipped {
+            border-left-color: #f39c12;
+            background: #fff9e6;
+        }
+
+        .test-name {
+            flex: 1;
+            color: #333;
+        }
+
+        .test-duration {
+            color: #999;
+            font-size: 0.9em;
+            margin-right: 15px;
+        }
+
+        .test-status {
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .test-status.passed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .test-status.failed {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .test-status.skipped {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .footer {
+            background: #f5f5f5;
+            padding: 20px 40px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .timestamp {
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .module-stats {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Unit Test Report</h1>
+            <p>AuditFlow-Pro Loan Document Auditor</p>
+        </div>
+
+        <div class="content">
+            <!-- Summary Cards -->
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Total Tests</h3>
+                    <div class="value">69</div>
+                </div>
+                <div class="summary-card passed">
+                    <h3>Passed</h3>
+                    <div class="value">69</div>
+                </div>
+                <div class="summary-card failed">
+                    <h3>Failed</h3>
+                    <div class="value">0</div>
+                </div>
+                <div class="summary-card skipped">
+                    <h3>Skipped</h3>
+                    <div class="value">0</div>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <h2>Pass Rate</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100.0%">
+                        100.0%
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Test Results Distribution</h3>
+                    <canvas id="resultsChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Results by Module</h3>
+                    <canvas id="modulesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Modules Section -->
+            <div class="modules-section">
+                <h2>Results by Module</h2>
+                
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">api_gateway</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 5/5</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_document_upload_endpoint</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_audit_query_endpoints</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_document_viewer_endpoint</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_api_authentication</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_api_logging</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">classifier</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 7/7</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_w2_classification</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_bank_statement_classification</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_tax_form_classification</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_drivers_license_classification</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_id_document_classification</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_confidence_score_calculation</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_illegible_document_handling</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">data_models</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 5/5</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_document_metadata_creation</div>
+                        <div class="test-duration">0.045s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_extracted_data_serialization</div>
+                        <div class="test-duration">0.045s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_confidence_tracking</div>
+                        <div class="test-duration">0.045s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_audit_record_creation</div>
+                        <div class="test-duration">0.045s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_golden_record_generation</div>
+                        <div class="test-duration">0.045s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">dynamodb</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 5/5</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_document_repository_create</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_document_repository_read</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_document_repository_update</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_audit_record_repository_query</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_repository_error_handling</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">extractor</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 8/8</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_w2_data_extraction</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_bank_statement_extraction</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_tax_form_extraction</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_drivers_license_extraction</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_id_document_extraction</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_pii_detection_and_masking</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_multipage_pdf_handling</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_confidence_tracking_extraction</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">frontend</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 6/6</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_auth_provider_component</div>
+                        <div class="test-duration">0.167s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_login_component</div>
+                        <div class="test-duration">0.167s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_upload_zone_component</div>
+                        <div class="test-duration">0.167s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_audit_queue_component</div>
+                        <div class="test-duration">0.167s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_audit_detail_view</div>
+                        <div class="test-duration">0.167s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_document_viewer_component</div>
+                        <div class="test-duration">0.167s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">integration</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 5/5</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_s3_event_processing</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_workflow_initiation</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_end_to_end_audit_workflow</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_error_recovery</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_high_risk_alert_flow</div>
+                        <div class="test-duration">0.267s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">report_generator</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 4/4</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_audit_record_compilation</div>
+                        <div class="test-duration">0.123s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_dynamodb_storage</div>
+                        <div class="test-duration">0.123s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_alert_triggering</div>
+                        <div class="test-duration">0.123s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_cloudwatch_logging</div>
+                        <div class="test-duration">0.123s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">risk_scorer</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 5/5</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_inconsistency_scoring</div>
+                        <div class="test-duration">0.076s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_extraction_quality_scoring</div>
+                        <div class="test-duration">0.076s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_risk_level_determination</div>
+                        <div class="test-duration">0.076s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_risk_factor_recording</div>
+                        <div class="test-duration">0.076s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_score_capping</div>
+                        <div class="test-duration">0.076s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">s3_storage</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 4/4</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_s3_document_upload</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_s3_presigned_url_generation</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_s3_document_retrieval</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_s3_checksum_validation</div>
+                        <div class="test-duration">0.156s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">security</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 5/5</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_iam_policy_restrictions</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_encryption_at_rest</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_encryption_in_transit</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_pii_field_encryption</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_unauthorized_access_denial</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">step_functions</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 4/4</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_state_machine_definition</div>
+                        <div class="test-duration">0.089s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_retry_policies</div>
+                        <div class="test-duration">0.089s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_document_aggregation</div>
+                        <div class="test-duration">0.089s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_error_handling</div>
+                        <div class="test-duration">0.089s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-name">validator</div>
+                    <div class="module-stats">
+                        <div class="stat passed">✓ 6/6</div>
+                        <div class="stat" style="color: #999;">(100.0%)</div>
+                    </div>
+                </div>
+                <div class="test-list">
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_name_validation</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_address_validation</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_income_validation</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_dob_ssn_validation</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_golden_record_selection</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                    <div class="test-item passed">
+                        <div class="test-name">test_inconsistency_recording</div>
+                        <div class="test-duration">0.134s</div>
+                        <div class="test-status passed">PASSED</div>
+                    </div>
+
+                </div>
+            </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generated on <span class="timestamp">2026-03-22 11:11:29</span></p>
+            <p>AuditFlow-Pro Test Suite</p>
+        </div>
+    </div>
+
+    <script>
+        // Results Distribution Chart
+        const resultsCtx = document.getElementById('resultsChart').getContext('2d');
+        new Chart(resultsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Passed', 'Failed', 'Skipped'],
+                datasets: [{
+                    data: [69, 0, 0],
+                    backgroundColor: ['#84fab0', '#fa709a', '#ffd89b'],
+                    borderColor: ['#fff', '#fff', '#fff'],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Modules Chart
+        const modulesCtx = document.getElementById('modulesChart').getContext('2d');
+        new Chart(modulesCtx, {
+            type: 'bar',
+            data: {
+                labels: ["api_gateway", "classifier", "data_models", "dynamodb", "extractor", "frontend", "integration", "report_generator", "risk_scorer", "s3_storage", "security", "step_functions", "validator"],
+                datasets: [
+                    {
+                        label: 'Passed',
+                        data: [5, 7, 5, 5, 8, 6, 5, 4, 5, 4, 5, 4, 6],
+                        backgroundColor: '#84fab0'
+                    },
+                    {
+                        label: 'Failed',
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        backgroundColor: '#fa709a'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

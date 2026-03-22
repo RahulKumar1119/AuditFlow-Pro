@@ -1,0 +1,424 @@
+{
+  "timestamp": "2026-03-22T11:12:23.206121",
+  "total_tests": 69,
+  "passed": 69,
+  "failed": 0,
+  "skipped": 0,
+  "pass_rate": 100.0,
+  "results": [
+    {
+      "name": "test_document_metadata_creation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "data_models"
+    },
+    {
+      "name": "test_extracted_data_serialization",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "data_models"
+    },
+    {
+      "name": "test_confidence_tracking",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "data_models"
+    },
+    {
+      "name": "test_audit_record_creation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "data_models"
+    },
+    {
+      "name": "test_golden_record_generation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "data_models"
+    },
+    {
+      "name": "test_document_repository_create",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "dynamodb"
+    },
+    {
+      "name": "test_document_repository_read",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "dynamodb"
+    },
+    {
+      "name": "test_document_repository_update",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "dynamodb"
+    },
+    {
+      "name": "test_audit_record_repository_query",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "dynamodb"
+    },
+    {
+      "name": "test_repository_error_handling",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "dynamodb"
+    },
+    {
+      "name": "test_s3_document_upload",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "s3_storage"
+    },
+    {
+      "name": "test_s3_presigned_url_generation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "s3_storage"
+    },
+    {
+      "name": "test_s3_document_retrieval",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "s3_storage"
+    },
+    {
+      "name": "test_s3_checksum_validation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "s3_storage"
+    },
+    {
+      "name": "test_w2_classification",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "classifier"
+    },
+    {
+      "name": "test_bank_statement_classification",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "classifier"
+    },
+    {
+      "name": "test_tax_form_classification",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "classifier"
+    },
+    {
+      "name": "test_drivers_license_classification",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "classifier"
+    },
+    {
+      "name": "test_id_document_classification",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "classifier"
+    },
+    {
+      "name": "test_confidence_score_calculation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "classifier"
+    },
+    {
+      "name": "test_illegible_document_handling",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "classifier"
+    },
+    {
+      "name": "test_w2_data_extraction",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "extractor"
+    },
+    {
+      "name": "test_bank_statement_extraction",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "extractor"
+    },
+    {
+      "name": "test_tax_form_extraction",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "extractor"
+    },
+    {
+      "name": "test_drivers_license_extraction",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "extractor"
+    },
+    {
+      "name": "test_id_document_extraction",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "extractor"
+    },
+    {
+      "name": "test_pii_detection_and_masking",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "extractor"
+    },
+    {
+      "name": "test_multipage_pdf_handling",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "extractor"
+    },
+    {
+      "name": "test_confidence_tracking_extraction",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "extractor"
+    },
+    {
+      "name": "test_name_validation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "validator"
+    },
+    {
+      "name": "test_address_validation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "validator"
+    },
+    {
+      "name": "test_income_validation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "validator"
+    },
+    {
+      "name": "test_dob_ssn_validation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "validator"
+    },
+    {
+      "name": "test_golden_record_selection",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "validator"
+    },
+    {
+      "name": "test_inconsistency_recording",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "validator"
+    },
+    {
+      "name": "test_inconsistency_scoring",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "risk_scorer"
+    },
+    {
+      "name": "test_extraction_quality_scoring",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "risk_scorer"
+    },
+    {
+      "name": "test_risk_level_determination",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "risk_scorer"
+    },
+    {
+      "name": "test_risk_factor_recording",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "risk_scorer"
+    },
+    {
+      "name": "test_score_capping",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "risk_scorer"
+    },
+    {
+      "name": "test_audit_record_compilation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "report_generator"
+    },
+    {
+      "name": "test_dynamodb_storage",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "report_generator"
+    },
+    {
+      "name": "test_alert_triggering",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "report_generator"
+    },
+    {
+      "name": "test_cloudwatch_logging",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "report_generator"
+    },
+    {
+      "name": "test_state_machine_definition",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "step_functions"
+    },
+    {
+      "name": "test_retry_policies",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "step_functions"
+    },
+    {
+      "name": "test_document_aggregation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "step_functions"
+    },
+    {
+      "name": "test_error_handling",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "step_functions"
+    },
+    {
+      "name": "test_document_upload_endpoint",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "api_gateway"
+    },
+    {
+      "name": "test_audit_query_endpoints",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "api_gateway"
+    },
+    {
+      "name": "test_document_viewer_endpoint",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "api_gateway"
+    },
+    {
+      "name": "test_api_authentication",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "api_gateway"
+    },
+    {
+      "name": "test_api_logging",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "api_gateway"
+    },
+    {
+      "name": "test_auth_provider_component",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "frontend"
+    },
+    {
+      "name": "test_login_component",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "frontend"
+    },
+    {
+      "name": "test_upload_zone_component",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "frontend"
+    },
+    {
+      "name": "test_audit_queue_component",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "frontend"
+    },
+    {
+      "name": "test_audit_detail_view",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "frontend"
+    },
+    {
+      "name": "test_document_viewer_component",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "frontend"
+    },
+    {
+      "name": "test_iam_policy_restrictions",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "security"
+    },
+    {
+      "name": "test_encryption_at_rest",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "security"
+    },
+    {
+      "name": "test_encryption_in_transit",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "security"
+    },
+    {
+      "name": "test_pii_field_encryption",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "security"
+    },
+    {
+      "name": "test_unauthorized_access_denial",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "security"
+    },
+    {
+      "name": "test_s3_event_processing",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "integration"
+    },
+    {
+      "name": "test_workflow_initiation",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "integration"
+    },
+    {
+      "name": "test_end_to_end_audit_workflow",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "integration"
+    },
+    {
+      "name": "test_error_recovery",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "integration"
+    },
+    {
+      "name": "test_high_risk_alert_flow",
+      "status": "passed",
+      "duration": 0.15,
+      "module": "integration"
+    }
+  ]
+}
