@@ -62,7 +62,6 @@ ALERTS_TOPIC_ARN = os.environ.get('ALERTS_TOPIC_ARN', '')
 
 def save_audit_record(record_data: dict):
     """Task 10.2: Store audit record in DynamoDB."""
-    global dynamodb
     table_name = os.environ.get('AUDIT_RECORDS_TABLE', 'AuditFlow-AuditRecords')
     table = dynamodb.Table(table_name)
     try:
@@ -76,7 +75,6 @@ def save_audit_record(record_data: dict):
 
 def update_document_statuses(documents: list, status: str):
     """Task 10.2: Update document processing status in DynamoDB."""
-    global dynamodb
     table_name = os.environ.get('DOCUMENTS_TABLE', 'AuditFlow-Documents')
     table = dynamodb.Table(table_name)
     for doc in documents:
@@ -95,7 +93,6 @@ def update_document_statuses(documents: list, status: str):
 
 def trigger_alerts(record_data: dict) -> list:
     """Task 10.3: Implement alert triggering via SNS."""
-    global sns
     alerts_topic_arn = os.environ.get('ALERTS_TOPIC_ARN', '')
     
     if not alerts_topic_arn:
