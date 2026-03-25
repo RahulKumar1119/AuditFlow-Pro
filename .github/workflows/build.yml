@@ -1,0 +1,151 @@
+name: Build and SonarQube Analysis
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    name: Build and Analyze
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x]
+        python-version: [3.9]
+    
+    steps:
+      # Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better analysis
+
+      # Setup Node.js for frontend
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      # Setup Python for backend
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      # Install frontend dependencies
+      - name: Install frontend dependencies
+        working-directory: ./auditflow-pro/frontend
+        run: npm ci
+
+      # Build frontend
+      - name: Build frontend
+        working-directory: ./auditflow-pro/frontend
+        run: npm run build
+
+      # Run frontend tests
+      - name: Run frontend tests
+        working-directory: ./auditflow-pro/frontend
+        run: npm test -- --coverage --watchAll=false
+        continue-on-error: true
+
+      # Install backend dependencies
+      - name: Install backend dependencies
+        working-directory: ./auditflow-pro/backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pylint flake8
+
+      # Run backend linting
+      - name: Run backend linting
+        working-directory: ./auditflow-pro/backend
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          pylint **/*.py --exit-zero
+        continue-on-error: true
+
+      # Run backend tests
+      - name: Run backend tests
+        working-directory: ./auditflow-pro/backend
+        run: pytest --cov=. --cov-report=xml --cov-report=html
+        continue-on-error: true
+
+      # Run SonarQube analysis
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=AuditFlow-Pro
+            -Dsonar.projectName=AuditFlow-Pro
+            -Dsonar.projectVersion=1.0.0
+            -Dsonar.sources=auditflow-pro
+            -Dsonar.exclusions=**/node_modules/**,**/__pycache__/**,**/dist/**,**/build/**
+            -Dsonar.javascript.lcov.reportPaths=auditflow-pro/frontend/coverage/lcov.info
+            -Dsonar.python.coverage.reportPaths=auditflow-pro/backend/coverage.xml
+            -Dsonar.qualitygate.wait=true
+
+      # Quality Gate check
+      - name: SonarQube Quality Gate
+        uses: SonarSource/sonarqube-quality-gate-action@master
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        continue-on-error: true
+
+      # Upload coverage reports
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./auditflow-pro/frontend/coverage/lcov.info,./auditflow-pro/backend/coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+      # Create test report
+      - name: Publish test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            auditflow-pro/frontend/coverage/junit.xml
+            auditflow-pro/backend/test-results.xml
+          check_name: Test Results
+        continue-on-error: true
+
+      # Archive build artifacts
+      - name: Archive build artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            auditflow-pro/frontend/dist
+            auditflow-pro/frontend/coverage
+            auditflow-pro/backend/coverage
+          retention-days: 30
+
+      # Notify on failure
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ Build or SonarQube analysis failed. Please check the workflow logs.'
+            })
+        continue-on-error: true
