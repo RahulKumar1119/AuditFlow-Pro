@@ -1,0 +1,195 @@
+
+digraph AuditFlowArchitecture {
+    rankdir=TB;
+    bgcolor=white;
+    node [shape=box, style=filled, fillcolor="#FF9900", fontcolor=white, fontname="Arial", fontsize=10];
+    edge [color="#232F3E", penwidth=2];
+    
+    // Client Layer
+    subgraph cluster_client {
+        label="Client Layer";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        user [label="👤 Loan Officer", fillcolor="#FF9900"];
+    }
+    
+    // Frontend Layer
+    subgraph cluster_frontend {
+        label="Frontend Layer (AWS Amplify)";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        frontend [label="🌐 React Dashboard
+(TypeScript + Vite)", fillcolor="#FF9900"];
+    }
+    
+    // Authentication & Security
+    subgraph cluster_auth {
+        label="Authentication & Security";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        cognito [label="🔐 Cognito
+User Pool", fillcolor="#FF9900"];
+        kms [label="🔑 KMS
+Encryption Keys", fillcolor="#FF9900"];
+    }
+    
+    // API Layer
+    subgraph cluster_api {
+        label="API Layer";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        api_gateway [label="🚪 API Gateway
+(REST)", fillcolor="#FF9900"];
+        api_lambda [label="⚡ API Handler
+Lambda", fillcolor="#FF9900"];
+    }
+    
+    // Storage Layer
+    subgraph cluster_storage {
+        label="Storage Layer";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        s3 [label="📦 S3 Bucket
+(Documents)", fillcolor="#FF9900"];
+        dynamodb_docs [label="📊 DynamoDB
+Documents", fillcolor="#FF9900"];
+        dynamodb_audits [label="📊 DynamoDB
+Audit Records", fillcolor="#FF9900"];
+    }
+    
+    // Orchestration Layer
+    subgraph cluster_orchestration {
+        label="Orchestration Layer";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        step_functions [label="🔄 Step Functions
+State Machine", fillcolor="#FF9900"];
+    }
+    
+    // Processing Pipeline
+    subgraph cluster_processing {
+        label="Processing Pipeline (Lambda Functions)";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        classifier [label="⚡ Classifier
+Lambda", fillcolor="#FF9900"];
+        extractor [label="⚡ Extractor
+Lambda", fillcolor="#FF9900"];
+        validator [label="⚡ Validator
+Lambda", fillcolor="#FF9900"];
+        risk_scorer [label="⚡ Risk Scorer
+Lambda", fillcolor="#FF9900"];
+        reporter [label="⚡ Reporter
+Lambda", fillcolor="#FF9900"];
+    }
+    
+    // AI/ML Services
+    subgraph cluster_aiml {
+        label="AI/ML Services";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        textract [label="🤖 Textract
+(OCR & Extraction)", fillcolor="#FF9900"];
+        comprehend [label="🤖 Comprehend
+(PII Detection)", fillcolor="#FF9900"];
+        bedrock [label="🤖 Bedrock
+(Claude Sonnet 4)", fillcolor="#FF9900"];
+    }
+    
+    // Monitoring & Alerts
+    subgraph cluster_monitoring {
+        label="Monitoring & Alerts";
+        style=filled;
+        fillcolor="#F0F0F0";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        fontname="Arial";
+        
+        cloudwatch [label="📈 CloudWatch
+(Logs & Metrics)", fillcolor="#FF9900"];
+        sns [label="📢 SNS
+(Alerts)", fillcolor="#FF9900"];
+    }
+    
+    // Data flows
+    user -> frontend [label="Access"];
+    frontend -> api_gateway [label="API Calls"];
+    api_gateway -> cognito [label="Authenticate"];
+    api_gateway -> api_lambda [label="Route"];
+    
+    // Document upload flow
+    api_lambda -> s3 [label="Upload"];
+    s3 -> step_functions [label="Trigger"];
+    
+    // Processing pipeline
+    step_functions -> classifier [label="Start"];
+    classifier -> textract [label="Analyze"];
+    textract -> extractor [label="Extract"];
+    extractor -> comprehend [label="Detect PII"];
+    extractor -> validator [label="Validate"];
+    validator -> bedrock [label="Reason"];
+    validator -> risk_scorer [label="Score"];
+    risk_scorer -> reporter [label="Report"];
+    
+    // Storage
+    classifier -> dynamodb_docs [label="Save"];
+    extractor -> dynamodb_docs [label="Save"];
+    reporter -> dynamodb_audits [label="Save"];
+    
+    // Alerts
+    reporter -> sns [label="Alert"];
+    
+    // Monitoring
+    classifier -> cloudwatch [label="Log"];
+    extractor -> cloudwatch [label="Log"];
+    validator -> cloudwatch [label="Log"];
+    risk_scorer -> cloudwatch [label="Log"];
+    reporter -> cloudwatch [label="Log"];
+    api_lambda -> cloudwatch [label="Log"];
+    
+    // Encryption
+    s3 -> kms [label="Encrypt"];
+    dynamodb_docs -> kms [label="Encrypt"];
+    dynamodb_audits -> kms [label="Encrypt"];
+}

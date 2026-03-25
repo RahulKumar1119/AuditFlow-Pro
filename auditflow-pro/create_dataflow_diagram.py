@@ -1,0 +1,158 @@
+#!/usr/bin/env python3
+"""
+AuditFlow-Pro Data Flow Diagram
+Shows the complete document processing pipeline
+"""
+
+import subprocess
+
+dot_content = """
+digraph AuditFlowDataFlow {
+    rankdir=LR;
+    bgcolor=white;
+    splines=curved;
+    nodesep=0.8;
+    ranksep=1.5;
+    
+    node [fontname="Arial", fontsize=10, shape=box, style="rounded,filled"];
+    edge [color="#232F3E", penwidth=2, fontname="Arial", fontsize=9];
+    
+    // Step 1: Document Upload
+    subgraph cluster_upload {
+        label="1. Document Upload";
+        style=filled;
+        fillcolor="#E8F4F8";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        
+        user_upload [label="User Uploads\\nDocuments", fillcolor="#FF9900", fontcolor=white];
+        s3_store [label="S3 Storage\\n(Encrypted)", fillcolor="#FF9900", fontcolor=white];
+    }
+    
+    // Step 2: Classification
+    subgraph cluster_classify {
+        label="2. Document Classification";
+        style=filled;
+        fillcolor="#E8F4F8";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        
+        trigger [label="S3 Event\\nTrigger", fillcolor="#FF9900", fontcolor=white];
+        classifier [label="Classifier\\nLambda", fillcolor="#FF9900", fontcolor=white];
+        textract [label="Textract\\nAnalysis", fillcolor="#FF9900", fontcolor=white];
+        doc_type [label="Document Type\\nIdentified", fillcolor="#FF9900", fontcolor=white];
+    }
+    
+    // Step 3: Data Extraction
+    subgraph cluster_extract {
+        label="3. Data Extraction";
+        style=filled;
+        fillcolor="#E8F4F8";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        
+        extractor [label="Extractor\\nLambda", fillcolor="#FF9900", fontcolor=white];
+        comprehend [label="Comprehend\\nPII Detection", fillcolor="#FF9900", fontcolor=white];
+        extracted_data [label="Extracted Fields\\n+ Confidence", fillcolor="#FF9900", fontcolor=white];
+    }
+    
+    // Step 4: Validation
+    subgraph cluster_validate {
+        label="4. Cross-Document Validation";
+        style=filled;
+        fillcolor="#E8F4F8";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        
+        validator [label="Validator\\nLambda", fillcolor="#FF9900", fontcolor=white];
+        bedrock [label="Bedrock\\n(Claude)", fillcolor="#FF9900", fontcolor=white];
+        golden_record [label="Golden Record\\nCreated", fillcolor="#FF9900", fontcolor=white];
+        inconsistencies [label="Inconsistencies\\nDetected", fillcolor="#FF9900", fontcolor=white];
+    }
+    
+    // Step 5: Risk Scoring
+    subgraph cluster_risk {
+        label="5. Risk Assessment";
+        style=filled;
+        fillcolor="#E8F4F8";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        
+        risk_scorer [label="Risk Scorer\\nLambda", fillcolor="#FF9900", fontcolor=white];
+        risk_score [label="Risk Score\\n(0-100)", fillcolor="#FF9900", fontcolor=white];
+        risk_factors [label="Risk Factors\\nIdentified", fillcolor="#FF9900", fontcolor=white];
+    }
+    
+    // Step 6: Reporting & Alerts
+    subgraph cluster_report {
+        label="6. Reporting & Alerts";
+        style=filled;
+        fillcolor="#E8F4F8";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        
+        reporter [label="Reporter\\nLambda", fillcolor="#FF9900", fontcolor=white];
+        audit_record [label="Audit Record\\nSaved", fillcolor="#FF9900", fontcolor=white];
+        sns_alert [label="SNS Alert\\nTriggered", fillcolor="#FF9900", fontcolor=white];
+    }
+    
+    // Step 7: Storage & Retrieval
+    subgraph cluster_storage {
+        label="7. Storage & Retrieval";
+        style=filled;
+        fillcolor="#E8F4F8";
+        color="#232F3E";
+        fontcolor="#232F3E";
+        fontsize=12;
+        
+        dynamodb [label="DynamoDB\\nAudit Records", fillcolor="#FF9900", fontcolor=white];
+        api_query [label="API Query\\nResults", fillcolor="#FF9900", fontcolor=white];
+        dashboard [label="Dashboard\\nDisplay", fillcolor="#FF9900", fontcolor=white];
+    }
+    
+    // Data flow connections
+    user_upload -> s3_store [label="Upload"];
+    s3_store -> trigger [label="Event"];
+    trigger -> classifier [label="Invoke"];
+    classifier -> textract [label="Analyze"];
+    textract -> doc_type [label="Type"];
+    doc_type -> extractor [label="Extract"];
+    extractor -> comprehend [label="Detect PII"];
+    comprehend -> extracted_data [label="Fields"];
+    extracted_data -> validator [label="Validate"];
+    validator -> bedrock [label="Reason"];
+    bedrock -> golden_record [label="Golden Record"];
+    bedrock -> inconsistencies [label="Inconsistencies"];
+    golden_record -> risk_scorer [label="Data"];
+    inconsistencies -> risk_scorer [label="Issues"];
+    risk_scorer -> risk_score [label="Score"];
+    risk_scorer -> risk_factors [label="Factors"];
+    risk_score -> reporter [label="Score"];
+    risk_factors -> reporter [label="Factors"];
+    reporter -> audit_record [label="Create"];
+    reporter -> sns_alert [label="Alert"];
+    audit_record -> dynamodb [label="Save"];
+    dynamodb -> api_query [label="Query"];
+    api_query -> dashboard [label="Display"];
+}
+"""
+
+dot_file = "auditflow-pro/architecture_dataflow.dot"
+with open(dot_file, 'w') as f:
+    f.write(dot_content)
+
+print("✓ Data flow DOT file created")
+
+try:
+    subprocess.run(['dot', '-Tpng', dot_file, '-o', 'auditflow-pro/architecture_dataflow.png'], 
+                   check=True, capture_output=True)
+    print("✓ Data flow diagram created!")
+    print("✓ Saved as: auditflow-pro/architecture_dataflow.png")
+except Exception as e:
+    print(f"Error: {e}")
