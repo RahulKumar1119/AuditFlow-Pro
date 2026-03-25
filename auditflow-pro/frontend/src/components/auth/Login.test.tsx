@@ -41,7 +41,7 @@ describe('Login Component', () => {
   it('renders login form correctly', () => {
     renderLogin();
     expect(screen.getByPlaceholderText(/you@company.com/i)).toBeDefined();
-    expect(screen.getByPlaceholderText(/enter your password/i)).toBeDefined();
+    expect(screen.getByPlaceholderText(/•••••••/i)).toBeDefined();
     expect(screen.getByRole('button', { name: /sign in/i })).toBeDefined();
   });
 
@@ -49,7 +49,7 @@ describe('Login Component', () => {
     renderLogin();
     
     const emailInput = screen.getByPlaceholderText(/you@company.com/i);
-    const passwordInput = screen.getByPlaceholderText(/enter your password/i);
+    const passwordInput = screen.getByPlaceholderText(/•••••••/i);
     const submitButton = screen.getByRole('button', { name: /sign in/i });
     
     fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
@@ -71,7 +71,7 @@ describe('Login Component', () => {
     renderLogin();
 
     fireEvent.change(screen.getByPlaceholderText(/you@company.com/i), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByPlaceholderText(/enter your password/i), { target: { value: 'Password123!' } });
+    fireEvent.change(screen.getByPlaceholderText(/•••••••/i), { target: { value: 'Password123!' } });
     fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {
