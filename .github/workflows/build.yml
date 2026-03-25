@@ -55,7 +55,7 @@ jobs:
       # Run frontend tests
       - name: Run frontend tests
         working-directory: ./auditflow-pro/frontend
-        run: npm test -- --coverage --watchAll=false
+        run: npm test -- --run --coverage
         continue-on-error: true
 
       # Install backend dependencies
