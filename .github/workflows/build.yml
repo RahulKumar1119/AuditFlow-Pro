@@ -33,6 +33,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: './auditflow-pro/frontend/package-lock.json'
 
       # Setup Python for backend
       - name: Setup Python ${{ matrix.python-version }}
