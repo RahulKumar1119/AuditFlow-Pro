@@ -1,0 +1,15 @@
+version: 2
+updates:
+  # Frontend dependencies
+  - package-ecosystem: "npm"
+    directory: "/auditflow-pro/frontend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+
+  # Backend Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/auditflow-pro/backend"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
