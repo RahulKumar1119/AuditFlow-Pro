@@ -1,0 +1,38 @@
+# Binary files
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.gif
+**/*.zip
+**/*.gz
+**/*.gzip
+
+# Test caches
+**/.hypothesis/**
+
+# Build artifacts
+**/deployment_package.zip
+**/api_handler.zip
+
+# Coverage reports
+**/coverage/**
+
+# Node modules and Python cache
+**/node_modules/**
+**/__pycache__/**
+
+# Build directories
+**/dist/**
+**/build/**
+
+# Git
+**/.git/**
+
+# Virtual environments
+**/venv/**
+
+# SonarQube
+**/.scannerwork/**
+
+# Test reports
+**/test_reports/**
