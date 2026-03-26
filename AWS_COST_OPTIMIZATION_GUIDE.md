@@ -395,7 +395,199 @@ def batch_classify_documents(documents):
 # Reduces API overhead by 20-30%
 ```
 
-### 2.5 API Gateway Optimization
+### 2.5 AWS Amplify Optimization
+
+#### Current Implementation
+```
+Frontend hosting:
+- auditflow-pro/frontend (React + TypeScript)
+- Hosted on AWS Amplify
+- Custom domain with SSL
+- CI/CD pipeline enabled
+```
+
+#### Optimization Strategies
+
+**A. Build Optimization**
+```
+Current: Full build on every commit
+Optimized: Incremental builds
+
+Implementation:
+1. Enable build caching
+2. Use monorepo optimization
+3. Lazy load components
+4. Code splitting
+
+Reduces build time by 50-70%
+Reduces bandwidth by 40-60%
+```
+
+**B. Artifact Optimization**
+```
+Current: Full bundle (~2-3 MB)
+Optimized: Optimized bundle (~500-800 KB)
+
+Techniques:
+1. Tree shaking (remove unused code)
+2. Minification
+3. Compression (gzip)
+4. Dynamic imports
+
+Implementation in vite.config.ts:
+```typescript
+export default defineConfig({
+  build: {
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor': ['react', 'react-dom'],
+          'ui': ['@aws-amplify/ui-react']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000
+  }
+})
+```
+
+Reduces bundle size by 60-70%
+Improves load time by 50%
+```
+
+**C. CDN Optimization**
+```
+Current: CloudFront with default settings
+Optimized: Aggressive caching
+
+Cache settings:
+- HTML: 1 hour (must revalidate)
+- JS/CSS: 1 year (versioned)
+- Images: 30 days
+- API responses: 5 minutes
+
+Implementation:
+```json
+{
+  "CacheBehaviors": [
+    {
+      "PathPattern": "*.js",
+      "ViewerProtocolPolicy": "https-only",
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true
+    },
+    {
+      "PathPattern": "*.css",
+      "ViewerProtocolPolicy": "https-only",
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true
+    }
+  ]
+}
+```
+
+Reduces bandwidth by 70-80%
+Improves performance by 40-50%
+```
+
+**D. Image Optimization**
+```python
+# Optimize images in frontend
+
+Techniques:
+1. Use WebP format (30% smaller)
+2. Responsive images (srcset)
+3. Lazy loading
+4. Image compression
+
+Example in React:
+```typescript
+import { Image } from '@aws-amplify/ui-react';
+
+export const OptimizedImage = ({ src, alt }) => (
+  <Image
+    src={src}
+    alt={alt}
+    loading="lazy"
+    width="100%"
+    height="auto"
+  />
+);
+```
+
+Reduces image size by 50-70%
+Improves page load by 30-40%
+```
+
+**E. Amplify Hosting Optimization**
+```
+Current: Standard hosting plan
+Optimized: Optimized configuration
+
+Settings:
+1. Enable branch protection
+2. Use preview environments only for PRs
+3. Disable unnecessary builds
+4. Set build timeout to 15 minutes
+
+Cost Reduction:
+- Fewer builds: 30-40% savings
+- Optimized storage: 20-30% savings
+- Reduced data transfer: 40-50% savings
+
+Total Amplify Savings: 50-60%
+```
+
+**F. Monitoring and Performance**
+```
+Enable Amplify Analytics:
+- Page load time
+- User engagement
+- Error tracking
+- Performance metrics
+
+Use CloudWatch for:
+- Build success rate
+- Deployment frequency
+- Error rates
+```
+
+#### Amplify Cost Breakdown
+
+```
+Current Costs:
+- Hosting: $50-100/month
+- Build minutes: $10-20/month
+- Data transfer: $10-20/month
+─────────────────────────────
+Total: $70-140/month
+
+Optimized Costs:
+- Hosting: $20-30/month (60% reduction)
+- Build minutes: $5-10/month (50% reduction)
+- Data transfer: $5-10/month (50% reduction)
+─────────────────────────────
+Total: $30-50/month
+
+Monthly Savings: $40-90
+Annual Savings: $480-1,080
+```
+
+#### Implementation Checklist for Amplify
+
+- [ ] Enable build caching
+- [ ] Optimize bundle size
+- [ ] Configure CDN caching
+- [ ] Optimize images (WebP, lazy loading)
+- [ ] Enable compression (gzip, brotli)
+- [ ] Set appropriate build timeouts
+- [ ] Use preview environments efficiently
+- [ ] Monitor performance metrics
+- [ ] Enable analytics
+- [ ] Review build logs for optimization
+
+### 2.6 API Gateway Optimization
 
 #### Current Implementation
 ```
@@ -509,14 +701,14 @@ AWS Lambda                 $150-200        $60-80           60-70%
 Amazon DynamoDB            $50-80          $15-25           70%
 Amazon S3                  $30-50          $10-15           70%
 AWS Bedrock               $200-300        $60-100          70%
-AWS Amplify               $50-100         $30-50           40%
+AWS Amplify               $70-140         $30-50           55%
 API Gateway               $20-30          $10-15           50%
 CloudWatch                $30-50          $5-10            80%
 Step Functions            $10-15          $5-10            50%
 Cognito                   $0 (free tier)  $0               -
-
+CloudFront                $20-30          $10-15           50%
 ─────────────────────────────────────────────────────────────────────
-TOTAL                     $560-835        $205-320         65%
+TOTAL                     $580-875        $205-320         63%
 ```
 
 ### 3.2 Cost Estimation by Usage Tier
