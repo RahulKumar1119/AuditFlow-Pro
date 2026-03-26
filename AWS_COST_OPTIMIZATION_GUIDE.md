@@ -18,7 +18,7 @@ AuditFlow-Pro is a serverless AI-powered loan document auditor built on AWS. Thi
 - **AWS Step Functions** - Workflow orchestration
 - **Amazon Cognito** - Authentication
 - **AWS CloudWatch** - Monitoring and logs
-- **Amazon CloudFront** - CDN for frontend
+
 
 ---
 
@@ -514,7 +514,7 @@ API Gateway               $20-30          $10-15           50%
 CloudWatch                $30-50          $5-10            80%
 Step Functions            $10-15          $5-10            50%
 Cognito                   $0 (free tier)  $0               -
-CloudFront                $20-30          $10-15           50%
+
 ─────────────────────────────────────────────────────────────────────
 TOTAL                     $560-835        $205-320         65%
 ```
