@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/tests/integration/test_trigger.py
 
 import os

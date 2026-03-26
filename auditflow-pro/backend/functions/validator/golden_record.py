@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/functions/validator/golden_record.py
 
 import logging

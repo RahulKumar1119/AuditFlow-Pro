@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/functions/trigger/app.py
 # Task 13.2: S3 Event Handler Lambda Function
 # Requirements: 1.4, 10.2, 10.3, 10.4

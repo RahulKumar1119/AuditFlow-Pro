@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Hypothesis strategies for generating random inconsistencies in document data.
 """

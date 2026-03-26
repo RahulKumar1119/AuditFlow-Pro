@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 DynamoDB table schema definitions for AuditFlow-Pro.
 

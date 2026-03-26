@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Integration tests for AWS Cognito authentication
 Tests user login, session management, account lockout, and role-based access control

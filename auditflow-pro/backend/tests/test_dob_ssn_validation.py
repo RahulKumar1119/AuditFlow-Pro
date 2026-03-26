@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Unit tests for Task 8.5: Date of Birth and SSN validation logic.
 """

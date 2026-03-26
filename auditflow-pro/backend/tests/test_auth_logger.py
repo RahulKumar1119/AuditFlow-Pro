@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Unit tests for authentication logger
 Tests PII redaction and event logging

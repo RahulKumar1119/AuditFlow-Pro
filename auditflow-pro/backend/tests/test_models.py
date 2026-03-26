@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 from hypothesis import given, strategies as st
 from shared.models import (

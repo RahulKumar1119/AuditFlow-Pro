@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/functions/validator/rules.py
 
 import json

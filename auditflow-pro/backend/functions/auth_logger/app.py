@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Authentication and Authorization Event Logger
 Logs all authentication events to CloudWatch with PII redaction

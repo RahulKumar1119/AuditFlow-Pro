@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/functions/extractor/parsers.py
 
 import boto3

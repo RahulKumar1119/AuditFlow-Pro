@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/functions/risk_scorer/scorer.py
 
 import logging

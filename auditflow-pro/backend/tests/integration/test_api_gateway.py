@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Integration tests for API Gateway endpoints.
 Task 15.6: Write integration tests for API endpoints

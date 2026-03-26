@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Unit tests for Task 8.4: Income validation logic.
 """

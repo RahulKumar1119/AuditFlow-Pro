@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/functions/validator/app.py
 """
 Task 8.1: Cross-Document Validator Lambda Handler

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 from unittest.mock import patch, MagicMock, call
 from botocore.exceptions import ClientError

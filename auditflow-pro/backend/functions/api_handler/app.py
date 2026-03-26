@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/functions/api_handler/app.py
 
 import os

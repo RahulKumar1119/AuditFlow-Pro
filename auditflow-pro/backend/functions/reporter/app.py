@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/functions/reporter/app.py
 
 import os

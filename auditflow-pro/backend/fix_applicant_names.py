@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Script to fix existing audit records with correct applicant names from golden_record.
 """

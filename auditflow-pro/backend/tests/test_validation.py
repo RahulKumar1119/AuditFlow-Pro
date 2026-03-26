@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 from shared.models import ExtractedField, Inconsistency
 

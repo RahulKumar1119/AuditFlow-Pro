@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Simplified Hypothesis strategies for generating random valid document data.
 """

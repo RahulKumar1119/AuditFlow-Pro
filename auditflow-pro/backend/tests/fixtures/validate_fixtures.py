@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Validation script for test fixtures.
 Verifies that all fixtures are properly formatted and contain required fields.

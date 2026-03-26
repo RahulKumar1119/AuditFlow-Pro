@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Example property-based tests demonstrating usage of test generators.
 

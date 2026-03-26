@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Field-level encryption utilities for PII data.
 

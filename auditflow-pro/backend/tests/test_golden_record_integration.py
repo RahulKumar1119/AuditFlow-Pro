@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Integration test for Golden Record generation (Task 8.7).
 Demonstrates the complete Golden Record generation workflow.

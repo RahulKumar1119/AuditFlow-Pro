@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Script to clean applicant names that contain address data.
 Extracts just the name part (before street address).

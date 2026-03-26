@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/tests/test_trigger.py
 # Task 13.4: Integration tests for S3 event triggers
 # Requirements: 20.2

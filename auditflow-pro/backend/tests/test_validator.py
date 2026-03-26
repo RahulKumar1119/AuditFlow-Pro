@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Unit tests for the Cross-Document Validator Lambda function.
 Tests Task 8.1: Lambda handler and validation orchestration.

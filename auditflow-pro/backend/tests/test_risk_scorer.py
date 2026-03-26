@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # backend/tests/test_risk_scorer.py
 
 import pytest
