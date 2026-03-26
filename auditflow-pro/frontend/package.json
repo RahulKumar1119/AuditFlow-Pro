@@ -30,7 +30,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@types/react-pdf": "^6.2.0",
+    "@types/react-pdf": "^5.0.7",
     "@vitejs/plugin-react": "^5.1.1",
     "@vitest/coverage-v8": "^4.0.18",
     "autoprefixer": "^10.4.27",
