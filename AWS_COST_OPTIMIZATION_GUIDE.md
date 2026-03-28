@@ -695,17 +695,15 @@ Savings: $5-20/month
 ### 3.1 Monthly Cost Breakdown (Current)
 
 ```
-Service                    Current Cost    Optimized Cost    Savings
-─────────────────────────────────────────────────────────────────────
-AWS Lambda                 $150-200        $60-80           60-70%
-Amazon DynamoDB            $50-80          $15-25           70%
-Amazon S3                  $30-50          $10-15           70%
-AWS Bedrock               $200-300        $60-100          70%
-AWS Amplify               $70-140         $30-50           55%
-API Gateway               $20-30          $10-15           50%
-CloudWatch                $30-50          $5-10            80%
-Step Functions            $10-15          $5-10            50%
-Cognito                   $0 (free tier)  $0               -
+Monthly Cost Summary (1,000 Audits)
+Service Tier	Free Tier Coverage (Active)	Estimated Monthly Cost
+Compute & Logic (Lambda, Step Functions)	1M Requests & 4,000 Transitions	$0.00
+Document OCR (Textract)	1,000 Pages/mo (Trial)	$7.00
+Hosting (AWS Amplify)	No Free Tier (Pay-as-you-go)	$2.50
+Security & Privacy (Comprehend, KMS, Cognito)	Always Free / Generous Trial	$1.60
+Database(DynamoDB)	Always Free / Generous Trial	$0.00
+Infrastructure (Route53, API Gateway)	Limited Free Tier	$1.50
+Total Estimated Monthly Bill		$12.60 – $15      -
 
 ```
 
