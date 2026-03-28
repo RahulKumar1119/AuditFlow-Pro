@@ -706,9 +706,7 @@ API Gateway               $20-30          $10-15           50%
 CloudWatch                $30-50          $5-10            80%
 Step Functions            $10-15          $5-10            50%
 Cognito                   $0 (free tier)  $0               -
-CloudFront                $20-30          $10-15           50%
-─────────────────────────────────────────────────────────────────────
-TOTAL                     $580-875        $205-320         63%
+
 ```
 
 ### 3.2 Cost Estimation by Usage Tier
